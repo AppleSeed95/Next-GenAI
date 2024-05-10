@@ -13,14 +13,14 @@ export function SiteHeader(props: { user?: User | null }) {
       }
     >
       <div className={'px-4 lg:px-8'}>
-        <div className="grid h-14 grid-cols-3 items-center">
+        <div className="grid h-14 grid-cols-2 items-center">
           <div>
             <AppLogo />
           </div>
 
-          <div className={'order-first md:order-none'}>
+          {/* <div className={'order-first md:order-none'}>
             <SiteNavigation />
-          </div>
+          </div> */}
 
           <div className={'flex items-center justify-end space-x-1'}>
             <SiteHeaderAccountSection user={props.user ?? null} />

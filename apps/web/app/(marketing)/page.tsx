@@ -36,16 +36,16 @@ function Home() {
             }
           >
             <Pill>
-              <span>The leading SaaS Starter Kit for ambitious developers</span>
+              <span>This is Contentfeeder for ambitious Users</span>
             </Pill>
 
             <div className={'flex flex-col items-center space-y-8'}>
               <HeroTitle>
-                <span>The SaaS Starter Kit</span>
+                <span>Wumdoo for Users</span>
 
-                <span>
-                  <span>for ambitious developers</span>
-                </span>
+                {/* <span>
+                  <span>for Users</span>
+                </span> */}
               </HeroTitle>
 
               <div className={'flex flex-col'}>
@@ -55,7 +55,7 @@ function Home() {
                     'p-0 text-center font-sans text-2xl font-normal text-muted-foreground'
                   }
                 >
-                  <span>Build and launch a SaaS in days, not months</span>
+                  <span>Create and launch a SaaS in days, not months</span>
                 </Heading>
 
                 <Heading
