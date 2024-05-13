@@ -17,10 +17,10 @@ export default createBillingSchema({
   // products configuration
   products: [
     {
-      id: 'starter',
-      name: 'Starter',
+      id: 'free',
+      name: 'Free',
       description: 'The perfect plan to get started',
-      currency: 'USD',
+      currency: 'EUR',
       badge: `Value`,
       plans: [
         {
@@ -32,7 +32,7 @@ export default createBillingSchema({
             {
               id: 'price_1NNwYHI1i3VnbZTqI2UzaHIe',
               name: 'Addon 2',
-              cost: 9.99,
+              cost: 0,
               type: 'flat' as const,
             },
             {
@@ -75,12 +75,12 @@ export default createBillingSchema({
       features: ['Feature 1', 'Feature 2', 'Feature 3'],
     },
     {
-      id: 'pro',
-      name: 'Pro',
+      id: 'basic',
+      name: 'Basic',
       badge: `Popular`,
       highlighted: true,
       description: 'The perfect plan for professionals',
-      currency: 'USD',
+      currency: 'EUR',
       plans: [
         {
           name: 'Pro Monthly',
@@ -91,7 +91,7 @@ export default createBillingSchema({
             {
               id: 'price_pro',
               name: 'Base',
-              cost: 19.99,
+              cost: 990,
               type: 'flat',
             },
           ],
@@ -120,10 +120,10 @@ export default createBillingSchema({
       ],
     },
     {
-      id: 'enterprise',
-      name: 'Enterprise',
-      description: 'The perfect plan for enterprises',
-      currency: 'USD',
+      id: 'pro',
+      name: 'Pro',
+      description: 'The perfect plan for pro',
+      currency: 'EUR',
       plans: [
         {
           name: 'Enterprise Monthly',
@@ -134,7 +134,7 @@ export default createBillingSchema({
             {
               id: 'price_enterprise-monthly',
               name: 'Base',
-              cost: 29.99,
+              cost: 2990,
               type: 'flat',
             },
           ],

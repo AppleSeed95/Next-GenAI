@@ -1,4 +1,4 @@
-import { CreditCard, Home, User } from 'lucide-react';
+import { CreditCard, Home, User, LucideProjector, ArchiveRestore  } from 'lucide-react';
 
 import { NavigationConfigSchema } from '@kit/ui/navigation-schema';
 
@@ -18,6 +18,16 @@ const routes = [
     label: 'account:accountTabLabel',
     path: pathsConfig.app.personalAccountSettings,
     Icon: <User className={iconClasses} />,
+  },
+  {
+    label: 'common:projectTabLabel',
+    path: pathsConfig.app.project,
+    Icon: <LucideProjector className={iconClasses} />
+  },
+  {
+    label: 'common:platformsTabLabel',
+    path: pathsConfig.app.platforms,
+    Icon: <ArchiveRestore className={iconClasses} />
   },
 ];
 

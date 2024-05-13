@@ -24,7 +24,9 @@ function UserHomePage() {
         description={<Trans i18nKey={'common:homeTabDescription'} />}
       />
 
-      <PageBody></PageBody>
+      <PageBody>
+        
+      </PageBody>
     </>
   );
 }
