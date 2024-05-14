@@ -1,7 +1,7 @@
 'use client'
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 // import { cookies } from 'next/headers';
 
 // function getTheme() {
@@ -18,12 +18,12 @@ function LogoImage({
 }) {
   
   const { setTheme, theme } = useTheme();
-  const logoFill = useMemo(() => {
-    const currentTheme = theme !== 'light' ? 'white' : 'black';
-    console.log({currentTheme})
-    return currentTheme;
+
+  const [logoFill, setLogoFill] = useState('black');
+  useEffect(() => {
+    const currentTheme = theme === 'system' ? 'black' : theme !== 'light' ? 'white' : 'black';
+    setLogoFill(currentTheme);
   }, [theme])
-  console.log({theme, logoFill})
 
   return (
     // <svg
