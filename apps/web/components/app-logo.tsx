@@ -1,7 +1,7 @@
 'use client'
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
-import React from 'react';
+import React, { useMemo } from 'react';
 // import { cookies } from 'next/headers';
 
 // function getTheme() {
@@ -18,7 +18,11 @@ function LogoImage({
 }) {
   
   const { setTheme, theme } = useTheme();
-  const logoFill = theme === 'dark' ? 'white' : 'black'
+  const logoFill = useMemo(() => {
+    const currentTheme = theme !== 'light' ? 'white' : 'black';
+    console.log({currentTheme})
+    return currentTheme;
+  }, [theme])
   console.log({theme, logoFill})
 
   return (
