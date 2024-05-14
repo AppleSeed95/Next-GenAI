@@ -31,8 +31,8 @@ test.describe('Auth flow', () => {
 
     await page.waitForURL('**/home');
 
-    // expect(page.url()).toContain('http://localhost:3000/home');
-    expect(page.url()).toContain('http://54.93.97.113/:3000/home');
+    expect(page.url()).toContain('http://localhost:3000/home');
+    // expect(page.url()).toContain('http://54.93.97.113/:3000/home');
   });
 
   test('will sign-in with the correct credentials', async ({ page }) => {

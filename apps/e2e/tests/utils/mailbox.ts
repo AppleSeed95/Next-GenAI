@@ -46,8 +46,8 @@ export class Mailbox {
       deleteAfter: boolean;
     },
   ) {
-    // const url = `http://localhost:54324/api/v1/mailbox/${mailbox}`;
-    const url = `http://54.93.97.113/:54324/api/v1/mailbox/${mailbox}`;
+    const url = `http://localhost:54324/api/v1/mailbox/${mailbox}`;
+    // const url = `http://54.93.97.113/:54324/api/v1/mailbox/${mailbox}`;
 
     const response = await fetch(url);
 
