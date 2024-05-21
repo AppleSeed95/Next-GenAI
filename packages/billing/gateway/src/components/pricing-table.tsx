@@ -26,7 +26,7 @@ import { LineItemDetails } from './line-item-details';
 
 interface Paths {
   signUp: string;
-  subscription: string;
+  return: string;
 }
 
 export function PricingTable({
@@ -44,6 +44,7 @@ export function PricingTable({
 
   CheckoutButtonRenderer?: React.ComponentType<{
     planId: string;
+    productId: string;
     highlighted?: boolean;
   }>;
 }) {
@@ -130,10 +131,12 @@ function PricingItem(
 
     CheckoutButton?: React.ComponentType<{
       planId: string;
+      productId: string;
       highlighted?: boolean;
     }>;
 
     product: {
+      id: string;
       name: string;
       currency: string;
       description: string;
@@ -158,7 +161,7 @@ function PricingItem(
       data-cy={'subscription-plan'}
       className={cn(
         props.className,
-        `s-full relative flex flex-1 grow flex-col items-stretch justify-between 
+        `s-full relative flex flex-1 grow flex-col items-stretch justify-between
             self-stretch rounded-lg border p-8 lg:w-4/12 xl:max-w-[20rem]`,
         {
           ['border-primary']: highlighted,
@@ -207,11 +210,9 @@ function PricingItem(
 
         <div className={'flex flex-col space-y-1'}>
           <Price>
-            {lineItem ? (
-              formatCurrency(props.product.currency, lineItem.cost)
-            ) : (
-              <Trans i18nKey={'billing:custom'} />
-            )}
+            {lineItem
+              ? formatCurrency(props.product.currency, lineItem.cost)
+              : props.plan.label ?? <Trans i18nKey={'billing:custom'} />}
           </Price>
 
           <If condition={props.plan.name}>
@@ -274,6 +275,7 @@ function PricingItem(
               <CheckoutButton
                 highlighted={highlighted}
                 planId={props.plan.id}
+                productId={props.product.id}
               />
             )}
           </If>
@@ -411,7 +413,7 @@ function DefaultCheckoutButton(
       id: string;
       name?: string | undefined;
       href?: string;
-      label?: string;
+      buttonLabel?: string;
     };
 
     product: {
@@ -424,22 +426,20 @@ function DefaultCheckoutButton(
     highlighted?: boolean;
   }>,
 ) {
-  const redirectToCheckoutParam = props.redirectToCheckout
-    ? '?redirectToCheckout=true'
-    : '';
-
   const { t } = useTranslation('billing');
 
-  const planId = props.plan.id;
   const signUpPath = props.paths.signUp;
-  const subscriptionPath = props.paths.subscription;
+
+  const searchParams = new URLSearchParams({
+    next: props.paths.return,
+    plan: props.plan.id,
+    redirectToCheckout: props.redirectToCheckout ? 'true' : 'false',
+  });
 
   const linkHref =
-    props.plan.href ??
-    `${signUpPath}?plan=${planId}&next=${subscriptionPath}?plan=${planId}${redirectToCheckoutParam}` ??
-    '';
+    props.plan.href ?? `${signUpPath}?${searchParams.toString()}` ?? '';
 
-  const label = props.plan.label ?? 'common:getStartedWithPlan';
+  const label = props.plan.buttonLabel ?? 'common:getStartedWithPlan';
 
   return (
     <Link className={'w-full'} href={linkHref}>

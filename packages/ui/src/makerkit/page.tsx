@@ -64,7 +64,7 @@ function PageWithHeader(props: PageProps) {
   const { Navigation, Children, MobileNavigation } = getSlotsFromPage(props);
 
   return (
-    <div className={cn('flex flex-1 flex-col', props.className)}>
+    <div className={cn('flex h-screen flex-1 flex-col', props.className)}>
       <div
         className={
           props.contentContainerClassName ?? 'flex flex-1 flex-col space-y-4'
@@ -72,10 +72,9 @@ function PageWithHeader(props: PageProps) {
       >
         <div
           className={cn(
-            'dark:border-primary-900 flex h-14 items-center justify-between px-4 shadow-sm dark:shadow-primary/10 lg:justify-start',
+            'dark:border-primary-900 flex h-14 items-center justify-between bg-muted/30 px-4 shadow-sm dark:shadow-primary/10 lg:justify-start',
             {
-              'sticky top-0 z-10 bg-background/80 backdrop-blur-md':
-                props.sticky ?? true,
+              'sticky top-0 z-10 backdrop-blur-md': props.sticky ?? true,
             },
           )}
         >
@@ -88,7 +87,11 @@ function PageWithHeader(props: PageProps) {
           {MobileNavigation}
         </div>
 
-        <div className={'flex flex-col space-y-8 px-4 py-4 lg:container'}>
+        <div
+          className={
+            'flex h-screen flex-1 flex-col space-y-8 px-4 py-4 lg:container'
+          }
+        >
           {Children}
         </div>
       </div>
