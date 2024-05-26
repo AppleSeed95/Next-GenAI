@@ -20,6 +20,7 @@ const INTERNAL_PACKAGES = [
   '@kit/monitoring',
   '@kit/next',
   '@kit/notifications',
+  '@kit/textcreator',
 ];
 
 /** @type {import('next').NextConfig} */

@@ -1,9 +1,8 @@
-import { Trans } from "@kit/ui/trans";
-import { HomeLayoutPageHeader } from "../../_components/home-page-header";
-import { PageBody } from "@kit/ui/page";
 import { withI18n } from "~/lib/i18n/with-i18n";
 
-
+import CompaignHeader from "./_components/compaign-header";
+import { CompaignPlatformSelect } from "./_components/compain-platform-select";
+import { CompaignContent } from "./_components/compaign-content";
 
 
 
@@ -13,14 +12,12 @@ import { withI18n } from "~/lib/i18n/with-i18n";
 function PersonalProject() {
    return (
       <>
-         <HomeLayoutPageHeader
-            title={<Trans i18nKey={'common:addProjectTabLabel'} />}
-            description={<Trans i18nKey={''}
-            />}
-         />
-         <PageBody className={'flex flex-col gap-10'}>
+         <div className={'flex flex-col gap-10'}>
+            <CompaignHeader />
+            <CompaignPlatformSelect />
+            <CompaignContent />
             
-         </PageBody>
+         </div>
       </>
    );
 }

@@ -14,9 +14,6 @@ import {
   CommandList,
   CommandSeparator,
 } from '@kit/ui/command';
-import {Badge} from '@kit/ui/badge';
-import Link from 'next/link';
-// import Loading from '../loading';
 
 export function Search({ ...props }: any) {
   const router = useRouter();

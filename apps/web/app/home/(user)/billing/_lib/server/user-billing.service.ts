@@ -55,11 +55,12 @@ class UserBillingService {
 
     // the return URL for the checkout session
     const returnUrl = getCheckoutSessionReturnUrl();
-
+    
     // find the customer ID for the account if it exists
     // (eg. if the account has been billed before)
     const api = createAccountsApi(this.client);
     const customerId = await api.getCustomerId(accountId);
+    console.log('CustomerId: ', accountId, customerId);
 
     const product = billingConfig.products.find(
       (item) => item.id === productId,
