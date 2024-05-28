@@ -32,12 +32,13 @@ const CompaignCard: FC<Props> = (props) => {
             </div>
             <div className={'flex flex-row gap-5 items-center'}>
                <Input
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => { props.onChange({ ...props.blog, words: Number(e.target.value || '300') }) }}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => { props.onChange({ ...props.blog, words: Number(e.target.value || '5') }) }}
                   type="number"
-                  defaultValue={300}
+                  defaultValue={5}
+                  max={10}
                   className={'[-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]'}
                />
-               <Heading level={5} children={'Words'} />
+               <Heading level={5} children={'Sentences'} />
             </div>
             <SelectDemo onChange={(lang) => { props.onChange({ ...props.blog, lang }) }} />
          </div>

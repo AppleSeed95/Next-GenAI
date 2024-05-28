@@ -1,27 +1,15 @@
-
 import { Trans } from "@kit/ui/trans";
 import { HomeLayoutPageHeader } from "../../../_components/home-page-header";
 import { PageBody } from "@kit/ui/page";
 import { withI18n } from "~/lib/i18n/with-i18n";
-import {
-   Card,
-   CardContent,
-   CardDescription,
-   CardFooter,
-   CardHeader,
-   CardTitle,
-} from "@kit/ui/card";
 import { DatePickerWithRange } from "../../_components/datePicker";
 import { Input } from "@kit/ui/input";
 import { Comboboxsuggest } from "../../_components/suggestmode-combobox";
 
 
 
-
-
-
-
 function CompaignHeader() {
+   // const context = useContext(ProjectContext)
    return (
       <>
          <HomeLayoutPageHeader
@@ -40,12 +28,13 @@ function CompaignHeader() {
                      </label>
                   </div>
                   <div className={'flex flex-row gap-5'}>
-                     <Input placeholder="Projectname" />
+                     <Input placeholder="Projectname"  /> 
+                     {/* onChange={(e) => {context.pName = e.target.value}} */}
                      <Comboboxsuggest />
                   </div>
                   <div className={'flex flex-row gap-5'}>
-                     <Input placeholder="Maintopic" />
-                     <Input placeholder="Subtopic" />
+                     <Input />
+                     <Input />
                   </div>
                </div>
             </div>

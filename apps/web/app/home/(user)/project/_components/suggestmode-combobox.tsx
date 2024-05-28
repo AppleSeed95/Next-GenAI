@@ -17,6 +17,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@kit/ui/popover"
+// import { ProjectContext } from "../compaign/page"
 
 type Mode = {
   value: string
@@ -51,6 +52,7 @@ export function Comboboxsuggest() {
   const [selectedStatus, setSelectedStatus] = React.useState<Mode | null>(
     null
   )
+  // const context = React.useContext(ProjectContext)
 
   return (
     <div className="flex items-center space-x-4">
@@ -84,6 +86,7 @@ export function Comboboxsuggest() {
                       setSelectedStatus(
                         modes.find((priority) => priority.value === value) ||
                         null
+                        
                       )
                       setOpen(false)
                     }}

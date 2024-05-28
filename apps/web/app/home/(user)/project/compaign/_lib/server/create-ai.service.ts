@@ -23,7 +23,7 @@ export default function createAiEditorService(): AiEditorService {
  * A class that provides AI text editing services using the OpenAI client.
  */
 class AiEditorService {
-  constructor(private readonly client: OpenAI) {}
+  constructor(private readonly client: OpenAI) { }
 
   /**
    * Generates a complete Content based on the provided context.
@@ -36,18 +36,24 @@ class AiEditorService {
 
     const prompt = [
       {
-        role: SYSTEM,
-        content: `You are assisting USER in writing professional text. Never use double quotes.`,
+        "role": SYSTEM,
+        "content": `You are assisting USER in writing professional text. Never use double quotes.`,
       },
       {
         "role": USER,
         "content": `
-        You have to create text about "${params.title}"
+        You have to generate title about "${params.title}" in one sentence and don't write "Title" word
+        You have to generate title in "${params.lang}".
+      `.trim(),
+      },
+      {
+        "role": USER,
+        "content": `
+        You have to generate text about "${params.title}" and don't write "Content" word
         USER has provided the following text: "${params.context}"
         You have to write Content with ${params.words} sentences.
         You have to creat text in "${params.lang}".
         Your job is to complete the Content.
-        Content:
       `.trim(),
       },
     ];
@@ -58,12 +64,18 @@ class AiEditorService {
       messages: prompt,
       // baseURL: "https://api.openai.com/v1/assistants",
       // max_tokens: 50,
-      // temperature: 0.8,
+      temperature: 0.8,
       // stream: true,
+      top_p: 1,
     });
 
-    console.log("GPT_response", GPT_response);
-    return GPT_response;
+    // for await (const chunk of GPT_response) {
+    //   console.log(chunk.choices[0]?.delta.content); // this code from the doc runs
+    // }
+
+  
+    
+    return GPT_response.choices[0]?.message.content;
   }
 
   /**

@@ -5,9 +5,23 @@ import { PageBody } from "@kit/ui/page"
 import { Trans } from "@kit/ui/trans"
 import { HomeLayoutPageHeader } from "~/home/(user)/_components/home-page-header"
 import CompaignCard from "./compaign-card"
+import { GlobalLoader } from "@kit/ui/global-loader"
 
 import { Button } from "@kit/ui/button"
-import { startTransition, useState } from "react";
+import { startTransition, useContext, useState } from "react";
+import {
+   Dialog,
+   DialogClose,
+   DialogContent,
+   DialogDescription,
+   DialogFooter,
+   DialogHeader,
+   DialogTitle,
+   DialogTrigger,
+} from "@kit/ui/dialog"
+import { Label } from "@kit/ui/label"
+import { Textarea } from "@kit/ui/textarea"
+import { Projects } from "../page"
 import { createAITextAction } from "../_lib/server/server-action"
 
 
@@ -17,30 +31,49 @@ export type Blog = {
    words: number;
    lang: string;
    brand: string;
-   description: string;
+   description?: string;
 }
 
+
+
+
 export function CompaignContent() {
+   const [isOpen, setIsOpen] = useState(true);
+   const [titleText, setTitleText] = useState<string>("");
+   const [contentText, setContentText] = useState<string>("");
+   // const context = useContext(ProjectContext);
 
    const [blogs, setBlogs] = useState<Blog[]>([
-      { type: 'Text', brand: 'Hello', description: 'How are you', lang: 'English', toggle: true, words: 300 },
-      { type: 'Image', brand: 'brand', description: 'aaa', lang: 'English', toggle: false, words: 300 },
-      { type: 'Video', brand: 'brand', description: 'aaa', lang: 'English', toggle: false, words: 300 },
+      { type: 'Text', brand: 'Hello', description: 'How are you', lang: 'English', toggle: true, words: 5 },
+      { type: 'Image', brand: 'brand', description: 'aaa', lang: 'English', toggle: false, words: 10 },
+      { type: 'Video', brand: 'brand', description: 'aaa', lang: 'English', toggle: false, words: 10 },
    ]);
 
    console.log({ blogs })
 
-   const handleClicked =  async() => {
+   const handleClicked = async () => {
+      // console.log(context);
       try {
-         if (blogs && blogs[0]?.toggle) {
-            const payload = { title: blogs[0]?.brand || 'Greeting', description: blogs[0]?.description || 'How are you', lang: blogs[0]?.lang || 'English', words: blogs[0]?.words || 300 }
+         if (blogs && blogs[0]?.toggle && blogs[0].words) {
+            const payload = { title: blogs[0].brand || 'Greeting', description: blogs[0].description || '', lang: blogs[0]?.lang || 'English', words: blogs[0]?.words || 5 }
+            setIsOpen(true);
             const res = await createAITextAction(payload);
-            console.log({res})
+            setIsOpen(false);
+            const title = res?.split("\n")[0];
+            setTitleText(title || '');
+            setContentText(res || 'Please confirm Options');
+            console.log("Response", { res }, title)
          }
 
       } catch (error: any) {
          console.log(error);
+         setContentText("You can't create Content. Please check your subscription");
       }
+
+   }
+
+   const handleSave = async () => {
+
    }
 
    return (
@@ -117,16 +150,71 @@ export function CompaignContent() {
                      <Textarea placeholder={'Additional infos for chatbot... like use paragraphs etc.'} className={'h-full w-full'} />
                   </div>
                </Card> */}
-            <div className={'flex justify-end'}>
-               <Button variant={'outline'} className={'w-60'} onClick={handleClicked}>
-                  <div className={'flex flex-row gap-3'}>
-                     <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5" />
-                     </svg>
-                     <Heading level={5} children={'Save Compaign'} />
+
+
+            <Dialog>
+               <DialogTrigger asChild>
+                  <div className={'flex justify-end'}>
+                     <Button variant={'outline'} className={'w-60'} onClick={handleClicked}>
+                        <div className={'flex flex-row gap-3'}>
+                           <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5" />
+                           </svg>
+                           <Heading level={5} children={'Save Compaign'} />
+                        </div>
+                     </Button>
                   </div>
-               </Button>
-            </div>
+               </DialogTrigger>
+               <DialogContent className="sm:max-w-[600px]">
+                  <DialogHeader>
+                     <DialogTitle>Display Content</DialogTitle>
+                     <DialogDescription>
+                        Make changes to your content here. Click save when you're done.
+                     </DialogDescription>
+                  </DialogHeader>
+                  {/* <GlobalLoader displaySpinner={isOpen} /> */}
+                  <div className={"flex flex-col gap-4 py-4"}>
+                     <div className={"flex flex-row gap-4 items-center"}>
+                        <Label htmlFor="title" className={""}>
+                           Title
+                        </Label>
+                        <Textarea
+                           id="title"
+                           defaultValue=""
+                           value={titleText}
+                           className="col-span-1"
+                        />
+                     </div>
+                     <div className={"flex flex-col gap-4"}>
+                        <Label htmlFor="description" className={""}>
+                           Description
+                        </Label>
+                        <Textarea
+                           id="description"
+                           defaultValue=""
+                           value={contentText}
+                           className={"w-full h-80"}
+                        />
+                     </div>
+                     <div className={"flex flex-col gap-4"}>
+                        <Label htmlFor="description" className={""}>
+                           Image
+                        </Label>
+
+                     </div>
+                  </div>
+                  <DialogFooter className={'flex flex-row justify-between'}>
+                     <DialogClose asChild>
+                        <Button variant={'outline'}>
+                           Close
+                        </Button>
+                     </DialogClose>
+                     <DialogClose asChild>
+                        <Button variant={'outline'} onClick={handleSave}>Save changes</Button>
+                     </DialogClose>
+                  </DialogFooter>
+               </DialogContent>
+            </Dialog>
          </PageBody>
       </>
    )
