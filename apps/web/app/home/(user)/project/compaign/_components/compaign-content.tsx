@@ -59,10 +59,15 @@ export function CompaignContent() {
             setIsOpen(true);
             const res = await createAITextAction(payload);
             setIsOpen(false);
-            const title = res?.split("\n")[0];
-            setTitleText(title || '');
-            setContentText(res || 'Please confirm Options');
-            console.log("Response", { res }, title)
+            if (res) {
+               const responseArray = res.split("\n");
+               const title = responseArray[0];
+               const content = responseArray.slice(1).join("\n");
+               setTitleText(title || "No Title");
+               setContentText(content || "No Content")
+            }
+            // setContentText(res || 'Please confirm Options');
+            console.log("Response", { res })
          }
 
       } catch (error: any) {
@@ -73,6 +78,9 @@ export function CompaignContent() {
    }
 
    const handleSave = async () => {
+      setTitleText("");
+      setContentText("");
+
 
    }
 
@@ -183,6 +191,7 @@ export function CompaignContent() {
                            defaultValue=""
                            value={titleText}
                            className="col-span-1"
+                           onChange={(e) => {setTitleText(e.target.value)}}
                         />
                      </div>
                      <div className={"flex flex-col gap-4"}>
@@ -194,6 +203,7 @@ export function CompaignContent() {
                            defaultValue=""
                            value={contentText}
                            className={"w-full h-80"}
+                           onChange={(e) => {setContentText(e.target.value)}}
                         />
                      </div>
                      <div className={"flex flex-col gap-4"}>
@@ -205,7 +215,7 @@ export function CompaignContent() {
                   </div>
                   <DialogFooter className={'flex flex-row justify-between'}>
                      <DialogClose asChild>
-                        <Button variant={'outline'}>
+                        <Button variant={'outline'} onClick={() => { setTitleText(""); setContentText("") }}>
                            Close
                         </Button>
                      </DialogClose>

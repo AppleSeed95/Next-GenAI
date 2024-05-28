@@ -40,22 +40,27 @@ class AiEditorService {
         "content": `You are assisting USER in writing professional text. Never use double quotes.`,
       },
       {
+
         "role": USER,
+
         "content": `
-        You have to generate title about "${params.title}" in one sentence and don't write "Title" word
-        You have to generate title in "${params.lang}".
-      `.trim(),
+      
+          Generate a title related to "${params.title}". The title should consist of 4 to 10 impactful words and don't use "Title" word. Ensure the title is in "${params.lang}" language.
+
+          Develop a text discussing "${params.title}". Here's the background information provided by the user: "${params.context}". Compose the text in "${params.lang}" language, and ensure it contains exactly ${params.words} sentences.          
+      
+        `.trim()
+
       },
-      {
-        "role": USER,
-        "content": `
-        You have to generate text about "${params.title}" and don't write "Content" word
-        USER has provided the following text: "${params.context}"
-        You have to write Content with ${params.words} sentences.
-        You have to creat text in "${params.lang}".
-        Your job is to complete the Content.
-      `.trim(),
-      },
+      // {
+
+      //   "role": USER,
+
+      //   "content": `
+      //     Develop a text discussing "${params.title}". Here's the background information provided by the user: "${params.context}". Compose the text in "${params.lang}" language, and ensure it contains exactly ${params.words} sentences.
+      //   `.trim()
+
+      // }
     ];
 
     const GPT_response = await this.client.chat.completions.create({
@@ -66,15 +71,15 @@ class AiEditorService {
       // max_tokens: 50,
       temperature: 0.8,
       // stream: true,
-      top_p: 1,
+      // top_p: 1,
     });
 
     // for await (const chunk of GPT_response) {
     //   console.log(chunk.choices[0]?.delta.content); // this code from the doc runs
     // }
 
-  
-    
+
+    console.log("GPT_Response", GPT_response.choices[0]?.message.content);
     return GPT_response.choices[0]?.message.content;
   }
 
