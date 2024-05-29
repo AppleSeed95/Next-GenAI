@@ -4,11 +4,8 @@ import { Heading } from "@kit/ui/heading"
 import { PageBody } from "@kit/ui/page"
 import { Trans } from "@kit/ui/trans"
 import { HomeLayoutPageHeader } from "~/home/(user)/_components/home-page-header"
-import CompaignCard from "./compaign-card"
-import { GlobalLoader } from "@kit/ui/global-loader"
-
 import { Button } from "@kit/ui/button"
-import { startTransition, useContext, useState } from "react";
+import { useState } from "react";
 import {
    Dialog,
    DialogClose,
@@ -21,11 +18,13 @@ import {
 } from "@kit/ui/dialog"
 import { Label } from "@kit/ui/label"
 import { Textarea } from "@kit/ui/textarea"
-import { Projects } from "../page"
-import { createAITextAction } from "../_lib/server/server-action"
+import { createAIImageAction, createAITextAction, createAIVideoAction } from "../_lib/server/server-action"
+import CompaignImageCard from "./compaign-image-card"
+import CompaignVideoCard from "./compaign-video-card"
+import CompaignTextCard from "./compaign-text-card"
 
 
-export type Blog = {
+export type BlogText = {
    type: string;
    toggle: boolean;
    words: number;
@@ -34,8 +33,22 @@ export type Blog = {
    description?: string;
 }
 
+export type BlogImage = {
+   type: string;
+   toggle: boolean;
+   format: string;
+   amount: number;
+   scale: number,
+   description?: string;
+}
 
-
+export type BlogVideo = {
+   type: string;
+   toggle: boolean;
+   format: string;
+   length: number,
+   description?: string;
+}
 
 export function CompaignContent() {
    const [isOpen, setIsOpen] = useState(true);
@@ -43,31 +56,48 @@ export function CompaignContent() {
    const [contentText, setContentText] = useState<string>("");
    // const context = useContext(ProjectContext);
 
-   const [blogs, setBlogs] = useState<Blog[]>([
-      { type: 'Text', brand: 'Hello', description: 'How are you', lang: 'English', toggle: true, words: 5 },
-      { type: 'Image', brand: 'brand', description: 'aaa', lang: 'English', toggle: false, words: 10 },
-      { type: 'Video', brand: 'brand', description: 'aaa', lang: 'English', toggle: false, words: 10 },
-   ]);
+   const [blogText, setBlogText] = useState<BlogText>(
+      { type: 'Text', brand: 'Hello', description: 'How are you', lang: 'English', toggle: true, words: 5 }
+   );
+   const [blogImage, setBlogImage] = useState<BlogImage>(
+      { type: 'Image', format: 'png', description: 'How are you', amount: 1, toggle: true, scale: 0.8 }
+   );
+   const [blogVideo, setBlogVideo] = useState<BlogVideo>(
+      { type: 'Video', format: 'mp4', description: 'How are you', length: 30, toggle: true }
+   );
 
-   console.log({ blogs })
+
 
    const handleClicked = async () => {
       // console.log(context);
       try {
-         if (blogs && blogs[0]?.toggle && blogs[0].words) {
-            const payload = { title: blogs[0].brand || 'Greeting', description: blogs[0].description || '', lang: blogs[0]?.lang || 'English', words: blogs[0]?.words || 5 }
+         if (blogText?.toggle && blogText.words) {
+            const payloadText = { title: blogText.brand || 'Greeting', description: blogText.description || '', lang: blogText?.lang || 'English', words: blogText?.words || 5 }
+
+            const payloadImage = { format: blogImage.format || 'png', description: blogImage.description || '', amount: blogImage.amount || 1, scale: blogImage.scale || 0.8 }
+
+            const payloadVideo = { format: blogVideo.format || 'mp3', description: blogVideo.description || '', length: blogVideo.length || 30 }
+
             setIsOpen(true);
-            const res = await createAITextAction(payload);
+            const resText = await createAITextAction(payloadText);
+            // if (blogImage.toggle) {
+            //    // const resImage = await createAIImageAction(payloadImage);
+            // }
+            // if (blogVideo.toggle) {
+            //    // const resVideo = await createAIVideoAction(payloadVideo);
+            // }
             setIsOpen(false);
-            if (res) {
-               const responseArray = res.split("\n");
+            if (resText) {
+               const responseArray = resText.split("\n");
                const title = responseArray[0];
                const content = responseArray.slice(1).join("\n");
                setTitleText(title || "No Title");
                setContentText(content || "No Content")
             }
             // setContentText(res || 'Please confirm Options');
-            console.log("Response", { res })
+            console.log("Response", { resText })
+         } else {
+            setContentText("Please confirm options. You have to set toggle true and input number of sentences");
          }
 
       } catch (error: any) {
@@ -80,8 +110,6 @@ export function CompaignContent() {
    const handleSave = async () => {
       setTitleText("");
       setContentText("");
-
-
    }
 
    return (
@@ -93,73 +121,9 @@ export function CompaignContent() {
             />}
          />
          <PageBody className={'flex flex-col gap-8'}>
-            {
-               blogs.map((blog, i) => {
-                  return <CompaignCard key={i} blog={blog} onChange={(data) => { const temp = [...blogs]; temp[i] = data; setBlogs(temp) }} />
-               })
-            }
-            {/* <Card className={'flex flex-row justify-between rounded-none px-7 py-6'}>
-                  <div className={'flex flex-col gap-5'}>
-                     <div className={'flex flex-row gap-6'}>
-                        <Heading level={5} children={'Image'} />
-                        <label className="inline-flex items-center cursor-pointer">
-                           <input type="checkbox" value="" className="sr-only peer" />
-                           <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                        </label>
-                     </div>
-                     <div className={'flex flex-row gap-5 items-center'}>
-                        <Input
-                           type="number"
-                           defaultValue={300}
-                           className={'[-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]'}
-                        />
-                        <Heading level={5} children={'Words'} />
-                     </div>
-                     <SelectDemo />
-                  </div>
-                  <div className={'flex flex-col gap-6'}>
-                     <div className={'flex flex-row gap-6 items-center'}>
-                        <Heading level={5} children={'Logo'} />
-                        <Input placeholder={'Brand Demo'} />
-                     </div>
-                     <div className={'flex flex-row gap-6'}>
-                        <Heading level={5} children={'File'} />
-                        <Input placeholder={'Brand Demo'} />
-                     </div>
-                  </div>
-                  <div>
-                     <Textarea placeholder={'Additional infos for chatbot... like use paragraphs etc.'} className={'h-full w-90'} />
-                  </div>
-               </Card>
-               <Card className={'flex flex-row justify-between rounded-none px-7 py-6'}>
-                  <div className={'flex flex-col gap-5'}>
-                     <div className={'flex flex-row gap-6'}>
-                        <Heading level={5} children={'Video'} />
-                        <label className="inline-flex items-center cursor-pointer">
-                           <input type="checkbox" value="" className="sr-only peer" />
-                           <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                        </label>
-                     </div>
-                     <div className={'flex flex-row gap-5 items-center'}>
-                        <Input
-                           type="number"
-                           defaultValue={300}
-                           className={'[-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]'}
-                        />
-                        <Heading level={5} children={'Words'} />
-                     </div>
-                     <SelectDemo />
-                  </div>
-                  <div className={'flex flex-row gap-6 items-center'}>
-                     <Heading level={5} children={'Brand'} />
-                     <Input placeholder={'Brand Demo'} />
-                  </div>
-                  <div>
-                     <Textarea placeholder={'Additional infos for chatbot... like use paragraphs etc.'} className={'h-full w-full'} />
-                  </div>
-               </Card> */}
-
-
+            <CompaignTextCard blogText={blogText} onChange={(data) => { setBlogText(data) }} />
+            <CompaignImageCard blogImage={blogImage} onChange={(data) => { setBlogImage(data) }} />
+            <CompaignVideoCard blogVideo={blogVideo} onChange={(data) => { setBlogVideo(data) }} />
             <Dialog>
                <DialogTrigger asChild>
                   <div className={'flex justify-end'}>
@@ -180,7 +144,6 @@ export function CompaignContent() {
                         Make changes to your content here. Click save when you're done.
                      </DialogDescription>
                   </DialogHeader>
-                  {/* <GlobalLoader displaySpinner={isOpen} /> */}
                   <div className={"flex flex-col gap-4 py-4"}>
                      <div className={"flex flex-row gap-4 items-center"}>
                         <Label htmlFor="title" className={""}>
@@ -191,7 +154,7 @@ export function CompaignContent() {
                            defaultValue=""
                            value={titleText}
                            className="col-span-1"
-                           onChange={(e) => {setTitleText(e.target.value)}}
+                           onChange={(e) => { setTitleText(e.target.value) }}
                         />
                      </div>
                      <div className={"flex flex-col gap-4"}>
@@ -203,7 +166,7 @@ export function CompaignContent() {
                            defaultValue=""
                            value={contentText}
                            className={"w-full h-80"}
-                           onChange={(e) => {setContentText(e.target.value)}}
+                           onChange={(e) => { setContentText(e.target.value) }}
                         />
                      </div>
                      <div className={"flex flex-col gap-4"}>

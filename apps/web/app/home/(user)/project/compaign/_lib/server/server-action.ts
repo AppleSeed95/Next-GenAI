@@ -5,7 +5,7 @@ import { OpenAIStream, StreamingTextResponse } from 'ai';
 import { enhanceAction } from '@kit/next/actions';
 import { getSupabaseServerActionClient } from '@kit/supabase/server-actions-client';
 
-import { CreateAITextSchema } from '../schema/create-ai.schema';
+import { CreateAIImageSchema, CreateAITextSchema, CreateAIVideoSchema } from '../schema/create-ai.schema';
 import { getLogger } from '@kit/shared/logger';
 import { z } from 'zod';
 import createAiEditorService from './create-ai.service';
@@ -19,7 +19,7 @@ export const createAITextAction = enhanceAction(
    async function (data) {
       const client = getSupabaseServerActionClient();
       try {
-         const response = await createAiEditorService().completeContent({
+         const response = await createAiEditorService().completeTextContent({
             title: data.title,
             context: data.description,
             lang: data.lang,
@@ -38,5 +38,56 @@ export const createAITextAction = enhanceAction(
    },
    {
       schema: CreateAITextSchema,
+   }
+);
+
+export const createAIImageAction = enhanceAction(
+   async function (data) {
+      const client = getSupabaseServerActionClient();
+      try {
+         const response = await createAiEditorService().completeImageContent({
+            format: data.format,
+            context: data.description,
+            scale: data.scale,
+            amount: data.amount,
+         });
+
+         // const stream = OpenAIStream(response);
+         // return new StreamingTextResponse(stream);
+         return response;
+
+      } catch (e) {
+         console.log("Bug: ", e);
+         // return NextResponse.error();
+         return ("Error");
+      }
+   },
+   {
+      schema: CreateAIImageSchema,
+   }
+);
+
+export const createAIVideoAction = enhanceAction(
+   async function (data) {
+      const client = getSupabaseServerActionClient();
+      try {
+         const response = await createAiEditorService().completeVideoContent({
+            format: data.format,
+            context: data.description,
+            length: data.length,
+         });
+
+         // const stream = OpenAIStream(response);
+         // return new StreamingTextResponse(stream);
+         return response;
+
+      } catch (e) {
+         console.log("Bug: ", e);
+         // return NextResponse.error();
+         return ("Error");
+      }
+   },
+   {
+      schema: CreateAIVideoSchema,
    }
 );

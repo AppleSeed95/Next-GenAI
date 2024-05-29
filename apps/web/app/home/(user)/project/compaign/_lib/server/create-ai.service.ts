@@ -32,7 +32,7 @@ class AiEditorService {
    * @param {string} params.context - The context to be used for generating the Content.
    * @return {Promise<object>} A promise that resolves to an object representing the generated Content.
    */
-  async completeContent(params: { context: string, title: string, words: number, lang: string }) {
+  async completeTextContent(params: { context: string, title: string, words: number, lang: string }) {
 
     const prompt = [
       {
@@ -52,15 +52,104 @@ class AiEditorService {
         `.trim()
 
       },
+    ];
+
+    const GPT_response = await this.client.chat.completions.create({
+      // model: DEFAULT_MODEL,
+      model: "gpt-4-turbo",
+      messages: prompt,
+      // baseURL: "https://api.openai.com/v1/assistants",
+      // max_tokens: 50,
+      temperature: 0.8,
+      // stream: true,
+      // top_p: 1,
+    });
+
+    // for await (const chunk of GPT_response) {
+    //   console.log(chunk.choices[0]?.delta.content); // this code from the doc runs
+    // }
+
+
+    console.log("GPT_Response", GPT_response.choices[0]?.message.content);
+    return GPT_response.choices[0]?.message.content;
+  }
+
+  /**
+   * Generates a complete Content based on the provided context.
+   *
+   * @param {object} params - The parameters for generating the complete Content.
+   * @param {string} params.context - The context to be used for generating the Content.
+   * @return {Promise<object>} A promise that resolves to an object representing the generated Content.
+   */
+  async completeImageContent(params: { format: string, context: string, scale: number, amount: number }) {
+
+    const prompt = [
+      {
+        "role": SYSTEM,
+        "content": `You are assisting USER in writing professional text. Never use double quotes.`,
+      },
       // {
 
       //   "role": USER,
 
       //   "content": `
-      //     Develop a text discussing "${params.title}". Here's the background information provided by the user: "${params.context}". Compose the text in "${params.lang}" language, and ensure it contains exactly ${params.words} sentences.
+      
+      //     Generate a title related to "${params.title}". The title should consist of 4 to 10 impactful words and don't use "Title" word. Ensure the title is in "${params.lang}" language.
+
+      //     Develop a text discussing "${params.title}". Here's the background information provided by the user: "${params.context}". Compose the text in "${params.lang}" language, and ensure it contains exactly ${params.words} sentences.          
+      
       //   `.trim()
 
-      // }
+      // },
+    ];
+
+    const GPT_response = await this.client.chat.completions.create({
+      // model: DEFAULT_MODEL,
+      model: "gpt-4-turbo",
+      messages: prompt,
+      // baseURL: "https://api.openai.com/v1/assistants",
+      // max_tokens: 50,
+      temperature: 0.8,
+      // stream: true,
+      // top_p: 1,
+    });
+
+    // for await (const chunk of GPT_response) {
+    //   console.log(chunk.choices[0]?.delta.content); // this code from the doc runs
+    // }
+
+
+    console.log("GPT_Response", GPT_response.choices[0]?.message.content);
+    return GPT_response.choices[0]?.message.content;
+  }
+
+  /**
+   * Generates a complete Content based on the provided context.
+   *
+   * @param {object} params - The parameters for generating the complete Content.
+   * @param {string} params.context - The context to be used for generating the Content.
+   * @return {Promise<object>} A promise that resolves to an object representing the generated Content.
+   */
+  async completeVideoContent(params: { format: string, context: string, length: number }) {
+
+    const prompt = [
+      {
+        "role": SYSTEM,
+        "content": `You are assisting USER in writing professional text. Never use double quotes.`,
+      },
+      // {
+
+      //   "role": USER,
+
+      //   "content": `
+      
+      //     Generate a video related to "${params.title}". The title should consist of 4 to 10 impactful words and don't use "Title" word. Ensure the title is in "${params.lang}" language.
+
+      //     Develop a text discussing "${params.title}". Here's the background information provided by the user: "${params.context}". Compose the text in "${params.lang}" language, and ensure it contains exactly ${params.words} sentences.          
+      
+      //   `.trim()
+
+      // },
     ];
 
     const GPT_response = await this.client.chat.completions.create({
