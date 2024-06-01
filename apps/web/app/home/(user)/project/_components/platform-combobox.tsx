@@ -2,7 +2,6 @@
 
 import * as React from "react"
 
-import { cn } from "@kit/ui/utils"
 import { Button } from "@kit/ui/button"
 import {
   Command,
@@ -17,6 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@kit/ui/popover"
+import { useTranslation } from "react-i18next"
 
 type Platform = {
   value: string
@@ -62,11 +62,18 @@ const platforms: Platform[] = [
    },
 ]
 
-export function ComboboxDemo() {
+type Props = {
+  platform: string,
+  onChange: (platform: string) => void,
+}
+
+
+export function ComboboxDemo(props: Props) {
   const [open, setOpen] = React.useState(false)
   const [selectedPlatform, setSelectedPlatform] = React.useState<Platform | null>(
     null
   )
+  const { t } = useTranslation();
 
   return (
     <div className="flex items-center space-x-4">
@@ -82,7 +89,7 @@ export function ComboboxDemo() {
                 {selectedPlatform.label}
               </>
             ) : (
-              <>Platform</>
+              <>{t('Platform')}</>
             )}
           </Button>
         </PopoverTrigger>
@@ -90,7 +97,7 @@ export function ComboboxDemo() {
           <Command>
             <CommandInput placeholder="Change Platform..." />
             <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandEmpty>{t('No results found.')}</CommandEmpty>
               <CommandGroup>
                 {platforms.map((platform) => (
                   <CommandItem
@@ -101,6 +108,8 @@ export function ComboboxDemo() {
                         platforms.find((priority) => priority.value === value) ||
                         null
                       )
+                      console.log(value)
+                      props.onChange(value)
                       setOpen(false)
                     }}
                   >

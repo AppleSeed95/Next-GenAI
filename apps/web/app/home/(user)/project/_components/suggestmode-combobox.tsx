@@ -1,8 +1,6 @@
 "use client"
 
 import * as React from "react"
-
-import { cn } from "@kit/ui/utils"
 import { Button } from "@kit/ui/button"
 import {
   Command,
@@ -17,17 +15,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@kit/ui/popover"
-// import { ProjectContext } from "../compaign/page"
+import { useTranslation } from "react-i18next"
 
 type Mode = {
   value: string
   label: string
 }
 
+
 const modes: Mode[] = [
   {
-    value: "autopilot",
-    label: "Autopilot",
+    value: 'autopilot',
+    label: 'Autopilot',
   },
   {
     value: "suggestmode",
@@ -47,12 +46,17 @@ const modes: Mode[] = [
   // },
 ]
 
-export function Comboboxsuggest() {
+type Props = {
+  pmode?: string,
+  onChange: (data: string) => void,
+}
+
+export function Comboboxsuggest(props: Props) {
   const [open, setOpen] = React.useState(false)
   const [selectedStatus, setSelectedStatus] = React.useState<Mode | null>(
     null
   )
-  // const context = React.useContext(ProjectContext)
+  const { t } = useTranslation();
 
   return (
     <div className="flex items-center space-x-4">
@@ -68,15 +72,15 @@ export function Comboboxsuggest() {
                 {selectedStatus.label}
               </>
             ) : (
-              <>Set Mode</>
+              <>{t('Set Mode')}</>
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="p-0" side="right" align="start">
+        <PopoverContent className={"p-0"} side="right" align="start">
           <Command>
-            <CommandInput placeholder="Change Mode" />
+            <CommandInput placeholder={t('Change Mode')} />
             <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandEmpty>{t('No results found.')}</CommandEmpty>
               <CommandGroup>
                 {modes.map((mode) => (
                   <CommandItem
@@ -86,12 +90,14 @@ export function Comboboxsuggest() {
                       setSelectedStatus(
                         modes.find((priority) => priority.value === value) ||
                         null
-                        
+
                       )
+                      console.log(value);
+                      props.onChange(value)
                       setOpen(false)
                     }}
                   >
-                    <span>{mode.label}</span>
+                    <span>{t(mode.label)}</span>
                   </CommandItem>
                 ))}
               </CommandGroup>

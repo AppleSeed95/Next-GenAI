@@ -62,7 +62,12 @@ const platforms: Platform[] = [
    },
 ]
 
-export function ComboboxDemoDetail() {
+type Props = {
+  platformurl: string,
+  onChange: (platform: string) => void,
+}
+
+export function ComboboxDemoDetail(props: Props) {
   const [open, setOpen] = React.useState(false)
   const [selectedPlatform, setSelectedPlatform] = React.useState<Platform | null>(
     null
@@ -101,6 +106,8 @@ export function ComboboxDemoDetail() {
                         platforms.find((priority) => priority.value === value) ||
                         null
                       )
+                      console.log(value)
+                      props.onChange(value)
                       setOpen(false)
                     }}
                   >

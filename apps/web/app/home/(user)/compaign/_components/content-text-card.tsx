@@ -8,6 +8,7 @@ import { SelectDemo } from "./language-selector"
 import { Textarea } from "@kit/ui/textarea"
 import { BlogText } from "./compaign-content"
 import { FC } from "react"
+import { useTranslation } from "react-i18next"
 
 type Props = {
    blogText: BlogText;
@@ -15,15 +16,15 @@ type Props = {
 }
 
 const CompaignTextCard: FC<Props> = (props) => {
-
+   const { t } = useTranslation();
    return (
 
-      <Card className={'flex flex-row justify-between rounded-none px-7 py-6'}>
+      <Card className={'flex flex-row justify-between px-7 py-6'}>
          <div className={'flex flex-col gap-5'}>
             <div className={'flex flex-row gap-6'}>
                <Heading level={5} children={props.blogText.type} />
                <label className="inline-flex items-center cursor-pointer">
-                  <input type="checkbox" checked={props.blogText.toggle} className="sr-only peer" onChange={(e: React.ChangeEvent<HTMLInputElement>) => { console.log(!props.blogText.toggle); props.onChange({ ...props.blogText, toggle: !props.blogText.toggle }) }} />
+                  <input type="checkbox" checked={props.blogText.toggle} className="sr-only peer" onChange={(e: React.ChangeEvent<HTMLInputElement>) => { props.onChange({ ...props.blogText, toggle: !props.blogText.toggle }) }} />
                   <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                </label>
             </div>
@@ -44,7 +45,7 @@ const CompaignTextCard: FC<Props> = (props) => {
                onChange={(e: React.ChangeEvent<HTMLInputElement>) => props.onChange({ ...props.blogText, brand: e.target.value })} />
          </div>
          <div className="max-w-[500px] w-full flex-1">
-            <Textarea placeholder={'Additional infos for chatbot... like use paragraphs etc.'} className={'h-full w-full'}
+            <Textarea placeholder={t('Additional infos for chatbot... like use paragraphs etc.')} className={'h-full w-full'}
                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => props.onChange({ ...props.blogText, description: e.target.value })} />
          </div>
       </Card>

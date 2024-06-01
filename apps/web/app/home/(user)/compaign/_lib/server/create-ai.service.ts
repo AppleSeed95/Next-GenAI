@@ -32,7 +32,7 @@ class AiEditorService {
    * @param {string} params.context - The context to be used for generating the Content.
    * @return {Promise<object>} A promise that resolves to an object representing the generated Content.
    */
-  async completeTextContent(params: { context: string, title: string, words: number, lang: string }) {
+  async completeTextContent(params: { context: string, brand: string, words: number, lang: string, maintopic: string, subtopic: string }) {
 
     const prompt = [
       {
@@ -44,10 +44,25 @@ class AiEditorService {
         "role": USER,
 
         "content": `
-      
-          Generate a title related to "${params.title}". The title should consist of 4 to 10 impactful words and don't use "Title" word. Ensure the title is in "${params.lang}" language.
-
-          Develop a text discussing "${params.title}". Here's the background information provided by the user: "${params.context}". Compose the text in "${params.lang}" language, and ensure it contains exactly ${params.words} sentences.          
+          
+        Generate a content title and text based on the provided parameters:
+        - Main Topic: "${params.maintopic}"
+        - Subtopic: "${params.subtopic}"
+        - Brand: "${params.brand}"
+        - Language: "${params.lang}"
+        
+          Requirements:
+          Each sentence should not exceed 20 words.
+          
+           - Compose a title of 4 to 10 impactful words related to the main topic, subtopic, and brand.
+           - Avoid using the word "Title."
+           - Ensure the title is in the specified language, "${params.lang}".
+           - you have to don't use "Title" word
+        
+         
+           - Develop a text discussing the main topic, subtopic, and brand.
+           - Background Information for context: "${- params.context}"
+           - The text should be composed in "${params.lang}" and consist of exactly ${params.words} sentences.         
       
         `.trim()
 
@@ -93,11 +108,11 @@ class AiEditorService {
       //   "role": USER,
 
       //   "content": `
-      
+
       //     Generate a title related to "${params.title}". The title should consist of 4 to 10 impactful words and don't use "Title" word. Ensure the title is in "${params.lang}" language.
 
       //     Develop a text discussing "${params.title}". Here's the background information provided by the user: "${params.context}". Compose the text in "${params.lang}" language, and ensure it contains exactly ${params.words} sentences.          
-      
+
       //   `.trim()
 
       // },
@@ -142,11 +157,11 @@ class AiEditorService {
       //   "role": USER,
 
       //   "content": `
-      
+
       //     Generate a video related to "${params.title}". The title should consist of 4 to 10 impactful words and don't use "Title" word. Ensure the title is in "${params.lang}" language.
 
       //     Develop a text discussing "${params.title}". Here's the background information provided by the user: "${params.context}". Compose the text in "${params.lang}" language, and ensure it contains exactly ${params.words} sentences.          
-      
+
       //   `.trim()
 
       // },

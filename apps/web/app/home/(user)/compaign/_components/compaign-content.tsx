@@ -5,7 +5,7 @@ import { PageBody } from "@kit/ui/page"
 import { Trans } from "@kit/ui/trans"
 import { HomeLayoutPageHeader } from "~/home/(user)/_components/home-page-header"
 import { Button } from "@kit/ui/button"
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import {
    Dialog,
    DialogClose,
@@ -19,13 +19,17 @@ import {
 import { Label } from "@kit/ui/label"
 import { Textarea } from "@kit/ui/textarea"
 import { createAIImageAction, createAITextAction, createAIVideoAction } from "../_lib/server/server-action"
-import CompaignImageCard from "./compaign-image-card"
-import CompaignVideoCard from "./compaign-video-card"
-import CompaignTextCard from "./compaign-text-card"
+import CompaignImageCard from "./content-image-card"
+import CompaignVideoCard from "./content-video-card"
+import CompaignTextCard from "./content-text-card"
+import { useTranslation } from "react-i18next"
+import { ProjectsType } from "./personal-compaign-creator-container"
 
 
 export type BlogText = {
    type: string;
+   maintopic: string;
+   subtopic: string;
    toggle: boolean;
    words: number;
    lang: string;
@@ -35,6 +39,8 @@ export type BlogText = {
 
 export type BlogImage = {
    type: string;
+   maintopic: string;
+   subtopic: string;
    toggle: boolean;
    format: string;
    amount: number;
@@ -44,49 +50,50 @@ export type BlogImage = {
 
 export type BlogVideo = {
    type: string;
+   maintopic: string;
+   subtopic: string;
    toggle: boolean;
    format: string;
    length: number,
    description?: string;
 }
 
-export function CompaignContent() {
+type Props = {
+   projectValue: ProjectsType,
+   onChange: (projectValue: ProjectsType) => void,
+}
+
+export function CompaignContent(props: Props) {
    const [isOpen, setIsOpen] = useState(true);
    const [titleText, setTitleText] = useState<string>("");
    const [contentText, setContentText] = useState<string>("");
+   const { t } = useTranslation();
    // const context = useContext(ProjectContext);
 
    const [blogText, setBlogText] = useState<BlogText>(
-      { type: 'Text', brand: 'Hello', description: 'How are you', lang: 'English', toggle: true, words: 5 }
+      { type: 'Text', maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic, brand: 'Hello', description: 'How are you', lang: 'English', toggle: true, words: 5 }
    );
    const [blogImage, setBlogImage] = useState<BlogImage>(
-      { type: 'Image', format: 'png', description: 'How are you', amount: 1, toggle: true, scale: 0.8 }
+      { type: 'Image', maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic, format: 'png', description: 'How are you', amount: 1, toggle: true, scale: 0.8 }
    );
    const [blogVideo, setBlogVideo] = useState<BlogVideo>(
-      { type: 'Video', format: 'mp4', description: 'How are you', length: 30, toggle: true }
+      { type: 'Video', maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic, format: 'mp4', description: 'How are you', length: 30, toggle: true }
    );
-
-
 
    const handleClicked = async () => {
       // console.log(context);
       try {
          if (blogText?.toggle && blogText.words) {
-            const payloadText = { title: blogText.brand || 'Greeting', description: blogText.description || '', lang: blogText?.lang || 'English', words: blogText?.words || 5 }
+            const payloadText = { brand: blogText.brand || 'Greeting', description: blogText.description || '', lang: blogText?.lang || 'English', words: blogText?.words || 5, maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic }
 
-            const payloadImage = { format: blogImage.format || 'png', description: blogImage.description || '', amount: blogImage.amount || 1, scale: blogImage.scale || 0.8 }
+            const payloadImage = { format: blogImage.format || 'png', description: blogImage.description || '', amount: blogImage.amount || 1, scale: blogImage.scale || 0.8, maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic }
 
-            const payloadVideo = { format: blogVideo.format || 'mp3', description: blogVideo.description || '', length: blogVideo.length || 30 }
+            const payloadVideo = { format: blogVideo.format || 'mp3', description: blogVideo.description || '', length: blogVideo.length || 30, maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic }
 
             setIsOpen(true);
             const resText = await createAITextAction(payloadText);
-            // if (blogImage.toggle) {
-            //    // const resImage = await createAIImageAction(payloadImage);
-            // }
-            // if (blogVideo.toggle) {
-            //    // const resVideo = await createAIVideoAction(payloadVideo);
-            // }
             setIsOpen(false);
+
             if (resText) {
                const responseArray = resText.split("\n");
                const title = responseArray[0];
@@ -100,6 +107,13 @@ export function CompaignContent() {
             setContentText("Please confirm options. You have to set toggle true and input number of sentences");
          }
 
+         // if (blogImage.toggle) {
+         //    // const resImage = await createAIImageAction(payloadImage);
+         // }
+         // if (blogVideo.toggle) {
+         //    // const resVideo = await createAIVideoAction(payloadVideo);
+         // }
+
       } catch (error: any) {
          console.log(error);
          setContentText("You can't create Content. Please check your subscription");
@@ -110,17 +124,15 @@ export function CompaignContent() {
    const handleSave = async () => {
       setTitleText("");
       setContentText("");
+      console.log(props.projectValue)
    }
 
    return (
-
-      <>
-         <HomeLayoutPageHeader
-            title={<Trans i18nKey={'common:content'} />}
-            description={<Trans i18nKey={''}
-            />}
-         />
-         <PageBody className={'flex flex-col gap-8'}>
+      <PageBody className={'flex flex-col gap-9'}>
+         <div>
+            <Heading level={4} className={''} children={'Content'} />
+         </div>
+         <div className={'flex flex-col gap-8'}>
             <CompaignTextCard blogText={blogText} onChange={(data) => { setBlogText(data) }} />
             <CompaignImageCard blogImage={blogImage} onChange={(data) => { setBlogImage(data) }} />
             <CompaignVideoCard blogVideo={blogVideo} onChange={(data) => { setBlogVideo(data) }} />
@@ -132,22 +144,22 @@ export function CompaignContent() {
                            <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5" />
                            </svg>
-                           <Heading level={5} children={'Save Compaign'} />
+                           <Heading level={5} children={t('Save Compaign')} />
                         </div>
                      </Button>
                   </div>
                </DialogTrigger>
                <DialogContent className="sm:max-w-[600px]">
                   <DialogHeader>
-                     <DialogTitle>Display Content</DialogTitle>
+                     <DialogTitle>{t('Display Content')}</DialogTitle>
                      <DialogDescription>
-                        Make changes to your content here. Click save when you're done.
+                        {t("Make changes to your content here. Click save when you're done.")}
                      </DialogDescription>
                   </DialogHeader>
                   <div className={"flex flex-col gap-4 py-4"}>
                      <div className={"flex flex-row gap-4 items-center"}>
                         <Label htmlFor="title" className={""}>
-                           Title
+                           {t('Title')}
                         </Label>
                         <Textarea
                            id="title"
@@ -159,7 +171,7 @@ export function CompaignContent() {
                      </div>
                      <div className={"flex flex-col gap-4"}>
                         <Label htmlFor="description" className={""}>
-                           Description
+                           {t('Description')}
                         </Label>
                         <Textarea
                            id="description"
@@ -171,7 +183,7 @@ export function CompaignContent() {
                      </div>
                      <div className={"flex flex-col gap-4"}>
                         <Label htmlFor="description" className={""}>
-                           Image
+                           {t('Image')}
                         </Label>
 
                      </div>
@@ -179,17 +191,17 @@ export function CompaignContent() {
                   <DialogFooter className={'flex flex-row justify-between'}>
                      <DialogClose asChild>
                         <Button variant={'outline'} onClick={() => { setTitleText(""); setContentText("") }}>
-                           Close
+                           {t('Close')}
                         </Button>
                      </DialogClose>
                      <DialogClose asChild>
-                        <Button variant={'outline'} onClick={handleSave}>Save changes</Button>
+                        <Button variant={'outline'} onClick={handleSave}>{t('Save changes')}</Button>
                      </DialogClose>
                   </DialogFooter>
                </DialogContent>
             </Dialog>
-         </PageBody>
-      </>
+         </div>
+      </PageBody>
    )
 }
 

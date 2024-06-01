@@ -12,6 +12,12 @@ import { useState } from "react";
 import { addDays, format } from "date-fns";
 import { cn } from "@kit/ui/utils";
 import { DateRange } from "@kit/ui/calendar";
+import { useTranslation } from "react-i18next";
+
+// type Props = {
+//   dateRange: DateRangeType,
+//   onChange: (dateRange: DateRangeType) => void,
+// }
 
 export function DatePickerWithRange({
    className,
@@ -20,6 +26,9 @@ export function DatePickerWithRange({
      from: new Date(),
      to: addDays(new Date(), 0),
    })
+
+   const { t } = useTranslation();
+   console.log(date?.from, date?.to);
   
    return (
      <div className={cn("grid gap-2", className)}>
@@ -44,7 +53,7 @@ export function DatePickerWithRange({
                  format(date.from, "LLL dd, y")
                )
              ) : (
-               <span>Pick a date</span>
+               <span>{t('Pick a date')}</span>
              )}
            </Button>
          </PopoverTrigger>

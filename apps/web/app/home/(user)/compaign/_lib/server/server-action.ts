@@ -1,13 +1,10 @@
 'use server';
 
-import { OpenAIStream, StreamingTextResponse } from 'ai';
-
 import { enhanceAction } from '@kit/next/actions';
 import { getSupabaseServerActionClient } from '@kit/supabase/server-actions-client';
 
 import { CreateAIImageSchema, CreateAITextSchema, CreateAIVideoSchema } from '../schema/create-ai.schema';
 import { getLogger } from '@kit/shared/logger';
-import { z } from 'zod';
 import createAiEditorService from './create-ai.service';
 
 
@@ -20,10 +17,12 @@ export const createAITextAction = enhanceAction(
       const client = getSupabaseServerActionClient();
       try {
          const response = await createAiEditorService().completeTextContent({
-            title: data.title,
+            brand: data.brand,
             context: data.description,
             lang: data.lang,
             words: data.words,
+            maintopic: data.maintopic,
+            subtopic: data.subtopic,
          });
 
          // const stream = OpenAIStream(response);

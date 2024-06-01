@@ -1,0 +1,7 @@
+{
+   "compaignTitleLabel": "Add Project",
+   "compaignDescription": "Create your new project.",
+   "content": {
+      "placeholder": "Additional infos for chatbot... like use paragraphs etc."
+   }
+}

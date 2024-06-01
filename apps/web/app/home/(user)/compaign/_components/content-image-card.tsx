@@ -20,7 +20,7 @@ const CompaignImageCard: FC<Props> = (props) => {
 
    return (
 
-      <Card className={'flex flex-row justify-between rounded-none px-7 py-6'}>
+      <Card className={'flex flex-row justify-between px-7 py-6'}>
          <div className={'flex flex-col gap-5'}>
             <div className={'flex flex-row gap-6'}>
                <Heading level={5} children={props.blogImage.type} />

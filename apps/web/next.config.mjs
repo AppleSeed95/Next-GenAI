@@ -92,7 +92,7 @@ function getRemotePatterns() {
         },
         // {
         //   protocol: 'http',
-        //   hostname: 'http://54.93.97.113/',
+        //   hostname: 'http://3.78.194.225/',
         // },
         
       ];

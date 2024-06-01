@@ -2,10 +2,12 @@ import { z } from 'zod';
 
 export const CreateAITextSchema = z
 .object({
-   title: z.string(),
+   brand: z.string(),
    description: z.string(),
    lang: z.string(),
    words: z.number(),
+   maintopic: z.string(),
+   subtopic: z.string(),
 })
 
 export const CreateAIImageSchema = z
@@ -14,6 +16,8 @@ export const CreateAIImageSchema = z
    description: z.string(),
    scale: z.number(),
    amount: z.number(),
+   maintopic: z.string(),
+   subtopic: z.string(),
 })
 
 export const CreateAIVideoSchema = z
@@ -21,4 +25,6 @@ export const CreateAIVideoSchema = z
    format: z.string(),
    description: z.string(),
    length: z.number(),
+   maintopic: z.string(),
+   subtopic: z.string(),
 })

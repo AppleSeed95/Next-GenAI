@@ -67,7 +67,6 @@ export function PasswordSignUpForm({
                   {...field}
                 />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}

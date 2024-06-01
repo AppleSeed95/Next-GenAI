@@ -32,7 +32,7 @@ export function UpdateAccountDetailsForm({
 }) {
   const updateAccountMutation = useUpdateAccountData(userId);
   const { t } = useTranslation('account');
-
+  
   const form = useForm({
     resolver: zodResolver(AccountDetailsSchema),
     defaultValues: {
