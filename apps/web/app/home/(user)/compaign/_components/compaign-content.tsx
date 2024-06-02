@@ -91,18 +91,17 @@ export function CompaignContent(props: Props) {
             const payloadVideo = { format: blogVideo.format || 'mp3', description: blogVideo.description || '', length: blogVideo.length || 30, maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic }
 
             setIsOpen(true);
-            const resText = await createAITextAction(payloadText);
+            // const resText = await createAITextAction(payloadText);
             setIsOpen(false);
 
-            if (resText) {
-               const responseArray = resText.split("\n");
-               const title = responseArray[0];
-               const content = responseArray.slice(1).join("\n");
-               setTitleText(title || "No Title");
-               setContentText(content || "No Content")
-            }
-            // setContentText(res || 'Please confirm Options');
-            console.log("Response", { resText })
+            // if (resText) {
+            //    const responseArray = resText.split("\n");
+            //    const title = responseArray[0];
+            //    const content = responseArray.slice(1).join("\n");
+            //    setTitleText(title || "No Title");
+            //    setContentText(content || "No Content")
+            // }
+            // console.log("Response", { resText })
          } else {
             setContentText("Please confirm options. You have to set toggle true and input number of sentences");
          }

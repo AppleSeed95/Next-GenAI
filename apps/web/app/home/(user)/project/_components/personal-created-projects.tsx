@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import { HeaderPart } from "./header-part";
 import { LastDataProvider } from "./last-project-data";
@@ -18,7 +19,7 @@ export function PersonalCreatedProjectsContainer(
             <HeaderPart />
             <div className={'flex flex-row gap-4'}>
                <Search />
-               <ComboboxDemo />
+               <ComboboxDemo platform={""} onChange={() => {}}/>
                <ComboboxPopover />
                <Comboboxsuggest pmode="" onChange={() => {}}/>
             </div>
