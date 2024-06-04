@@ -18,7 +18,6 @@ import {
 } from "@kit/ui/dialog"
 import { Label } from "@kit/ui/label"
 import { Textarea } from "@kit/ui/textarea"
-import { createAIImageAction, createAITextAction, createAIVideoAction } from "../_lib/server/server-action"
 import CompaignImageCard from "./content-image-card"
 import CompaignVideoCard from "./content-video-card"
 import CompaignTextCard from "./content-text-card"
@@ -123,6 +122,9 @@ export function CompaignContent(props: Props) {
    const handleSave = async () => {
       setTitleText("");
       setContentText("");
+
+      const payload = { project_name: props.projectValue.pName, title: titleText, platform: props.projectValue.platform, topic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic, start_date: props.projectValue.pstartDate, end_date: props.projectValue.pendDate, state: props.projectValue.pstate, mode: props.projectValue.pmode }
+
       console.log(props.projectValue)
    }
 

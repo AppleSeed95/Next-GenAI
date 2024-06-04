@@ -20,7 +20,7 @@ type Props = {
 
 export function CompaignPlatformSelect( props: Props) {
    const { t } = useTranslation();
-   const [platform, setPlatform] = useState<string>('Linkedin');
+   const [platform, setPlatform] = useState<string>(props.projectValue.platform);
    const [platformurl, setPlatformUrl] = useState<string>('');
 
 
@@ -29,8 +29,8 @@ export function CompaignPlatformSelect( props: Props) {
          <div className={'flex flex-col gap-4'}>
             <div className={'flex flex-row gap-6'}>
                <Heading level={5} children={t('Plattform')} />
-               <ComboboxDemo platform={props.projectValue.platform} onChange={(data) => {setPlatform(data)}}/>
-               <ComboboxDemoDetail platformurl={props.projectValue.platformurl} onChange={(data) => {setPlatformUrl(data)}}/>
+               <ComboboxDemo platform={props.projectValue.platform} onChange={(data) => {setPlatform(data), props.onChange({...props.projectValue, platform: data})}}/>
+               <ComboboxDemoDetail platformurl={props.projectValue.platformurl} onChange={(data) => {setPlatformUrl(data), props.onChange({...props.projectValue, platformurl: data})}}/>
             </div>
             <Card className={'px-7 py-6'}>
                <Button variant={'outline'} className={'flex flex-row gap-2'}>

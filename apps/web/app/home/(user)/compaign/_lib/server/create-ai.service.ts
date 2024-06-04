@@ -138,6 +138,10 @@ class AiEditorService {
     return GPT_response.choices[0]?.message.content;
   }
 
+  async saveProject(params: { format: string, context: string, scale: number, amount: number }) {
+    
+  }
+
   /**
    * Generates a complete Content based on the provided context.
    *

@@ -13,6 +13,7 @@
         "name": "next"
       }
     ],
+    // "incremental":true,
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
   "include": [

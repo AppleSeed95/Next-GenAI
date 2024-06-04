@@ -484,6 +484,107 @@ export type Database = {
           },
         ]
       }
+      project_table: {
+        Row: {
+          account_id: string
+          created_at: string
+          created_by: string
+          end_date: string
+          id: number
+          mode: string
+          platform: string
+          project_name: string
+          start_date: string
+          state: boolean
+          subtopic: string | null
+          title: string
+          topic: string
+          updated_by: string
+        }
+        Insert: {
+          account_id: string
+          created_at?: string
+          created_by: string
+          end_date: string
+          id?: number
+          mode: string
+          platform: string
+          project_name: string
+          start_date: string
+          state?: boolean
+          subtopic?: string | null
+          title: string
+          topic: string
+          updated_by: string
+        }
+        Update: {
+          account_id?: string
+          created_at?: string
+          created_by?: string
+          end_date?: string
+          id?: number
+          mode?: string
+          platform?: string
+          project_name?: string
+          start_date?: string
+          state?: boolean
+          subtopic?: string | null
+          title?: string
+          topic?: string
+          updated_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_project_table_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_project_table_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_account_workspace"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_project_table_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_project_table_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_project_table_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_account_workspace"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_project_table_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_project_table_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       role_permissions: {
         Row: {
           id: number

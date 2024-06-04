@@ -25,7 +25,7 @@ export function CompaignHeader( props: Props) {
    //    to: props.projectValue.pendDate,
    // })
 
-   const [pmode, setPmode] = useState<string>('');
+   const [pmode, setPmode] = useState<string>(props.projectValue.pmode);
 
    return (
       <PageBody className={'flex flex-col gap-10'}>
@@ -45,7 +45,7 @@ export function CompaignHeader( props: Props) {
                      <Label children={t('ProjectName')} />
                      <Input placeholder={t('ProjectName')} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {props.onChange({...props.projectValue, pName: e.target.value})}} />
                   </div>
-                  <Comboboxsuggest pmode={props.projectValue.pmode} onChange={(data: string) => {setPmode(data)}}/>
+                  <Comboboxsuggest pmode={props.projectValue.pmode} onChange={(data: string) => {setPmode(data), props.onChange({...props.projectValue, pmode: data}), console.log(pmode)}}/>
                </div>
                <div className={'flex flex-row gap-5 '}>
                   <div className={'flex  gap-2 items-center flex-1'}>

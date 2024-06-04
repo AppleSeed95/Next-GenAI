@@ -6,6 +6,7 @@ import { getSupabaseServerActionClient } from '@kit/supabase/server-actions-clie
 import { CreateAIImageSchema, CreateAITextSchema, CreateAIVideoSchema } from '../schema/create-ai.schema';
 import { getLogger } from '@kit/shared/logger';
 import createAiEditorService from './create-ai.service';
+import { SaveProject } from '../schema/save-project.schema';
 
 
 /**
@@ -88,5 +89,32 @@ export const createAIVideoAction = enhanceAction(
    },
    {
       schema: CreateAIVideoSchema,
+   }
+);
+
+/**
+ * @name saveProject
+ * @description Creates a AI for a personal account.
+ */
+export const saveProject = enhanceAction(
+   async function (data) {
+      const client = getSupabaseServerActionClient();
+      try {
+         // const response = await createAiEditorService().saveProject({
+         console.log(client)
+         // });
+
+         // const stream = OpenAIStream(response);
+         // return new StreamingTextResponse(stream);
+         // return response;
+
+      } catch (e) {
+         console.log("Bug: ", e);
+         // return NextResponse.error();
+         return ("Error");
+      }
+   },
+   {
+      schema: SaveProject,
    }
 );
