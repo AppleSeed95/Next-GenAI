@@ -6,14 +6,7 @@ import { Button } from "@kit/ui/button";
 import { Heading } from "@kit/ui/heading";
 import { FacebookIcon, TicketCheckIcon, YoutubeIcon } from "lucide-react";
 import { Input } from "@kit/ui/input";
-import {
-   Card,
-   CardContent,
-   CardDescription,
-   CardFooter,
-   CardHeader,
-   CardTitle,
-} from "@kit/ui/card";
+
 import {
    Tabs,
    TabsContent,

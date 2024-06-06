@@ -104,10 +104,6 @@ export const saveProject = enhanceAction(
          console.log(client)
          // });
 
-         // const stream = OpenAIStream(response);
-         // return new StreamingTextResponse(stream);
-         // return response;
-
       } catch (e) {
          console.log("Bug: ", e);
          // return NextResponse.error();

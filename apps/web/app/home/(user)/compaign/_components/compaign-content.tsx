@@ -23,6 +23,8 @@ import CompaignVideoCard from "./content-video-card"
 import CompaignTextCard from "./content-text-card"
 import { useTranslation } from "react-i18next"
 import { ProjectsType } from "./personal-compaign-creator-container"
+import { saveProject } from "../_lib/server/server-action"
+import { useSupabase } from "@kit/supabase/hooks/use-supabase"
 
 
 export type BlogText = {
@@ -67,6 +69,7 @@ export function CompaignContent(props: Props) {
    const [titleText, setTitleText] = useState<string>("");
    const [contentText, setContentText] = useState<string>("");
    const { t } = useTranslation();
+   const client = useSupabase();
    // const context = useContext(ProjectContext);
 
    const [blogText, setBlogText] = useState<BlogText>(
@@ -122,8 +125,11 @@ export function CompaignContent(props: Props) {
    const handleSave = async () => {
       setTitleText("");
       setContentText("");
+      const account_id = client.auth;
+      console.log(account_id);
+      // const payload = { project_name: props.projectValue.pName, title: titleText, platform: props.projectValue.platform, topic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic, start_date: props.projectValue.pstartDate, end_date: props.projectValue.pendDate, state: props.projectValue.pstate, mode: props.projectValue.pmode }
 
-      const payload = { project_name: props.projectValue.pName, title: titleText, platform: props.projectValue.platform, topic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic, start_date: props.projectValue.pstartDate, end_date: props.projectValue.pendDate, state: props.projectValue.pstate, mode: props.projectValue.pmode }
+      // const res =  await saveProject(payload);
 
       console.log(props.projectValue)
    }
