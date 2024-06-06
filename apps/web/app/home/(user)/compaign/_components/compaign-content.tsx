@@ -23,8 +23,9 @@ import CompaignVideoCard from "./content-video-card"
 import CompaignTextCard from "./content-text-card"
 import { useTranslation } from "react-i18next"
 import { ProjectsType } from "./personal-compaign-creator-container"
-import { saveProject } from "../_lib/server/server-action"
+import { createAITextAction, saveProject } from "../_lib/server/server-action"
 import { useSupabase } from "@kit/supabase/hooks/use-supabase"
+import { requireUser } from "@kit/supabase/require-user"
 
 
 export type BlogText = {
@@ -70,6 +71,7 @@ export function CompaignContent(props: Props) {
    const [contentText, setContentText] = useState<string>("");
    const { t } = useTranslation();
    const client = useSupabase();
+   const auth = requireUser(client);
    // const context = useContext(ProjectContext);
 
    const [blogText, setBlogText] = useState<BlogText>(
@@ -93,17 +95,17 @@ export function CompaignContent(props: Props) {
             const payloadVideo = { format: blogVideo.format || 'mp3', description: blogVideo.description || '', length: blogVideo.length || 30, maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic }
 
             setIsOpen(true);
-            // const resText = await createAITextAction(payloadText);
+            const resText = await createAITextAction(payloadText);
             setIsOpen(false);
 
-            // if (resText) {
-            //    const responseArray = resText.split("\n");
-            //    const title = responseArray[0];
-            //    const content = responseArray.slice(1).join("\n");
-            //    setTitleText(title || "No Title");
-            //    setContentText(content || "No Content")
-            // }
-            // console.log("Response", { resText })
+            if (resText) {
+               const responseArray = resText.split("\n");
+               const title = responseArray[0];
+               const content = responseArray.slice(1).join("\n");
+               setTitleText(title || "No Title");
+               setContentText(content || "No Content")
+            }
+            console.log("Response", { resText })
          } else {
             setContentText("Please confirm options. You have to set toggle true and input number of sentences");
          }
@@ -125,13 +127,17 @@ export function CompaignContent(props: Props) {
    const handleSave = async () => {
       setTitleText("");
       setContentText("");
-      const account_id = client.auth;
+      const account_id = (await auth).data?.id
       console.log(account_id);
-      // const payload = { project_name: props.projectValue.pName, title: titleText, platform: props.projectValue.platform, topic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic, start_date: props.projectValue.pstartDate, end_date: props.projectValue.pendDate, state: props.projectValue.pstate, mode: props.projectValue.pmode }
 
-      // const res =  await saveProject(payload);
+      // if ((await auth).data) {
+      //    const payload = { project_name: props.projectValue.pName, account_id: account_id || '', title: titleText, platform: props.projectValue.platform, topic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic, start_date: props.projectValue.pstartDate, end_date: props.projectValue.pendDate, state: props.projectValue.pstate, mode: props.projectValue.pmode, created_by: account_id || '', updated_by: '', }
+         
+      //    const res = await saveProject(payload);
+      // }
 
-      console.log(props.projectValue)
+
+      // console.log(props.projectValue)
    }
 
    return (

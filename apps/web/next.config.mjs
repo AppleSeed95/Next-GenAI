@@ -31,6 +31,11 @@ const config = {
   images: {
     remotePatterns: getRemotePatterns(),
   },
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   experimental: {
     mdxRs: true,
     instrumentationHook: true,

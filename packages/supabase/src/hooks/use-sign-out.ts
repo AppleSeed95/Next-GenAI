@@ -6,8 +6,8 @@ export function useSignOut() {
   const client = useSupabase();
 
   return useMutation({
-    mutationFn: async () => {
-      await client.auth.signOut();
+    mutationFn: () => {
+      return client.auth.signOut();
     },
   });
 }

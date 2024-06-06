@@ -132,13 +132,6 @@ export class LemonSqueezyWebhookHandlerService
         );
       }
 
-      case 'subscription_payment_success': {
-        return this.handleInvoicePaid(
-          event as SubscriptionWebhook,
-          params.onInvoicePaid,
-        );
-      }
-
       default: {
         const logger = await getLogger();
 
@@ -287,18 +280,6 @@ export class LemonSqueezyWebhookHandlerService
     );
   }
 
-  private handleInvoicePaid(
-    subscription: SubscriptionWebhook,
-    onInvoicePaidCallback: (
-      subscription: UpsertSubscriptionParams,
-    ) => Promise<unknown>,
-  ) {
-    return this.handleSubscriptionCreatedEvent(
-      subscription,
-      onInvoicePaidCallback,
-    );
-  }
-
   private handleSubscriptionDeletedEvent(
     subscription: SubscriptionWebhook,
     onSubscriptionDeletedCallback: (subscriptionId: string) => Promise<unknown>,
@@ -331,7 +312,13 @@ export class LemonSqueezyWebhookHandlerService
     trialStartsAt: number | null;
     trialEndsAt: number | null;
   }): UpsertSubscriptionParams {
-    const active = params.status === 'active' || params.status === 'trialing';
+    const canceledAtPeriodEnd =
+      params.status === 'cancelled' && params.cancelAtPeriodEnd;
+
+    const active =
+      params.status === 'active' ||
+      params.status === 'trialing' ||
+      canceledAtPeriodEnd;
 
     const lineItems = params.lineItems.map((item) => {
       const quantity = item.quantity ?? 1;
@@ -345,7 +332,7 @@ export class LemonSqueezyWebhookHandlerService
         product_id: item.product,
         variant_id: item.variant,
         price_amount: item.priceAmount,
-        type: getLineItemTypeById(this.config, item.id),
+        type: getLineItemTypeById(this.config, item.variant),
       };
     });
 

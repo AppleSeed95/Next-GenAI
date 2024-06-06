@@ -14,6 +14,7 @@ import {
    TabsTrigger,
 } from "@kit/ui/tabs";
 import { InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
+import { Icons } from "../_components/icons";
 
 
 const buttonData = [
@@ -47,7 +48,7 @@ function PersonalProject() {
                      </TabsList>
                      <TabsContent value="facebook">
                         <div className="flex flex-row gap-12">
-                           <FacebookIcon className={'h-6 w-6'} />
+                           <Icons.social.facebook />
                            <div className={'fex flex-col gap-6'}>
                               <Button variant={'outline'} children={'Connect via Facebook login'} />
                               <Heading level={5} children={'Autopilot-Release- Mail for checking the content '} className={'pt-12'} />
@@ -67,7 +68,7 @@ function PersonalProject() {
                      </TabsContent>
                      <TabsContent value="instagram">
                         <div className="flex flex-row gap-12">
-                           <InstagramLogoIcon className={'h-6 w-6'} />
+                           <Icons.social.instagram />
                            <div className={'fex flex-col gap-6'}>
                               <Button variant={'outline'} children={'Connect via Instagram login'} />
                               <Heading level={5} children={'Autopilot-Release- Mail for checking the content '} className={'pt-12'} />
@@ -87,7 +88,7 @@ function PersonalProject() {
                      </TabsContent>
                      <TabsContent value="linkedin">
                         <div className="flex flex-row gap-12">
-                           <LinkedInLogoIcon className={'h-6 w-6'} />
+                           <Icons.social.linkedin />
                            <div className={'fex flex-col gap-6'}>
                               <Button variant={'outline'} children={'Connect via Linkedin login'} />
                               <Heading level={5} children={'Autopilot-Release- Mail for checking the content '} className={'pt-12'} />
@@ -107,7 +108,7 @@ function PersonalProject() {
                      </TabsContent>
                      <TabsContent value="youtube">
                         <div className="flex flex-row gap-12">
-                           <YoutubeIcon className={'h-6 w-6'} />
+                           <Icons.social.youtube />
                            <div className={'fex flex-col gap-6'}>
                               <Button variant={'outline'} children={'Connect via Youtube login'} />
                               <Heading level={5} children={'Autopilot-Release- Mail for checking the content '} className={'pt-12'} />
@@ -127,7 +128,7 @@ function PersonalProject() {
                      </TabsContent>
                      <TabsContent value="tiktok">
                         <div className="flex flex-row gap-12">
-                           <TicketCheckIcon className={'h-6 w-6'} />
+                           <Icons.social.tiktok />
                            <div className={'fex flex-col gap-6'}>
                               <Button variant={'outline'} children={'Connect via TikTok login'} />
                               <Heading level={5} children={'Autopilot-Release- Mail for checking the content '} className={'pt-12'} />
@@ -147,12 +148,18 @@ function PersonalProject() {
                      </TabsContent>
                      <TabsContent value="wordpress">
                         <div className={'flex flex-col gap-5'}>
-                           
+                           <Icons.social.wordpress />
                         </div>
                      </TabsContent>
                      <TabsContent value="contao">
+                        <div className={'flex flex-col gap-5'}>
+                           <Icons.social.contao />
+                        </div>
                      </TabsContent>
                      <TabsContent value="joomla">
+                        <div className={'flex flex-col gap-5'}>
+                           <Icons.social.joomla />
+                        </div>
                      </TabsContent>
                   </Tabs>
                </div>

@@ -52,6 +52,11 @@ export function CompaignPlatformSelect(props: Props) {
       { value: 'fun', label: 'Fun' },
       { value: 'knowledge', label: 'Knowledge' },
       { value: 'product_placement', label: 'Product placement' },
+      // { value: 'interesting_facts', label: 'Interesting facts' },
+      // { value: 'entertainment_fun_humor', label: 'Entertainment/Fun/Humor' },
+      // { value: 'guide', label: 'Guide' },
+      // { value: 'entertainment', label: 'Entertainment' },
+      // { value: 'advisor', label: 'Advisor' },
    ];
 
    const handleSelectionChange = (selectedOptions: Option[]) => {

@@ -7,6 +7,8 @@ import { CreateAIImageSchema, CreateAITextSchema, CreateAIVideoSchema } from '..
 import { getLogger } from '@kit/shared/logger';
 import createAiEditorService from './create-ai.service';
 import { SaveProject } from '../schema/save-project.schema';
+import { requireUser } from '@kit/supabase/require-user';
+import { redirect } from 'next/dist/server/api-utils';
 
 
 /**
@@ -98,17 +100,18 @@ export const createAIVideoAction = enhanceAction(
  */
 export const saveProject = enhanceAction(
    async function (data) {
-      const client = getSupabaseServerActionClient();
-      try {
-         // const response = await createAiEditorService().saveProject({
-         console.log(client)
-         // });
+      const client = getSupabaseServerActionClient()
+      const logger = await getLogger();
+      const auth = requireUser(client);
+      const saveData = SaveProject.parse(data);
 
-      } catch (e) {
-         console.log("Bug: ", e);
-         // return NextResponse.error();
-         return ("Error");
+      if (!(await auth).data) {
+         // redirect(auth.redirectTo)
       }
+
+      logger.info(saveData, `Adding task...`);
+
+      
    },
    {
       schema: SaveProject,

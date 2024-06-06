@@ -11,8 +11,6 @@ const PROVIDER = getMonitoringProvider();
  */
 export async function registerMonitoringInstrumentation() {
   if (!PROVIDER) {
-    console.info(`No instrumentation provider specified. Skipping...`);
-
     return;
   }
 
@@ -26,11 +24,9 @@ export async function registerMonitoringInstrumentation() {
     }
 
     case InstrumentationProvider.Sentry: {
-      const { registerInstrumentation } = await import(
-        '@kit/sentry/instrumentation'
-      );
+      // Sentry v8 automatically sets this up
 
-      return registerInstrumentation();
+      return;
     }
 
     default:

@@ -2,10 +2,9 @@
 
 import { useEffect } from 'react';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import { useSupabase } from './use-supabase';
-import { useRevalidateUserSession, useUserSession } from './use-user-session';
 
 /**
  * @name PRIVATE_PATH_PREFIXES
@@ -27,10 +26,6 @@ export function useAuthChangeListener({
 }) {
   const client = useSupabase();
   const pathName = usePathname();
-  const router = useRouter();
-  const revalidateUserSession = useRevalidateUserSession();
-  const session = useUserSession();
-  const accessToken = session.data?.access_token;
 
   useEffect(() => {
     // keep this running for the whole session unless the component was unmounted
@@ -47,30 +42,15 @@ export function useAuthChangeListener({
         return;
       }
 
+      // revalidate user session when user signs in or out
       if (event === 'SIGNED_OUT') {
-        return router.refresh();
-      }
-
-      if (accessToken) {
-        const isOutOfSync = user?.access_token !== accessToken;
-
-        if (isOutOfSync) {
-          void router.refresh();
-        }
+        window.location.reload();
       }
     });
 
     // destroy listener on un-mounts
     return () => listener.data.subscription.unsubscribe();
-  }, [
-    client.auth,
-    router,
-    accessToken,
-    revalidateUserSession,
-    pathName,
-    appHomePath,
-    privatePathPrefixes,
-  ]);
+  }, [client.auth, pathName, appHomePath, privatePathPrefixes]);
 }
 
 /**

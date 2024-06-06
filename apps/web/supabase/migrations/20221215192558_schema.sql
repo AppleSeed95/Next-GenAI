@@ -1889,7 +1889,7 @@ select
   on table public.order_items to authenticated,
   service_role;
 
-grant insert on table public.order_items to service_role;
+grant insert, update, delete on table public.order_items to service_role;
 
 -- Indexes on the order_items table
 create index ix_order_items_order_id on public.order_items (order_id);
@@ -2733,7 +2733,7 @@ create policy account_image on storage.objects for all using (
 with
   check (
     bucket_id = 'account_image'
-    and kit.get_storage_filename_as_uuid (name) = (
+    and (kit.get_storage_filename_as_uuid (name) = (
       select
         auth.uid ()
     )
@@ -2741,5 +2741,5 @@ with
       auth.uid (),
       kit.get_storage_filename_as_uuid (name),
       'settings.manage'
-    )
+    ))
   );
