@@ -6,18 +6,18 @@ const AppConfigSchema = z
   .object({
     name: z
       .string({
-        description: `This is the name of your SaaS. Ex. "Makerkit"`,
+        description: `This is the name of your App. Ex. "Wumdoo"`,
         required_error: `Please provide the variable NEXT_PUBLIC_PRODUCT_NAME`,
       })
       .min(1),
     title: z
       .string({
-        description: `This is the default title tag of your SaaS.`,
+        description: `This is the default title tag of your App.`,
         required_error: `Please provide the variable NEXT_PUBLIC_SITE_TITLE`,
       })
       .min(1),
     description: z.string({
-      description: `This is the default description of your SaaS.`,
+      description: `This is the default description of your App.`,
       required_error: `Please provide the variable NEXT_PUBLIC_SITE_DESCRIPTION`,
     }),
     url: z
@@ -29,7 +29,7 @@ const AppConfigSchema = z
       }),
     locale: z
       .string({
-        description: `This is the default locale of your SaaS.`,
+        description: `This is the default locale of your App.`,
         required_error: `Please provide the variable NEXT_PUBLIC_DEFAULT_LOCALE`,
       })
       .default('en'),

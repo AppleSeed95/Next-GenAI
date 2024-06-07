@@ -55,7 +55,7 @@ function Home() {
                     'p-0 text-center font-sans text-2xl font-normal text-muted-foreground'
                   }
                 >
-                  <span>Create and launch a SaaS in days, not months</span>
+                  <span>Create and launch a content in seconds, not minutes</span>
                 </Heading>
 
                 <Heading

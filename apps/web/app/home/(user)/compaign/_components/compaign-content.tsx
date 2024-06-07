@@ -2,8 +2,6 @@
 
 import { Heading } from "@kit/ui/heading"
 import { PageBody } from "@kit/ui/page"
-import { Trans } from "@kit/ui/trans"
-import { HomeLayoutPageHeader } from "~/home/(user)/_components/home-page-header"
 import { Button } from "@kit/ui/button"
 import { useState, useTransition } from "react";
 import {
