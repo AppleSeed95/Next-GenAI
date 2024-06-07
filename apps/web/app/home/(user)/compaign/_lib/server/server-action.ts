@@ -8,7 +8,6 @@ import { getLogger } from '@kit/shared/logger';
 import createAiEditorService from './create-ai.service';
 import { SaveProject } from '../schema/save-project.schema';
 import { requireUser } from '@kit/supabase/require-user';
-import { redirect } from 'next/dist/server/api-utils';
 
 
 /**
@@ -104,12 +103,6 @@ export const saveProject = enhanceAction(
       const logger = await getLogger();
       const auth = requireUser(client);
       const saveData = SaveProject.parse(data);
-
-      if (!(await auth).data) {
-         // redirect(auth.redirectTo)
-      }
-
-      logger.info(saveData, `Adding task...`);
 
       
    },
