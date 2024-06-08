@@ -499,7 +499,7 @@ export type Database = {
           subtopic: string | null
           title: string
           topic: string
-          updated_by: string
+          updated_by: string | null
         }
         Insert: {
           account_id: string
@@ -515,7 +515,7 @@ export type Database = {
           subtopic?: string | null
           title: string
           topic: string
-          updated_by: string
+          updated_by?: string | null
         }
         Update: {
           account_id?: string
@@ -531,7 +531,7 @@ export type Database = {
           subtopic?: string | null
           title?: string
           topic?: string
-          updated_by?: string
+          updated_by?: string | null
         }
         Relationships: [
           {

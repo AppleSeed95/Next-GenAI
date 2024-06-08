@@ -1,119 +1,102 @@
-"use client"
+import { use } from 'react';
 
-import * as React from "react"
-import {
-   ArrowUpCircle,
-   CheckCircle2,
-   Circle,
-   HelpCircle,
-   LucideIcon,
-   XCircle,
-   Facebook,
-   Youtube,
-   Instagram,
-   CopyIcon,
-   DeleteIcon,
-   Edit2Icon,
-   X,
-} from "lucide-react"
+import { ServerDataLoader } from '@makerkit/data-loader-supabase-nextjs';
 
-import { cn } from "@kit/ui/utils"
-import { Button } from "@kit/ui/button"
-import {
-   Card,
-   CardContent,
-   CardDescription,
-   CardFooter,
-   CardHeader,
-   CardTitle,
-} from "@kit/ui/card";
-import { Heading } from "@kit/ui/heading"
-import { DatePickerWithRange } from "./datePicker"
+import { getSupabaseServerComponentClient } from '@kit/supabase/server-component-client';
+import { Button } from '@kit/ui/button';
+import { Heading } from '@kit/ui/heading';
+import { If } from '@kit/ui/if';
+import { Input } from '@kit/ui/input';
+import { PageBody } from '@kit/ui/page';
+import { Trans } from '@kit/ui/trans';
 
+import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
+import { withI18n } from '~/lib/i18n/with-i18n';
 
-type LastData = {
-   icon: LucideIcon
-   title: string
-   topic: string
-   subtopics: string
+import { loadUserWorkspace } from '../../_lib/server/load-user-workspace';
+import { CardProject } from './card-saved-project';
+
+interface SearchParams {
+  page?: string;
+  query?: string;
 }
 
-const lastData: LastData[] = [
-   {
-      icon: Instagram,
-      title: "Instagram",
-      topic: "AI future",
-      subtopics: "What is the future of AI",
-   },
-   {
-      icon: Youtube,
-      title: "Youtube",
-      topic: "AI future",
-      subtopics: "What is the future of AI",
-   },
-   {
-      icon: Facebook,
-      title: "Facebook",
-      topic: "AI future",
-      subtopics: "What is the future of AI",
-   },
-   {
-      icon: HelpCircle,
-      title: "Facebook",
-      topic: "AI future",
-      subtopics: "What is the future of AI",
-   },
+export const generateMetadata = async () => {
+  const i18n = await createI18nServerInstance();
+  const title = i18n.t('account:homePage');
 
-]
+  return {
+    title,
+  };
+};
 
-export function LastDataProvider() {
-   const [open, setOpen] = React.useState(false)
-   const [selectedStatus, setSelectedStatus] = React.useState<LastData | null>(
-      null
-   )
+function UserProjectPage(props: { searchParams: SearchParams }) {
+  const client = getSupabaseServerComponentClient();
+  const { user } = use(loadUserWorkspace());
 
-   return (
-      <div className="flex flex-col items-center space-x-4 w-full gap-8">
-         {lastData.map((item) => (
-            <Card className="px-7 py-6">
-               <div className={'flex flex-row gap-6 items-center'}>
-                  <div>
-                     <item.icon />
+  const page = parseInt(props.searchParams.page ?? '1', 10);
+  const query = props.searchParams.query ?? '';
+
+  return (
+    <>
+      <PageBody className={'space-y-4'}>
+        <div className={'flex items-center justify-between'}>
+
+          <div className={'flex items-center space-x-2'}>
+            <form className={'w-full'}>
+              <Input
+                name={'query'}
+                defaultValue={query}
+                className={'w-full lg:w-[18rem]'}
+                placeholder={'Search project'}
+              />
+            </form>
+          </div>
+        </div>
+
+        <ServerDataLoader
+          client={client}
+          table={'project_table'}
+          page={page}
+          where={{
+            account_id: {
+              eq: user.id,
+            },
+            title: {
+              textSearch: query ? `%${query}%` : undefined,
+            },
+          }}
+        >
+          {(props) => {
+            return (
+              <div className={'flex flex-col space-y-8'}>
+                <If condition={props.count === 0 && query}>
+                  <div className={'flex flex-col space-y-2.5'}>
+                    <p>
+                      <Trans
+                        i18nKey={'No Found'}
+                        values={{ query }}
+                      />
+                    </p>
+
+                    <form>
+                      <input type="hidden" name={'query'} value={''} />
+
+                      <Button variant={'outline'} size={'sm'}>
+                        <Trans i18nKey={'clearSearch'} />
+                      </Button>
+                    </form>
                   </div>
-                  <div className={'flex flex-col gap-8'}>
-                     <Heading level={3} children={item.title} />
-                     <Button variant={'outline'} children={'History - show last'} />
-                  </div>
-                  <div className={'flex flex-col gap-6'}>
-                     <Heading level={4} children={item.topic} />
-                     <Heading level={6} children={item.subtopics} />
-                  </div>
-                  <div className={'flex flex-col gap-8'}>
-                     <div className={'flex flex-row justify-between'}>
-                        <DatePickerWithRange />
-                        <label className="inline-flex items-center cursor-pointer">
-                           <input type="checkbox" value="" className="sr-only peer" />
-                           <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                        </label>
-                     </div>
-                     <div className={'flex flex-row gap-5'}>
-                        <Button variant={'outline'} className={'flex flex-row gap-4'}>
-                           <CopyIcon />
-                           <Heading level={5} children={'Copy'} />
-                        </Button>
-                        <Button variant={'outline'} className={'flex flex-row gap-4'}>
-                           <X />
-                           <Heading level={5} children={'Delete'} />
-                        </Button>
-                        <Button variant={'outline'} className={'flex flex-row gap-4'}>
-                           <Edit2Icon />
-                           <Heading level={5} children={'Edit'} />
-                        </Button>
-                     </div>
-                  </div>
-               </div>
-            </Card>
-         ))}
-      </div>
-   )
+                </If>
+
+                <CardProject projects={props.data} />
+              </div>
+            );
+          }}
+        </ServerDataLoader>
+      </PageBody>
+    </>
+  );
 }
+
+export default withI18n(UserProjectPage);

@@ -21,7 +21,7 @@ import CompaignVideoCard from "./content-video-card"
 import CompaignTextCard from "./content-text-card"
 import { useTranslation } from "react-i18next"
 import { ProjectsType } from "./personal-compaign-creator-container"
-import { createAITextAction, saveProject } from "../_lib/server/server-action"
+import { createAITextAction, saveProjectAction } from "../_lib/server/server-action"
 import { useSupabase } from "@kit/supabase/hooks/use-supabase"
 import { requireUser } from "@kit/supabase/require-user"
 
@@ -128,11 +128,26 @@ export function CompaignContent(props: Props) {
       const account_id = (await auth).data?.id
       console.log(account_id);
 
-      // if ((await auth).data) {
-      //    const payload = { project_name: props.projectValue.pName, account_id: account_id || '', title: titleText, platform: props.projectValue.platform, topic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic, start_date: props.projectValue.pstartDate, end_date: props.projectValue.pendDate, state: props.projectValue.pstate, mode: props.projectValue.pmode, created_by: account_id || '', updated_by: '', }
+      if ((await auth).data) {
+         const payload = { 
+            project_name: props.projectValue.pName, 
+            account_id: account_id || '', 
+            title: titleText,
+            platform: props.projectValue.platform, 
+            topic: props.projectValue.pMainTopic, 
+            subtopic: props.projectValue.pSubTopic, 
+            start_date: props.projectValue.pstartDate.toISOString(), 
+            end_date: props.projectValue.pendDate.toISOString(), 
+            state: props.projectValue.pstate, 
+            mode: props.projectValue.pmode, 
+            created_by: account_id || '', 
+            updated_by: null, 
+         }
          
-      //    const res = await saveProject(payload);
-      // }
+         console.log(payload);
+
+         const res = await saveProjectAction(payload);
+      }
 
 
       // console.log(props.projectValue)

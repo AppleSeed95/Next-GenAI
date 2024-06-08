@@ -6,8 +6,11 @@ import { getSupabaseServerActionClient } from '@kit/supabase/server-actions-clie
 import { CreateAIImageSchema, CreateAITextSchema, CreateAIVideoSchema } from '../schema/create-ai.schema';
 import { getLogger } from '@kit/shared/logger';
 import createAiEditorService from './create-ai.service';
-import { SaveProject } from '../schema/save-project.schema';
+import { SaveProjectSchema } from '../schema/save-project.schema';
 import { requireUser } from '@kit/supabase/require-user';
+import { z } from 'zod';
+import { redirect } from 'next/dist/server/api-utils';
+import { revalidatePath } from 'next/cache';
 
 
 /**
@@ -97,16 +100,71 @@ export const createAIVideoAction = enhanceAction(
  * @name saveProject
  * @description Creates a AI for a personal account.
  */
-export const saveProject = enhanceAction(
-   async function (data) {
-      const client = getSupabaseServerActionClient()
-      const logger = await getLogger();
-      const auth = requireUser(client);
-      const saveData = SaveProject.parse(data);
+// export async function saveProjectAction(params: z.infer<typeof SaveProjectSchema>) {
+//    'use server';
 
-      
+//    const saveData = SaveProjectSchema.parse(params);
+
+//    const logger = await getLogger();
+//    const client = getSupabaseServerActionClient();
+//    const auth = await requireUser(client);
+
+//    if (!auth.data) {
+//       //   redirect(auth.redirectTo);
+//    }
+
+//    logger.info(saveData, `Adding saveData...`);
+
+//    const { data, error } = await client.from('project_table')
+//       .insert({ ...saveData, account_id: params.account_id });
+
+//    if (error) {
+//       logger.error(error, `Failed to save Content`);
+//       console.log(error);
+
+//       throw new Error(`Failed to save Content`);
+//    }
+
+//    logger.info(data, `Content saved successfully`);
+
+//    revalidatePath('/home', 'page');
+
+//    return null;
+// }
+
+
+export const saveProjectAction = enhanceAction(
+   async function (params) {
+      const saveData = SaveProjectSchema.parse(params);
+
+      const logger = await getLogger();
+      const client = getSupabaseServerActionClient();
+      const auth = await requireUser(client);
+
+      if (!auth.data) {
+         //   redirect(auth.redirectTo);
+      }
+
+      logger.info(params, `Adding saveData...` );
+      logger.info(saveData, `Adding saveData...`);
+
+      const { data, error } = await client.from('project_table')
+         .insert({ ...saveData, account_id: params.account_id });
+
+      if (error) {
+         logger.error(error, `Failed to save Content`);
+         console.log(error);
+
+         throw new Error(`Failed to save Content`);
+      }
+
+      revalidatePath('/home/project', 'page');
+      logger.info(data, `Content saved successfully`);
+
+
+      return null;
    },
    {
-      schema: SaveProject,
+      schema: SaveProjectSchema,
    }
 );

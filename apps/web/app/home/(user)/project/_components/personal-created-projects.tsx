@@ -1,30 +1,22 @@
 'use client'
-import React from "react";
-import { HeaderPart } from "./header-part";
-import { LastDataProvider } from "./last-project-data";
+import React, { useState } from "react";
 import { ComboboxDemo } from "./platform-combobox";
-import { Search } from "./searchDialog";
 import { ComboboxPopover } from "./state-combobox";
 import { Comboboxsuggest } from "./suggestmode-combobox";
 
 
-export function PersonalCreatedProjectsContainer(
-   props: React.PropsWithChildren<{
-      userId:string;
-   }>
-) {
+export function SearchOptions() {
+
+   const [platform, setPlatform] = useState('');
+   const [state, setState] = useState(true);
+   const [mode, setMode] = useState('');
+
    return (
-      <div className={'flex flex-col gap-4'}>
-         <div className={'flex flex-col gap-4'}>
-            <HeaderPart />
-            <div className={'flex flex-row gap-4'}>
-               <Search />
-               <ComboboxDemo platform={""} onChange={() => {}}/>
-               <ComboboxPopover />
-               <Comboboxsuggest pmode="" onChange={() => {}}/>
-            </div>
-         </div>
-         <LastDataProvider />
+
+      <div className={'flex flex-row gap-4'}>
+         <ComboboxDemo platform={""} onChange={() => {}} />
+         <ComboboxPopover />
+         <Comboboxsuggest pmode="" onChange={() => {}} />
       </div>
    )
 }
