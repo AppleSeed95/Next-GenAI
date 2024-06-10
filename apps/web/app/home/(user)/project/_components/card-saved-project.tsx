@@ -18,6 +18,7 @@ import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogT
 import { useTranslation } from "react-i18next";
 import { Label } from "@kit/ui/label";
 import { Textarea } from "@kit/ui/textarea";
+import { deleteUserProject } from "../_lib/server/delete-user-project";
 
 export type ProjectType = {
    account_id: string;
@@ -46,6 +47,12 @@ export function CardProject(props: PropsType) {
    const savedProject = props.projects;
    const { t } = useTranslation();
 
+   const handleDelete = async (id: number) => {
+      const payload = {id: id};
+      const res = await deleteUserProject(payload);
+      console.log(res);
+   }
+
    return (
       <div className="flex flex-col items-center space-x-4 w-full gap-8">
          {savedProject.map((item) => (
@@ -73,7 +80,7 @@ export function CardProject(props: PropsType) {
                      <div className={'flex flex-row justify-between'}>
                         <Dialog>
                            <DialogTrigger asChild>
-                              <Button variant={'outline'} className={'flex flex-row gap-4'}>
+                              <Button variant={'destructive'} className={'flex flex-row gap-2'}>
                                  <X />
                                  <Heading level={5} children={'Delete'} />
                               </Button>
@@ -89,7 +96,7 @@ export function CardProject(props: PropsType) {
                                     </Button>
                                  </DialogClose>
                                  <DialogClose asChild>
-                                    <Button variant={'outline'} >{t('Delete')}</Button>
+                                    <Button variant={'destructive'} onClick={(e) => handleDelete(item.id)}>{t('Delete')}</Button>
                                  </DialogClose>
                               </DialogFooter>
                            </DialogContent>
@@ -115,7 +122,7 @@ export function CardProject(props: PropsType) {
                                        defaultValue=""
                                        value={item.project_name}
                                        className="col-span-1"
-                                       onChange={(e) => {  }}
+                                       onChange={(e) => { }}
                                     />
                                  </div>
                                  <div className={"flex flex-row gap-4 items-center"}>
@@ -127,7 +134,7 @@ export function CardProject(props: PropsType) {
                                        defaultValue=""
                                        value={item.topic}
                                        className="col-span-1"
-                                       onChange={(e) => {  }}
+                                       onChange={(e) => { }}
                                     />
                                  </div>
                               </div>
