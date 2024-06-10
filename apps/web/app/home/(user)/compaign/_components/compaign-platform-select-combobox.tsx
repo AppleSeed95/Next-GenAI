@@ -25,10 +25,6 @@ type Platform = {
 
 const platforms: Platform[] = [
    {
-      value: "all",
-      label: "All",
-   },
-   {
       value: "facebook",
       label: "Facebook",
    },
@@ -67,7 +63,7 @@ type Props = {
 }
 
 
-export function ComboboxDemo(props: Props) {
+export function PlatformSelectForCompaingnComboboxDemo(props: Props) {
   const [open, setOpen] = React.useState(false)
   const [selectedPlatform, setSelectedPlatform] = React.useState<Platform | null>(
     null
@@ -107,6 +103,7 @@ export function ComboboxDemo(props: Props) {
                         platforms.find((priority) => priority.value === value) ||
                         null
                       )
+                      console.log(value)
                       props.onChange(value)
                       setOpen(false)
                     }}

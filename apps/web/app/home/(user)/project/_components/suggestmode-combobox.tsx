@@ -25,6 +25,10 @@ type Mode = {
 
 const modes: Mode[] = [
   {
+    value: "all",
+    label: "All",
+  },
+  {
     value: 'autopilot',
     label: 'Autopilot',
   },
@@ -47,7 +51,6 @@ const modes: Mode[] = [
 ]
 
 type Props = {
-  pmode?: string,
   onChange: (data: string) => void,
 }
 
@@ -92,7 +95,6 @@ export function Comboboxsuggest(props: Props) {
                         null
 
                       )
-                      console.log(value);
                       props.onChange(value)
                       setOpen(false)
                     }}

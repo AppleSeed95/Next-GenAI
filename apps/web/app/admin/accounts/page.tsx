@@ -76,7 +76,6 @@ function getFilters(params: SearchParams) {
       like: `%${params.query}%`,
     };
   }
-
   return filters;
 }
 

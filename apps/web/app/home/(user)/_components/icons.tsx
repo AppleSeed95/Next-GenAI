@@ -2,6 +2,20 @@ import { LucideProps } from "lucide-react";
 
 
 export const Icons = {
+   warning: (props: LucideProps) => (
+      <span className="[&>svg]:h-16 [&>svg]:w-16 ">
+         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512">
+            <polygon  points="0,477.703 256,477.703 289.391,256 256,34.297 " fill="#FFA418"/>
+            <polygon  points="256,34.297 256,477.703 512,477.703 " fill="#FF8A1E"/>
+            <g>
+               <circle cx="256" cy="405.359" r="16.696" fill="#324860"/>
+               <rect x="239.304" y="177.185" width="33.391" height="178.087" fill="#324860"/>
+            </g>
+         </svg>
+      </span>
+
+   ),
    social: {
       facebook: (props: LucideProps) => (
          <span className="[&>svg]:h-16 [&>svg]:w-16 [&>svg]:fill-[#1877f2]">
@@ -74,7 +88,7 @@ export const Icons = {
    }
 };
 
-export function IconSelect({platform}: {platform: string}) {
+export function IconSelect({ platform }: { platform: string }) {
 
    switch (platform) {
       case 'facebook':
@@ -94,6 +108,6 @@ export function IconSelect({platform}: {platform: string}) {
       case 'joomla':
          return <Icons.social.joomla />
       default:
-         return <Icons.social.facebook />
+         return <Icons.warning />
    }
 };

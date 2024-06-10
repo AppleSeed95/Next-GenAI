@@ -4,7 +4,6 @@ import { ServerDataLoader } from '@makerkit/data-loader-supabase-nextjs';
 
 import { getSupabaseServerComponentClient } from '@kit/supabase/server-component-client';
 import { Button } from '@kit/ui/button';
-import { Heading } from '@kit/ui/heading';
 import { If } from '@kit/ui/if';
 import { Input } from '@kit/ui/input';
 import { PageBody } from '@kit/ui/page';
@@ -17,16 +16,17 @@ import { loadUserWorkspace } from '../_lib/server/load-user-workspace';
 import { CardProject } from './_components/card-saved-project';
 import { HeaderPart } from './_components/header-part';
 import { SearchOptions } from './_components/personal-created-projects';
-import { ComboboxDemo } from './_components/platform-combobox';
-import { ComboboxPopover } from './_components/state-combobox';
-import { Comboboxsuggest } from './_components/suggestmode-combobox';
 
-interface SearchParams {
+export type PlatformType = 'all' | 'linkedin' | 'facebook' | 'youtube' | 'instagram' | 'tiktok' | 'wordpress' | 'contao' | 'joomla';
+export type ModeType = 'all' | 'autopilot' | 'suggestmode';
+export type StateType = 'all' | 'active' | 'inactive';
+
+export interface SearchParams {
    page?: string;
    query?: string;
-   platform?: 'all' | 'linkedin' | 'facebook' | 'youtube' | 'instagram' | 'tiktok' | 'wordpress' | 'contao' | 'joomla';
-   state?: 'true' | 'false';
-   mode?: 'all' | 'autopilot' | 'suggestmode';
+   platform?: PlatformType;
+   state?: string;
+   mode?: ModeType;
 }
 
 export const generateMetadata = async () => {
@@ -45,7 +45,8 @@ function UserProjectPage(props: { searchParams: SearchParams }) {
 
    const page = parseInt(props.searchParams.page ?? '1', 10);
    const query = props.searchParams.query ?? '';
-   const filters = getFilters({...props.searchParams, })
+   const filters = getFilters({...props.searchParams, });
+   console.log(filters);
 
    return (
       <>
@@ -62,7 +63,7 @@ function UserProjectPage(props: { searchParams: SearchParams }) {
                      />
                   </form>
                </div>
-               <SearchOptions />
+               <SearchOptions searchParams={props.searchParams}/>
             </div>
 
             <ServerDataLoader
@@ -124,7 +125,7 @@ function getFilters(params: SearchParams) {
 
    if (params.platform && params.platform !== 'all') {
       let selectedPlatform = '';
-      switch (params.platform) {
+      switch (params.platform.toLowerCase()) {
          case 'facebook':
             selectedPlatform = 'facebook'
             break;
@@ -153,14 +154,14 @@ function getFilters(params: SearchParams) {
             break;
       }
 
-      filters.is_platform = {
-         eq: params.platform == selectedPlatform,
+      filters.platform = {
+         eq: selectedPlatform,
       };
    }
 
    if (params.mode && params.mode !== 'all') {
       let selectedMode
-      switch (params.mode) {
+      switch (params.mode.toLowerCase()) {
          case 'autopilot':
             selectedMode = 'autopilot'
             break;
@@ -171,10 +172,27 @@ function getFilters(params: SearchParams) {
             break;
       }
 
-      filters.is_mode = {
-         eq: params.mode == selectedMode,
+      filters.mode = {
+         eq: selectedMode,
       };
    }
 
+   if (params.state && params.state !== 'all') {
+      let selectedState
+      switch (params.state) {
+         case 'active':
+            selectedState = true
+            break;
+         case 'inactive':
+            selectedState = false
+            break;
+         default:
+            break;
+      }
+
+      filters.state = {
+         eq: selectedState,
+      };
+   }
    return filters;
 }

@@ -13,17 +13,17 @@ import {
 import { cn } from "@kit/ui/utils"
 import { Button } from "@kit/ui/button"
 import {
-   Command,
-   CommandEmpty,
-   CommandGroup,
-   CommandInput,
-   CommandItem,
-   CommandList,
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
 } from "@kit/ui/command"
 import {
-   Popover,
-   PopoverContent,
-   PopoverTrigger,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from "@kit/ui/popover"
 
 type State = {
@@ -33,21 +33,26 @@ type State = {
 }
 
 const states: State[] = [
-//   {
-//     value: "backlog",
-//     label: "Backlog",
-//     icon: HelpCircle,
-//   },
-//   {
-//     value: "todo",
-//     label: "Todo",
-//     icon: Circle,
-//   },
-//   {
-//     value: "in progress",
-//     label: "In Progress",
-//     icon: ArrowUpCircle,
-//   },
+  //   {
+  //     value: "backlog",
+  //     label: "Backlog",
+  //     icon: HelpCircle,
+  //   },
+  //   {
+  //     value: "todo",
+  //     label: "Todo",
+  //     icon: Circle,
+  //   },
+  //   {
+  //     value: "in progress",
+  //     label: "In Progress",
+  //     icon: ArrowUpCircle,
+  //   },
+  {
+    value: "all",
+    label: "All",
+    icon: Circle,
+  },
   {
     value: "active",
     label: "Active",
@@ -60,7 +65,12 @@ const states: State[] = [
   },
 ]
 
-export function ComboboxPopover() {
+type Props = {
+  pstate?: string,
+  onChange: (data: string) => void,
+}
+
+export function ComboboxPopover(props: Props) {
   const [open, setOpen] = React.useState(false)
   const [selectedState, setSelectedState] = React.useState<State | null>(
     null
@@ -98,8 +108,9 @@ export function ComboboxPopover() {
                     onSelect={(value) => {
                       setSelectedState(
                         states.find((priority) => priority.value === value) ||
-                          null
+                        null
                       )
+                      props.onChange(value)
                       setOpen(false)
                     }}
                   >

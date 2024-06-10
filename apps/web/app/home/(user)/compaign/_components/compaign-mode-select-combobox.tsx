@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-
 import { Button } from "@kit/ui/button"
 import {
   Command,
@@ -18,58 +17,42 @@ import {
 } from "@kit/ui/popover"
 import { useTranslation } from "react-i18next"
 
-type Platform = {
+type Mode = {
   value: string
   label: string
 }
 
-const platforms: Platform[] = [
-   {
-      value: "all",
-      label: "All",
-   },
-   {
-      value: "facebook",
-      label: "Facebook",
-   },
-   {
-      value: "instagram",
-      label: "Instagram",
-   },
-   {
-      value: "linkedin",
-      label: "LinkedIn",
-   },
-   {
-      value: "youtube",
-      label: "YouTube",
-   },
-   {
-      value: "tiktok",
-      label: "TikTok",
-   },
-   {
-      value: "wordpress",
-      label: "Wordpress",
-   },
-   {
-      value: "contao",
-      label: "Contao",
-   },
-   {
-      value: "joomla",
-      label: "Joomla",
-   },
+
+const modes: Mode[] = [
+  {
+    value: 'autopilot',
+    label: 'Autopilot',
+  },
+  {
+    value: "suggestmode",
+    label: "Suggestmode",
+  },
+  // {
+  //   value: "in progress",
+  //   label: "In Progress",
+  // },
+  // {
+  //   value: "done",
+  //   label: "Done",
+  // },
+  // {
+  //   value: "canceled",
+  //   label: "Canceled",
+  // },
 ]
 
 type Props = {
-  onChange: (platform: string) => void,
+  onChange: (data: string) => void,
 }
 
-
-export function ComboboxDemo(props: Props) {
+export function ModeSelectComboDemo(props: Props) {
   const [open, setOpen] = React.useState(false)
-  const [selectedPlatform, setSelectedPlatform] = React.useState<Platform | null>(
+  const [selectedStatus, setSelectedStatus] = React.useState<Mode | null>(
     null
   )
   const { t } = useTranslation();
@@ -83,35 +66,37 @@ export function ComboboxDemo(props: Props) {
             size="sm"
             className="w-[150px] justify-start"
           >
-            {selectedPlatform ? (
+            {selectedStatus ? (
               <>
-                {selectedPlatform.label}
+                {selectedStatus.label}
               </>
             ) : (
-              <>{t('Platform')}</>
+              <>{t('Set Mode')}</>
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="p-0" side="right" align="start">
+        <PopoverContent className={"p-0"} side="right" align="start">
           <Command>
-            <CommandInput placeholder="Change Platform..." />
+            <CommandInput placeholder={t('Change Mode')} />
             <CommandList>
               <CommandEmpty>{t('No results found.')}</CommandEmpty>
               <CommandGroup>
-                {platforms.map((platform) => (
+                {modes.map((mode) => (
                   <CommandItem
-                    key={platform.value}
-                    value={platform.value}
+                    key={mode.value}
+                    value={mode.value}
                     onSelect={(value) => {
-                      setSelectedPlatform(
-                        platforms.find((priority) => priority.value === value) ||
+                      setSelectedStatus(
+                        modes.find((priority) => priority.value === value) ||
                         null
+
                       )
+                      console.log(value);
                       props.onChange(value)
                       setOpen(false)
                     }}
                   >
-                    <span>{platform.label}</span>
+                    <span>{t(mode.label)}</span>
                   </CommandItem>
                 ))}
               </CommandGroup>

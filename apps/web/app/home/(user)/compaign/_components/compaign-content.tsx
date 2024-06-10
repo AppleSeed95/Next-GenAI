@@ -93,17 +93,25 @@ export function CompaignContent(props: Props) {
             const payloadVideo = { format: blogVideo.format || 'mp3', description: blogVideo.description || '', length: blogVideo.length || 30, maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic }
 
             setIsOpen(true);
-            const resText = await createAITextAction(payloadText);
+            if (props.projectValue.platform) {
+               const resText = await createAITextAction(payloadText);
+               if (resText) {
+                  const responseArray = resText.split("\n");
+                  const title = responseArray[0];
+                  const content = responseArray.slice(1).join("\n");
+                  setTitleText(title || "No Title");
+                  setContentText(content || "No Content")
+
+                  console.log("Response", { resText });
+               } else {
+                  setContentText("Please confirm your Network Connection");
+               }
+            } else {
+               setContentText("Select Platform");
+            }
             setIsOpen(false);
 
-            if (resText) {
-               const responseArray = resText.split("\n");
-               const title = responseArray[0];
-               const content = responseArray.slice(1).join("\n");
-               setTitleText(title || "No Title");
-               setContentText(content || "No Content")
-            }
-            console.log("Response", { resText })
+
          } else {
             setContentText("Please confirm options. You have to set toggle true and input number of sentences");
          }
@@ -129,21 +137,21 @@ export function CompaignContent(props: Props) {
       console.log(account_id);
 
       if ((await auth).data) {
-         const payload = { 
-            project_name: props.projectValue.pName, 
-            account_id: account_id || '', 
-            title: titleText,
-            platform: props.projectValue.platform, 
-            topic: props.projectValue.pMainTopic, 
-            subtopic: props.projectValue.pSubTopic, 
-            start_date: props.projectValue.pstartDate.toISOString(), 
-            end_date: props.projectValue.pendDate.toISOString(), 
-            state: props.projectValue.pstate, 
-            mode: props.projectValue.pmode, 
-            created_by: account_id || '', 
-            updated_by: null, 
+         const payload = {
+            project_name: props.projectValue.pName.toLowerCase(),
+            account_id: account_id?.toLowerCase() || '',
+            title: titleText.toLowerCase(),
+            platform: props.projectValue.platform.toLowerCase(),
+            topic: props.projectValue.pMainTopic.toLowerCase(),
+            subtopic: props.projectValue.pSubTopic.toLowerCase(),
+            start_date: props.projectValue.pstartDate.toISOString(),
+            end_date: props.projectValue.pendDate.toISOString(),
+            state: props.projectValue.pstate,
+            mode: props.projectValue.pmode.toLowerCase(),
+            created_by: account_id || '',
+            updated_by: null,
          }
-         
+
          console.log(payload);
 
          const res = await saveProjectAction(payload);
