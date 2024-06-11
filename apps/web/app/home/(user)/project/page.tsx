@@ -52,8 +52,8 @@ function UserProjectPage(props: { searchParams: SearchParams }) {
       <>
          <PageBody className={'space-y-4'}>
             <HeaderPart />
-            <div className={'flex items-center justify-between'}>
-               <div className={'flex items-center space-x-2'}>
+            <div className={'flex items-center flex-col gap-2 sm:flex-row sm:justify-between'}>
+               <div className={'flex  space-x-2'}>
                   <form className={'w-full'}>
                      <Input
                         name={'query'}

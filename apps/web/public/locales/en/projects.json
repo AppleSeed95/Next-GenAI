@@ -1,3 +1,6 @@
 {
-   "addProjectLabel": "Add Project"
+   "addProjectLabel": "Add Project",
+   "deleteSuccess": "Success!",
+   "deleteSuccessDescription": "Your Project has been deleted successfully",
+   "editSuccessDescription": "Your Project has been updated successfully"
 }

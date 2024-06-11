@@ -12,16 +12,28 @@ import { IconSelect, Icons } from "../../_components/icons";
 import { DateTimePicker } from "./date-time-picker/date-time-picker";
 import { SelectDuration } from "./compaign-platform-duration-select";
 import { Input } from "@kit/ui/input";
-import { RadioGroup, RadioGroupItem } from "@kit/ui/radio-group";
 import MultiSelectableCheckboxGroup, { Option } from "./compaign-platform-multi-type-select";
 import { PlatformSelectForCompaingnComboboxDemo } from "./compaign-platform-select-combobox";
+import { ContentTopicSuggestion } from "./compaign-topic-suggestion-select";
 
 type Props = {
    projectValue: ProjectsType,
    onChange: (projectValue: ProjectsType) => void,
 }
 
-
+const options = [
+   { value: 'tips_and_tricks', label: 'Tipps & Tricks', state: false },
+   { value: 'howto', label: 'Howto', state: false },
+   { value: 'tutorial', label: 'Tutorial', state: false },
+   { value: 'fun', label: 'Fun', state: false },
+   { value: 'knowledge', label: 'Knowledge', state: false },
+   { value: 'product_placement', label: 'Product placement', state: false },
+   { value: 'interesting_facts', label: 'Interesting facts', state: false },
+   { value: 'entertainment_fun_humor', label: 'Entertainment/Fun/Humor', state: false },
+   { value: 'guide', label: 'Guide', state: false },
+   { value: 'entertainment', label: 'Entertainment', state: false },
+   { value: 'advisor', label: 'Advisor', state: false },
+];
 
 
 export function CompaignPlatformSelect(props: Props) {
@@ -29,7 +41,8 @@ export function CompaignPlatformSelect(props: Props) {
    const [platform, setPlatform] = useState<string>(props.projectValue.platform);
    const [platformurl, setPlatformUrl] = useState<string>('');
    const [index, setIndex] = useState([0]);
-   const [message, setMessage] = useState('')
+   const [message, setMessage] = useState('');
+   const [selectedOptions, setSelectedOptions] = useState<Option[]>(options)
 
    const handleAdd = () => {
       if (index.length < 3) {
@@ -44,36 +57,17 @@ export function CompaignPlatformSelect(props: Props) {
       setMessage('');
    }
 
-   const options = [
-      { value: 'tips_and_tricks', label: 'Tipps & Tricks' },
-      { value: 'howto', label: 'Howto' },
-      { value: 'tutorial', label: 'Tutorial' },
-      { value: 'fun', label: 'Fun' },
-      { value: 'knowledge', label: 'Knowledge' },
-      { value: 'product_placement', label: 'Product placement' },
-      { value: 'interesting_facts', label: 'Interesting facts' },
-      { value: 'entertainment_fun_humor', label: 'Entertainment/Fun/Humor' },
-      { value: 'guide', label: 'Guide' },
-      { value: 'entertainment', label: 'Entertainment' },
-      { value: 'advisor', label: 'Advisor' },
-   ];
-   
-
-   const handleSelectionChange = (selectedOptions: Option[]) => {
-      selectedOptions.map((option) => {
-         console.log(option);
-      })
-   }
-
    return (
       <PageBody>
          <div className={'flex flex-col gap-4'}>
-            <div className={'flex flex-row gap-6'}>
-               <Heading level={5} children={t('Plattform')} />
-               <PlatformSelectForCompaingnComboboxDemo onChange={(data) => { setPlatform(data), props.onChange({ ...props.projectValue, platform: data }) }} />
-               <ComboboxDemoDetail platformurl={props.projectValue.platformurl} onChange={(data) => { setPlatformUrl(data), props.onChange({ ...props.projectValue, platformurl: data }) }} />
+            <div className={'flex flex-col sm:flex-row justify-between'}>
+               <Heading level={5} children={t('Platform')} />
+               <div className={'flex flex-row justify-between sm:gap-4'}>
+                  <PlatformSelectForCompaingnComboboxDemo onChange={(data) => { setPlatform(data), props.onChange({ ...props.projectValue, platform: data }) }} />
+                  <ComboboxDemoDetail platformurl={props.projectValue.platformurl} onChange={(data) => { setPlatformUrl(data), props.onChange({ ...props.projectValue, platformurl: data }) }} />
+               </div>
             </div>
-            <Card className={'flex flex-row px-7 py-6 justify-between items-center'}>
+            <Card className={'flex flex-col gap-4 sm:flex-row px-7 py-6 justify-center sm:justify-between items-center'}>
                <div className={''}>
                   <IconSelect platform={props.projectValue.platform as string} />
                </div>
@@ -105,14 +99,9 @@ export function CompaignPlatformSelect(props: Props) {
                <div className={'flex flex-col gap-4'}>
                   <MultiSelectableCheckboxGroup
                      options={options}
-                     onSelectionChange={handleSelectionChange}
+                     onChange={(data) => { setSelectedOptions(data) }}
                   />
-                  {/* <Button variant={'outline'} className={'flex flex-row gap-2'} >
-                     <svg className={'w-6 h-6 text-gray-800 dark:text-white'} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5" />
-                     </svg>
-                     <Heading level={5} children={t('Add more type')} />
-                  </Button> */}
+                  <ContentTopicSuggestion selectedOptions={selectedOptions} isAuto={props.projectValue.pmode} onChange={() => { setSelectedOptions([]) }} />
                </div>
             </Card>
          </div>

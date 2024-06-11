@@ -53,7 +53,7 @@ export function SearchOptions(props: Props) {
 
       <div >
          <Form {...form}>
-            <form className={'flex flex-row gap-4'}
+            <form className={'flex flex-col gap-2 display-end sm:flex-row gap-4'}
                onSubmit={form.handleSubmit((data) => onSubmit(data))}
             >
                <ComboboxDemo

@@ -9,35 +9,49 @@ import { Edit2Icon, X } from "lucide-react"
 import { Label } from "@kit/ui/label"
 import { Textarea } from "@kit/ui/textarea"
 import { ProjectType } from "./card-saved-project"
-import { useTranslation } from "react-i18next"
+import { Trans, useTranslation } from "react-i18next"
 import { deleteUserProject, editUserProject } from "../_lib/server/server-action-user-project"
 import React, { useState } from "react"
+import { Alert, AlertDescription, AlertTitle } from "@kit/ui/alert"
+import { usePathname, useRouter } from "next/navigation"
 
 type SaveOneProjectType = {
     saveValue: ProjectType
 }
 
 export function SaveOneProject(saveValue: SaveOneProjectType) {
-    const { t } = useTranslation();
+    const router = useRouter();
+    const pathName = usePathname();
+    const url = `${pathName}`;
+
+    const { t } = useTranslation(`projects`);
     const [editedProjectName, setEditedProjectName] = useState(saveValue.saveValue.project_name);
     const [editedTopic, setEditedTopic] = useState(saveValue.saveValue.topic);
+    const [resultMessage, setResultMessage] = useState('');
 
 
     const handleDelete = async (id: number) => {
         const payload = { id: id };
         const res = await deleteUserProject(payload);
+        setResultMessage(t('deleteSuccessDescription'));
+        router.push(url);
+
     }
 
     const handleEdit = async (id: number) => {
         const payload = { id: id, projectName: editedProjectName, topic: editedTopic };
         const res = await editUserProject(payload);
+        setResultMessage(t('editSuccessDescription'));
+        console.log(url);
+        router.push(url);
+        console.log(resultMessage);
     }
 
 
     return (
         <Card className="px-7 py-6">
-            <div className={'flex flex-row gap-6 items-center'}>
-                <div>
+            <div className={'flex flex-col sm:flex-row gap-6 items-center'}>
+                <div className="display-center">
                     <IconSelect platform={saveValue.saveValue.platform} />
                 </div>
                 <div className={'flex flex-col gap-8'}>
@@ -135,4 +149,18 @@ export function SaveOneProject(saveValue: SaveOneProjectType) {
             </div>
         </Card>
     )
+}
+
+function SuccessAlert() {
+    return (
+        <Alert variant={'success'}>
+            <AlertTitle>
+                <Trans i18nKey={'projects:deleteSuccess'} />
+            </AlertTitle>
+
+            <AlertDescription>
+                <Trans i18nKey={'projects:contactSuccessDescription'} />
+            </AlertDescription>
+        </Alert>
+    );
 }

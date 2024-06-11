@@ -71,7 +71,7 @@ export function PlatformSelectForCompaingnComboboxDemo(props: Props) {
   const { t } = useTranslation();
 
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex w-full sm:items-center space-x-4">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button

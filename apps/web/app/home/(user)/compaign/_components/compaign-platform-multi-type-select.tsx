@@ -4,31 +4,18 @@ import React, { useState } from 'react';
 export type Option = {
    value: string,
    label: string,
+   state: boolean,
 }
 
 export type MultiOption = {
    options: Option[],
-   onSelectionChange: (options: Option[]) => void,
+   onChange: (options: Option[]) => void,
 }
 const MultiSelectableCheckboxGroup = (props: MultiOption) => {
-   const [selectedOptions, setSelectedOptions] = useState<Option[]>(
-      [{ value: 'tips_and_tricks', label: 'Tipps & Tricks' }]
-   );
    const option1 = props.options.slice(0, 5);
    const option2 = props.options.slice(5);
-
-   const handleCheckboxChange = (event: number) => {
-      //  const { value, checked } = ;
-
-      //  if (checked) {
-      //    setSelectedOptions(value);
-      //  } else {
-      //    setSelectedOptions(selectedOptions.filter((option) => option !== value));
-      //  }
-
-      // Call the provided callback with the updated selected options
-      props.onSelectionChange(selectedOptions);
-   };
+   const [isSelected, setIsSelected] = useState(false);
+   console.log(props.options);
 
    return (
       <div className='flex flex-row gap-3'>
