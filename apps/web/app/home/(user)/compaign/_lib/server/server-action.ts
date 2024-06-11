@@ -11,6 +11,7 @@ import { requireUser } from '@kit/supabase/require-user';
 import { z } from 'zod';
 import { redirect } from 'next/dist/server/api-utils';
 import { revalidatePath } from 'next/cache';
+import { SuggestTopicIdeaSchema } from '../schema/suggest-topic-ideas';
 
 
 /**
@@ -166,5 +167,29 @@ export const saveProjectAction = enhanceAction(
    },
    {
       schema: SaveProjectSchema,
+   }
+);
+
+export const createSuggestTopic = enhanceAction(
+   async function (data) {
+      const client = getSupabaseServerActionClient();
+      try {
+         const response = await createAiEditorService().completeSuggestTopics({
+            topic: data.topic,
+            contentType: data.contentType,
+         });
+
+         // const stream = OpenAIStream(response);
+         // return new StreamingTextResponse(stream);
+         return response;
+
+      } catch (e) {
+         console.log("Bug: ", e);
+         // return NextResponse.error();
+         return ("Error");
+      }
+   },
+   {
+      schema: SuggestTopicIdeaSchema
    }
 );

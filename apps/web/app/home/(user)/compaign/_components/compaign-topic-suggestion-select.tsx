@@ -7,23 +7,70 @@ import { Textarea } from "@kit/ui/textarea";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Option } from "./compaign-platform-multi-type-select";
+import { createSuggestTopic } from "../_lib/server/server-action";
+import { Input } from "@kit/ui/input";
+
 
 type PropsType = {
     selectedOptions: Option[],
+    topic: string,
     isAuto: string,
     onChange: () => void
 }
 
 
+
 export function ContentTopicSuggestion(props: PropsType) {
     const { t } = useTranslation();
-    const [selectedTopic, setSelectedTopic] = useState('');
-    const [ topicsSuggestion, setTopicsSuggestion ] = useState('');
+    const [selectedTopic, setSelectedTopic] = useState('No found Idea');
+    const [topicsSuggestion, setTopicsSuggestion] = useState('');
+    const randomContent = getRandomOption(props.selectedOptions);
+    const [topicIdeasTitle, setTopicIdeasTitle] = useState([''])
 
-    const handleTopics = () => {
-        console.log(props.isAuto);
-        console.log(props.selectedOptions);
-        props.onChange();
+    const handleDisplayTopicIdea = (e: number) => {
+        const inputValue = e;
+        if (inputValue > 0 && inputValue < 6) {
+            setSelectedTopic(topicIdeasTitle[inputValue - 1] ?? 'No Found Idea');
+        } else {
+            setSelectedTopic('Please input correct Nmber');
+        }
+    }
+
+    const handleSaveIdea = () => {
+
+    }
+
+    const handleTopics = async () => {
+        const payload = { topic: props.topic, contentType: randomContent?.label || 'Tipps & Tricks' }
+        console.log("randomContent", randomContent);
+
+        try {
+            const resText = await createSuggestTopic(payload);
+            console.log(resText);
+            if (resText) {
+                setTopicsSuggestion(resText);
+                const regex = /\d+\.\s\*\*([^\*]+)\*\*/g;
+                let match;
+                const titles: string[] = [];
+                // Use the regex to find all matches
+                while ((match = regex.exec(resText)) !== null) {
+                    if (match[1]) {
+                        titles.push(match[1].trim());
+                    }
+                }
+
+                if (props.isAuto = 'autopilot') {
+                    setSelectedTopic(titles[Math.random() * 5] ?? 'Not Found Idea');
+                }
+
+                setTopicIdeasTitle(titles);
+                console.log(titles);
+            } else {
+                setTopicsSuggestion(t("Can't create Topic ideas!"));
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -34,7 +81,7 @@ export function ContentTopicSuggestion(props: PropsType) {
                         <svg className={'w-6 h-6 text-gray-800 dark:text-white'} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5" />
                         </svg>
-                        <Heading level={5} children={t('Add more type')} />
+                        <Heading level={5} children={t('Create Topic Idea')} />
                     </Button>
                 </div>
             </DialogTrigger>
@@ -53,9 +100,9 @@ export function ContentTopicSuggestion(props: PropsType) {
                         <Textarea
                             id="title"
                             defaultValue=""
-                            // value={titleText}
-                            // className="col-span-1"
-                            // onChange={(e) => { setTitleText(e.target.value) }}
+                            value={selectedTopic}
+                            className="col-span-1"
+                        // onChange={(e) => { setTitleText(e.target.value) }}
                         />
                     </div>
                     <div className={"flex flex-col gap-4"}>
@@ -65,23 +112,34 @@ export function ContentTopicSuggestion(props: PropsType) {
                         <Textarea
                             id="description"
                             defaultValue=""
-                            // value={contentText}
-                            // className={"w-full h-80"}
-                            // onChange={(e) => { setContentText(e.target.value) }}
+                            value={topicsSuggestion}
+                            className={"w-full h-80"}
+                        // onChange={(e) => { setContentText(e.target.value) }}
                         />
                     </div>
                 </div>
                 <DialogFooter className={'flex flex-row justify-between'}>
                     <DialogClose asChild>
-                        <Button variant={'outline'} >
+                        <Button variant={'outline'} onClick={() => { setTopicsSuggestion(''); setSelectedTopic(''); }} >
                             {t('Close')}
                         </Button>
                     </DialogClose>
+                    <Input placeholder="Input your number for your Ideas"
+                        disabled={props.isAuto === 'autopilot'}
+                        onChange={(e) => { handleDisplayTopicIdea(Number(e.target.value)) }} />
                     <DialogClose asChild>
-                        <Button variant={'outline'} >{t('Save changes')}</Button>
+                        <Button variant={'outline'} onClick={() => { setTopicsSuggestion(''); handleSaveIdea }} >{t('Save Idea')}</Button>
                     </DialogClose>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
     )
+}
+
+function getRandomOption(array: Option[]) {
+    // Generate a random index
+    const randomIndex = Math.floor(Math.random() * array.length);
+
+    // Return the item at the random index
+    return array[randomIndex];
 }

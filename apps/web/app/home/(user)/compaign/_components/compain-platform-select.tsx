@@ -101,7 +101,7 @@ export function CompaignPlatformSelect(props: Props) {
                      options={options}
                      onChange={(data) => { setSelectedOptions(data) }}
                   />
-                  <ContentTopicSuggestion selectedOptions={selectedOptions} isAuto={props.projectValue.pmode} onChange={() => { setSelectedOptions([]) }} />
+                  <ContentTopicSuggestion selectedOptions={options} topic={props.projectValue.pMainTopic} isAuto={props.projectValue.pmode} onChange={() => { setSelectedOptions([]) }} />
                </div>
             </Card>
          </div>
