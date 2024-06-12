@@ -54,7 +54,7 @@ export function SaveOneProject(saveValue: SaveOneProjectType) {
 
 
     return (
-        <Card className="px-7 py-6">
+        <Card className="px-7 py-6 w-[840px] sm:w-full">
             <div className={'flex flex-col sm:flex-row gap-6 items-center'}>
                 <div className="display-center">
                     <IconSelect platform={saveValue.saveValue.platform} />
