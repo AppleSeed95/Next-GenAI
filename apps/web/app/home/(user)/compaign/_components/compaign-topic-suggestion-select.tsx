@@ -29,8 +29,9 @@ export function ContentTopicSuggestion(props: PropsType) {
 
     const handleDisplayTopicIdea = (e: number) => {
         const inputValue = e;
-        if (inputValue > 0 && inputValue < 6) {
+        if ( inputValue > 0 && inputValue < 6 ) {
             setSelectedTopic(topicIdeasTitle[inputValue - 1] ?? 'No Found Idea');
+            console.log(selectedTopic);
         } else {
             setSelectedTopic('Please input correct Nmber');
         }
@@ -59,12 +60,12 @@ export function ContentTopicSuggestion(props: PropsType) {
                     }
                 }
 
-                if (props.isAuto = 'autopilot') {
-                    setSelectedTopic(titles[Math.random() * 5] ?? 'Not Found Idea');
+                if (props.isAuto == 'autopilot') {
+                    setSelectedTopic(titles[Math.floor(Math.random() * 5)] ?? 'Not Found Idea');
                 }
 
                 setTopicIdeasTitle(titles);
-                console.log(titles);
+                console.log('Titles', titles);
             } else {
                 setTopicsSuggestion(t("Can't create Topic ideas!"));
             }
@@ -93,9 +94,9 @@ export function ContentTopicSuggestion(props: PropsType) {
                     </DialogDescription>
                 </DialogHeader>
                 <div className={"flex flex-col gap-4 py-4"}>
-                    <div className={"flex flex-row gap-4 items-center"}>
+                    <div className={"flex flex-col gap-4 items-center"}>
                         <Label htmlFor="title" className={""}>
-                            {t('Topic Title')}
+                            {t('Topic Idea Title')}
                         </Label>
                         <Textarea
                             id="title"
@@ -107,7 +108,7 @@ export function ContentTopicSuggestion(props: PropsType) {
                     </div>
                     <div className={"flex flex-col gap-4"}>
                         <Label htmlFor="description" className={""}>
-                            {t('Generated Topics')}
+                            {t('Generated Topic Ideas')}
                         </Label>
                         <Textarea
                             id="description"
@@ -125,7 +126,7 @@ export function ContentTopicSuggestion(props: PropsType) {
                         </Button>
                     </DialogClose>
                     <Input placeholder="Input your number for your Ideas"
-                        disabled={props.isAuto === 'autopilot'}
+                        // disabled={props.isAuto === 'autopilot'}
                         onChange={(e) => { handleDisplayTopicIdea(Number(e.target.value)) }} />
                     <DialogClose asChild>
                         <Button variant={'outline'} onClick={() => { setTopicsSuggestion(''); handleSaveIdea }} >{t('Save Idea')}</Button>

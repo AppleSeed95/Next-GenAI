@@ -32,19 +32,24 @@ export function SaveOneProject(saveValue: SaveOneProjectType) {
 
     const handleDelete = async (id: number) => {
         const payload = { id: id };
-        const res = await deleteUserProject(payload);
-        setResultMessage(t('deleteSuccessDescription'));
-        router.push(url);
-
+        try {
+            const res = await deleteUserProject(payload);
+            setResultMessage(t('deleteSuccessDescription'));
+            router.push(url);
+        } catch (error) {
+            setResultMessage(t('deleteErrorDescription'));
+        }
     }
 
     const handleEdit = async (id: number) => {
         const payload = { id: id, projectName: editedProjectName, topic: editedTopic };
-        const res = await editUserProject(payload);
-        setResultMessage(t('editSuccessDescription'));
-        console.log(url);
-        router.push(url);
-        console.log(resultMessage);
+        try {
+            const res = await editUserProject(payload);
+            setResultMessage(t('editSuccessDescription'));
+            router.push(url);
+        } catch (error) {
+            setResultMessage(t('editFailedDescription'));
+        }
     }
 
 
