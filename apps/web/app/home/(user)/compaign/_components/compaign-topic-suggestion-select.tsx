@@ -38,7 +38,7 @@ export function ContentTopicSuggestion(props: PropsType) {
     }
 
     const handleSaveIdea = () => {
-
+        
     }
 
     const handleTopics = async () => {

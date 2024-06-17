@@ -21,9 +21,15 @@ import CompaignVideoCard from "./content-video-card"
 import CompaignTextCard from "./content-text-card"
 import { useTranslation } from "react-i18next"
 import { ProjectsType } from "./personal-compaign-creator-container"
-import { createAITextAction, saveProjectAction } from "../_lib/server/server-action"
+import { createAIImageAction, createAITextAction, saveProjectAction } from "../_lib/server/server-action"
 import { useSupabase } from "@kit/supabase/hooks/use-supabase"
 import { requireUser } from "@kit/supabase/require-user"
+import Image from "next/image";
+import { Icons } from "../../_components/icons";
+import { Icon } from "lucide-react";
+import { url } from "inspector";
+import DownloadImageIcon from "./image-dwonload-regenerate/image-download";
+import RegenerateImageIcon from "./image-dwonload-regenerate/image-regnerate";
 
 
 export type BlogText = {
@@ -67,6 +73,7 @@ export function CompaignContent(props: Props) {
    const [isOpen, setIsOpen] = useState(true);
    const [titleText, setTitleText] = useState<string>("");
    const [contentText, setContentText] = useState<string>("");
+   const [imageURL, setImageURL] = useState('');
    const { t } = useTranslation();
    const client = useSupabase();
    const auth = requireUser(client);
@@ -88,9 +95,9 @@ export function CompaignContent(props: Props) {
          if (blogText?.toggle && blogText.words) {
             const payloadText = { brand: blogText.brand || 'Greeting', description: blogText.description || '', lang: blogText?.lang || 'English', words: blogText?.words || 5, maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic }
 
-            const payloadImage = { format: blogImage.format || 'png', description: blogImage.description || '', amount: blogImage.amount || 1, scale: blogImage.scale || 0.8, maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic }
+         const payloadImage = { format: blogImage.format || 'png', description: blogImage.description || '', amount: blogImage.amount || 1, scale: blogImage.scale || 0.8, maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic }
 
-            const payloadVideo = { format: blogVideo.format || 'mp3', description: blogVideo.description || '', length: blogVideo.length || 30, maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic }
+         //    const payloadVideo = { format: blogVideo.format || 'mp3', description: blogVideo.description || '', length: blogVideo.length || 30, maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic }
 
             setIsOpen(true);
             if (props.projectValue.platform) {
@@ -116,9 +123,14 @@ export function CompaignContent(props: Props) {
             setContentText("Please confirm options. You have to set toggle true and input number of sentences");
          }
 
-         // if (blogImage.toggle) {
-         //    // const resImage = await createAIImageAction(payloadImage);
-         // }
+         if (blogImage.toggle) {
+            setImageURL(".")
+            // const resImage = await createAIImageAction(payloadImage);
+            // if (resImage) {
+            //    setImageURL(resImage);
+            //    console.log(resImage);
+            // }
+         }
          // if (blogVideo.toggle) {
          //    // const resVideo = await createAIVideoAction(payloadVideo);
          // }
@@ -183,7 +195,7 @@ export function CompaignContent(props: Props) {
                      </Button>
                   </div>
                </DialogTrigger>
-               <DialogContent className="sm:max-w-[600px]">
+               <DialogContent className="sm:max-w-[600px] overflow-y-auto">
                   <DialogHeader>
                      <DialogTitle>{t('Display Content')}</DialogTitle>
                      <DialogDescription>
@@ -219,7 +231,22 @@ export function CompaignContent(props: Props) {
                         <Label htmlFor="description" className={""}>
                            {t('Image')}
                         </Label>
-
+                        <div className="relative w-auto h-auto">
+                           <Image
+                              src='/images/livingroom5.png'
+                              layout="intrinsic"
+                              width={1024}
+                              height={1024}
+                              alt="Picture of the author"
+                              className="z-0 rounded-lg"
+                           />
+                           <div className={''}>
+                              <div className={"flex flex-row gap-16 justify-center absolute bottom-2 left-1/2 transform -translate-x-1/2 p-0"}>
+                                 <DownloadImageIcon imageUrl="/images/livingroom5.png" fileName="downloadfile" />
+                                 <RegenerateImageIcon initialImageUrl="/images/livingroom5.png" />
+                              </div>
+                           </div>
+                        </div>
                      </div>
                   </div>
                   <DialogFooter className={'flex flex-row justify-between'}>

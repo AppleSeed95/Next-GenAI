@@ -1,0 +1,208 @@
+[33mcommit 9fc6e50dc2bf82f078912b927322ac5e96e149cc[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Masato <keysven0@gmail.com>
+Date:   Wed Jun 12 08:00:34 2024 +0100
+
+    fix: mobile device
+
+[33mcommit ed5f54a647a20197108c5b04fbe8376432493602[m
+Author: Masato <keysven0@gmail.com>
+Date:   Wed Jun 12 01:28:25 2024 +0100
+
+    fix: set topic idea
+
+[33mcommit cb18b2556a12625fb0a3f64bf2211b612c5d2d42[m
+Author: Masato <keysven0@gmail.com>
+Date:   Wed Jun 12 00:48:55 2024 +0100
+
+    feat: create topic idea
+
+[33mcommit f985aee0997b2b956d02c63a8e102370889907e0[m
+Author: Masato <keysven0@gmail.com>
+Date:   Tue Jun 11 18:48:17 2024 +0100
+
+    feat:mobile device
+
+[33mcommit c28772d3d63d7d9cdddce748fd5aa72770617945[m
+Author: Masato <keysven0@gmail.com>
+Date:   Mon Jun 10 19:38:36 2024 +0100
+
+    feat: delete function in project page
+
+[33mcommit 13f9f60827bb0a83d4ae32ca219f2ac48a876618[m
+Author: Masato <keysven0@gmail.com>
+Date:   Mon Jun 10 09:20:22 2024 +0100
+
+    feat:delete funtion
+
+[33mcommit 98d69341230bc99c737b92eb88c7cbe8058427f7[m
+Author: Masato <keysven0@gmail.com>
+Date:   Mon Jun 10 01:22:32 2024 +0100
+
+    feat: add search function
+
+[33mcommit 4701fab6c72a3b2b096cebbfc0e958d05ae7367c[m
+Author: Masato <keysven0@gmail.com>
+Date:   Sat Jun 8 17:27:39 2024 +0100
+
+    FIX: change open ai api key
+
+[33mcommit 5b98eb9f6753d470ea4874f83a48b7b972363469[m
+Author: Masato <keysven0@gmail.com>
+Date:   Sat Jun 8 17:23:07 2024 +0100
+
+    Chore: .env file sample
+
+[33mcommit 00f196367ef4af05e95db0cf4fa18bf8634b2810[m
+Author: Masato <keysven0@gmail.com>
+Date:   Sat Jun 8 11:34:07 2024 +0100
+
+    feat: save project and content
+
+[33mcommit 39a4eb8ba3ae10a990f5b818fe81c4b751b1500d[m
+Author: Masato <keysven0@gmail.com>
+Date:   Fri Jun 7 06:47:59 2024 +0100
+
+    fix: change config files
+
+[33mcommit ea2cc691b466a231eaff9171326a73c7d162f12c[m
+Author: Masato <keysven0@gmail.com>
+Date:   Fri Jun 7 05:48:59 2024 +0100
+
+    fix: turbo.json
+
+[33mcommit 6c20b394c387b5f7854cf54220b27c8465b1769e[m
+Merge: 8e4344e 390e015
+Author: Masato <keysven0@gmail.com>
+Date:   Fri Jun 7 00:50:13 2024 +0100
+
+    fix: create text
+
+[33mcommit 8e4344e68d72c7807f42f2a82f15d8d30e1a0926[m
+Author: Masato <keysven0@gmail.com>
+Date:   Thu Jun 6 21:27:50 2024 +0100
+
+    feat: platform select function
+
+[33mcommit 390e01535be0c7578db2d6b7bf5ea52ad6f41a0e[m
+Author: giancarlo <giancarlopsk@gmail.com>
+Date:   Fri Jun 7 01:46:36 2024 +0700
+
+    Remove 'invoice.paid' event handler in Stripe webhook service
+    
+    The 'invoice.paid' event has been removed from the Stripe webhook handler service. The corresponding method handleInvoicePaid and the case in the switch statement have been deleted.
+
+[33mcommit a965ca9d39f7b91b8659dd54e36e67d93f11bd3d[m
+Author: giancarlo <giancarlopsk@gmail.com>
+Date:   Fri Jun 7 01:39:27 2024 +0700
+
+    Add shouldCreateUser property to MagicLinkAuthContainer
+    
+    The update integrates a new property, shouldCreateUser, in MagicLinkAuthContainer component. This property defines the behavior for both the sign-in and sign-up methods. It is assigned false for sign-in and true for sign-up methods.
+
+[33mcommit 2e7e2894955ef8daef1d8a5213fa28a21585b6a3[m
+Author: giancarlo <giancarlopsk@gmail.com>
+Date:   Fri Jun 7 01:23:16 2024 +0700
+
+    Fixed sign in with an invite token when user is signed out
+
+[33mcommit 6ec939469b1d00e73e8970b9a18f06d28dbd58f4[m
+Merge: d057359 c9f0ec5
+Author: giancarlo <giancarlopsk@gmail.com>
+Date:   Thu Jun 6 15:36:36 2024 +0700
+
+    Merge remote-tracking branch 'origin/main'
+
+[33mcommit c9f0ec5d8924b83df4656a607cc2a7bbca7d69b6[m
+Author: Giancarlo Buomprisco <giancarlopsk@gmail.com>
+Date:   Thu Jun 6 15:36:16 2024 +0700
+
+    Turbo v2 (#32)
+    
+    Updated to Turbo v2, and updated dependencies.
+
+[33mcommit d057359ceb111aa470e4c066fceae1c3278a3d95[m
+Author: giancarlo <giancarlopsk@gmail.com>
+Date:   Wed Jun 5 20:12:09 2024 +0700
+
+    Added package.json scripts for env
+
+[33mcommit aba90768055bb137101c4de2b29633e4a0d4ebf8[m
+Author: giancarlo <giancarlopsk@gmail.com>
+Date:   Wed Jun 5 20:02:29 2024 +0700
+
+    Use existing environment variables as defaults for the generator command.
+
+[33mcommit a3f339aaf673104debdc24586fcef40a541ba9d9[m
+Author: giancarlo <giancarlopsk@gmail.com>
+Date:   Wed Jun 5 19:15:21 2024 +0700
+
+    Fix issues with Lemon Squeezy and i18n issue requiring a parameter we do not pass.
+
+[33mcommit d3a4fbdeb15a45dc4477177904b6fea021b82e15[m
+Author: giancarlo <giancarlopsk@gmail.com>
+Date:   Wed Jun 5 15:45:47 2024 +0700
+
+    Refactor env file generation and validation
+    
+    This commit replaces the previous use of execSync to generate .env.local files with the use of writeFileSync. It also updates the corresponding path and default value in the validation process. This change provides a more efficient and safer way to create these files and correctly update the related prompts.
+
+[33mcommit 83a4f29be4b4708a1181538e948b94f570e956b8[m
+Author: giancarlo <giancarlopsk@gmail.com>
+Date:   Wed Jun 5 14:59:10 2024 +0700
+
+    Add environment variables generators and validators
+    
+    Added a new generator for creating environment variables and a validator to check the validity of the created variables. Also updated the config file to include these new generators in the list of registered generators.
+
+[33mcommit 4b4feeec99a2829897f7dea284269b6e9c7d6f10[m
+Author: giancarlo <giancarlopsk@gmail.com>
+Date:   Wed Jun 5 13:12:35 2024 +0700
+
+    Added tests for storage
+
+[33mcommit 521cba7dd38af20de767fb536aaad12b47e3a16d[m
+Author: mk3ext <me@mk3ext.dev>
+Date:   Wed Jun 5 06:43:04 2024 +0100
+
+    fix(web): update schema.sql for supabase, fixes file upload (#31)
+    
+    The RLS policy restricted non-uuid file names from being uploaded to ANY bucket.
+    This was caused by the "or" condition in the policy. This fixes that by wrapping both "or" conditions in a single set of parentheses.
+
+[33mcommit 8808e3755830bd89c5ecba71dffd3f881f3239b8[m
+Author: giancarlo <giancarlopsk@gmail.com>
+Date:   Tue Jun 4 19:38:51 2024 +0700
+
+    Refactor sign out and auth change listener hooks
+    
+    In the use-sign-out.ts file, the use of query client has been removed and error handling has been improved during sign-out operations. Meanwhile, in the use-auth-change-listener.ts file, an unnecessary usage of query client and router has been removed. Event handling logic has also been simplified by using window.location.reload() instead of router.refresh() on user sign-out.
+
+[33mcommit 6e868a0b7cdb381cd7b8416df6ea6ff4e08ddcf6[m
+Author: Masato <keysven0@gmail.com>
+Date:   Tue Jun 4 12:32:11 2024 +0100
+
+    feat: save project
+
+[33mcommit d203c9782dce2bd822f954273717f845151de4fe[m
+Author: giancarlo <giancarlopsk@gmail.com>
+Date:   Tue Jun 4 17:46:40 2024 +0700
+
+    Remove redundant loaders and update styling
+    
+    Deleted the previously redundant loaders from blog and docs sections. Updated the loading.tsx files in home to utilize the GlobalLoader component with improved styling. Additionally, styling in global-loader.tsx from the ui package has been modified to ensure better visibility.
+
+[33mcommit 5f872f26cd6ac5ae2c1f79bb46eeab2a5dee9b8f[m
+Author: giancarlo <giancarlopsk@gmail.com>
+Date:   Tue Jun 4 17:20:14 2024 +0700
+
+    Remove unused tooling/license from pnpm-lock.yaml
+    
+    In the pnpm-lock.yaml file, the tooling/license dependency was unused and has been removed.
+
+[33mcommit e2112eefeeb934cef908b8e0b9c86f3cb68fe8b5[m
+Author: giancarlo <giancarlopsk@gmail.com>
+Date:   Tue Jun 4 17:17:12 2024 +0700
+
+    Update UI styling and Spinner component
+    
+    Several updates have been made to UI components across various packages. Styling changes have been made in 'global-loader.tsx', 'docs-card.tsx', and 'pricing-table.tsx'. The Spinner component in 'spinner.tsx' has been updated to adjust size and animation properties. Addition of a new prop 'spinnerClassName' in 'loading-overlay.tsx' allows dynamic class assignment. The 'loading.tsx' now exports GlobalLoader directly instead of wrapping it in a function. 'pnpm-lock.yaml' has been updated with 

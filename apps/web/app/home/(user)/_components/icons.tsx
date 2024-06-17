@@ -1,3 +1,4 @@
+import { Heading } from "@kit/ui/heading";
 import { LucideProps } from "lucide-react";
 
 
@@ -6,16 +7,60 @@ export const Icons = {
       <span className="[&>svg]:h-16 [&>svg]:w-16 ">
          <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512">
-            <polygon  points="0,477.703 256,477.703 289.391,256 256,34.297 " fill="#FFA418"/>
-            <polygon  points="256,34.297 256,477.703 512,477.703 " fill="#FF8A1E"/>
+            <polygon points="0,477.703 256,477.703 289.391,256 256,34.297 " fill="#FFA418" />
+            <polygon points="256,34.297 256,477.703 512,477.703 " fill="#FF8A1E" />
             <g>
-               <circle cx="256" cy="405.359" r="16.696" fill="#324860"/>
-               <rect x="239.304" y="177.185" width="33.391" height="178.087" fill="#324860"/>
+               <circle cx="256" cy="405.359" r="16.696" fill="#324860" />
+               <rect x="239.304" y="177.185" width="33.391" height="178.087" fill="#324860" />
             </g>
          </svg>
       </span>
 
    ),
+   download: (props: LucideProps) => (
+      <span className="w-5 flex flex-col items-center justify-center cursor-pointer">
+         <svg
+            id='Layer_1'
+            version='1.1'
+            viewBox='0 0 100 100'
+            xmlns='http://www.w3.org/2000/svg'
+            enable-background='new 0 0 100 100'
+         >
+            <path
+               d='M13 86.1c-4.4 0-8-3.6-8-8v-32c0-2.2 1.8-4 4-4s4 1.8 4 4v30c0 1.1.9 2 2 2h70c1.1 0 2-.9 2-2v-30c0-2.2 1.8-4 4-4s4 1.8 4 4v32c0 4.4-3.6 8-8 8H13z'
+               fill='#40f1ff'
+            ></path>
+            <path
+               d='m54 52.2 10.1-10.1c.8-.8 2-.8 2.8 0l2.8 2.8c.8.8.8 2 0 2.8l-14 14.2c-3.1 3.1-8.2 3.1-11.3 0L30.2 47.8c-.8-.8-.8-2 0-2.8l2.8-2.8c.8-.8 2-.8 2.8 0l10.2 10V15.9c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v36.3z'
+               fill='#40f1ff'
+            ></path>
+         </svg>
+         <Heading level={6} className="text-xs font-normal mt-2 text-white" children={'Download'} />
+      </span>
+   ),
+   regenerate: (props: LucideProps) => (
+      <span className="w-5 flex flex-col items-center justify-center cursor-pointer">
+         <svg
+            viewBox='0 0 16 16'
+            xmlns='http://www.w3.org/2000/svg'
+            fill-rule='evenodd'
+            clip-rule='evenodd'
+            stroke-linejoin='round'
+            stroke-miterlimit='2'
+         >
+            <path
+               d='M7.836 1.75A6.253 6.253 0 0 0 1.586 8a6.242 6.242 0 0 0 2.657 5.113.75.75 0 1 0 .863-1.226 4.752 4.752 0 0 1 2.73-8.637.75.75 0 0 0 0-1.5ZM8.238 14.237A6.254 6.254 0 0 0 14.086 8a6.24 6.24 0 0 0-2.199-4.758.75.75 0 0 0-.973 1.142A4.737 4.737 0 0 1 12.586 8a4.753 4.753 0 0 1-4.444 4.74.75.75 0 0 0 .096 1.497Z'
+               fill='#40f1ff'
+            ></path>
+            <path
+               d='M13.664 2.75h-2.828a.75.75 0 0 0-.75.75v2.828a.75.75 0 0 0 1.5 0V4.25h2.078a.75.75 0 0 0 0-1.5ZM2.336 13.75h2.828a.75.75 0 0 0 .75-.75v-2.828a.75.75 0 0 0-1.5 0v2.078H2.336a.75.75 0 0 0 0 1.5Z'
+               fill='#40f1ff'
+            ></path>
+         </svg>
+         <Heading level={6}className="text-xs font-normal mt-2 text-white" children={'Regenerate'} />
+      </span >
+   ),
+
    social: {
       facebook: (props: LucideProps) => (
          <span className="[&>svg]:h-16 [&>svg]:w-16 [&>svg]:fill-[#1877f2]">

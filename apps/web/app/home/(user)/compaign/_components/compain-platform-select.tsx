@@ -75,7 +75,7 @@ export function CompaignPlatformSelect(props: Props) {
                   {index.map((id) => (
                      <div className={'flex flex-row gap-2 items-center'}>
                         <DateTimePicker key={id} />
-                        <Button variant={'outline'} children={t('delete')} onClick={() => deleteDateTimePicker(id)} disabled={index.length === 0} />
+                        <Button key={id} variant={'outline'} children={t('delete')} onClick={() => deleteDateTimePicker(id)} disabled={index.length === 0} />
                      </div>
                   ))}
                   <Heading level={6} children={t(message)} />

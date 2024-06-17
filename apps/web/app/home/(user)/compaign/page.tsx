@@ -6,9 +6,7 @@ import { PageBody } from "@kit/ui/page";
 function PersonalContentCreatorPage() {
    return (
       <PageBody>
-         <div>
-            <PersonalContentCreatorContainer />
-         </div>
+         <PersonalContentCreatorContainer />
       </PageBody>
 
    );

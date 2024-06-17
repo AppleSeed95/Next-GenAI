@@ -96,7 +96,7 @@ class AiEditorService {
    * @param {string} params.context - The context to be used for generating the Content.
    * @return {Promise<object>} A promise that resolves to an object representing the generated Content.
    */
-  async completeSuggestTopics(params: {topic: string, contentType: string}) {
+  async completeSuggestTopics(params: { topic: string, contentType: string }) {
 
     const prompt = [
       {
@@ -148,43 +148,27 @@ class AiEditorService {
         "role": SYSTEM,
         "content": `You are assisting USER in writing professional text. Never use double quotes.`,
       },
-      // {
-
-      //   "role": USER,
-
-      //   "content": `
-
-      //     Generate a title related to "${params.title}". The title should consist of 4 to 10 impactful words and don't use "Title" word. Ensure the title is in "${params.lang}" language.
-
-      //     Develop a text discussing "${params.title}". Here's the background information provided by the user: "${params.context}". Compose the text in "${params.lang}" language, and ensure it contains exactly ${params.words} sentences.          
-
-      //   `.trim()
-
-      // },
     ];
 
-    const GPT_response = await this.client.chat.completions.create({
+    const Image_response = await this.client.images.generate({
       // model: DEFAULT_MODEL,
-      model: "gpt-4-turbo",
-      messages: prompt,
-      // baseURL: "https://api.openai.com/v1/assistants",
-      // max_tokens: 50,
-      temperature: 0.8,
-      // stream: true,
-      // top_p: 1,
+      model: "dall-e-3",
+      prompt: "a white siamese cat",
+      n: 1,
+      size: "1024x1024",
     });
 
     // for await (const chunk of GPT_response) {
     //   console.log(chunk.choices[0]?.delta.content); // this code from the doc runs
     // }
+    const image_url = Image_response.data[0]?.url;
 
-
-    console.log("GPT_Response", GPT_response.choices[0]?.message.content);
-    return GPT_response.choices[0]?.message.content;
+    console.log("GPT_Response", image_url);
+    return image_url;
   }
 
   async saveProject(params: { format: string, context: string, scale: number, amount: number }) {
-    
+
   }
 
   /**
