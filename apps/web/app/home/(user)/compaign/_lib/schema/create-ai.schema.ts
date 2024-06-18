@@ -14,7 +14,7 @@ export const CreateAIImageSchema = z
 .object({
    format: z.string(),
    description: z.string(),
-   scale: z.number(),
+   size: z.string(),
    amount: z.number(),
    maintopic: z.string(),
    subtopic: z.string(),

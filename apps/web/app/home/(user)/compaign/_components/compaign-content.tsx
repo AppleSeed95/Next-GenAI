@@ -30,6 +30,7 @@ import { Icon } from "lucide-react";
 import { url } from "inspector";
 import DownloadImageIcon from "./image-dwonload-regenerate/image-download";
 import RegenerateImageIcon from "./image-dwonload-regenerate/image-regnerate";
+import { CarouselImage } from "./image-dwonload-regenerate/image-carousel";
 
 
 export type BlogText = {
@@ -50,7 +51,7 @@ export type BlogImage = {
    toggle: boolean;
    format: string;
    amount: number;
-   scale: number,
+   size: string,
    description?: string;
 }
 
@@ -73,17 +74,39 @@ export function CompaignContent(props: Props) {
    const [isOpen, setIsOpen] = useState(true);
    const [titleText, setTitleText] = useState<string>("");
    const [contentText, setContentText] = useState<string>("");
-   const [imageURL, setImageURL] = useState('');
+   const [imageURL, setImageURL] = useState<string[]>([
+      "/images/livingroom5.png",
+      "/images/livingroom9.png",
+      "/images/livingroom11.png",
+   ]);
    const { t } = useTranslation();
    const client = useSupabase();
    const auth = requireUser(client);
    // const context = useContext(ProjectContext);
 
    const [blogText, setBlogText] = useState<BlogText>(
-      { type: 'Text', maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic, brand: 'Hello', description: 'How are you', lang: 'English', toggle: true, words: 5 }
+      {
+         type: 'Text',
+         maintopic: props.projectValue.pMainTopic,
+         subtopic: props.projectValue.pSubTopic,
+         brand: 'Hello',
+         description: 'How are you',
+         lang: 'English',
+         toggle: true,
+         words: 5
+      }
    );
    const [blogImage, setBlogImage] = useState<BlogImage>(
-      { type: 'Image', maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic, format: 'png', description: 'How are you', amount: 1, toggle: true, scale: 0.8 }
+      {
+         type: 'Image',
+         maintopic: props.projectValue.pMainTopic,
+         subtopic: props.projectValue.pSubTopic,
+         format: 'png',
+         description: 'How are you',
+         amount: 1,
+         toggle: true,
+         size: "1024x1024"
+      }
    );
    const [blogVideo, setBlogVideo] = useState<BlogVideo>(
       { type: 'Video', maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic, format: 'mp4', description: 'How are you', length: 30, toggle: true }
@@ -92,12 +115,33 @@ export function CompaignContent(props: Props) {
    const handleClicked = async () => {
       // console.log(context);
       try {
+         const payloadText = {
+            brand: blogText.brand,
+            description: blogText.description || '',
+            lang: blogText.lang,
+            words: blogText.words,
+            maintopic: props.projectValue.pMainTopic,
+            subtopic: props.projectValue.pSubTopic
+         }
+
+         const payloadImage = {
+            format: blogImage.format,
+            description: blogImage.description || '',
+            amount: blogImage.amount,
+            size: blogImage.size,
+            maintopic: props.projectValue.pMainTopic,
+            subtopic: props.projectValue.pSubTopic
+         }
+
+         // const payloadVideo = {
+         //    format: blogVideo.format || 'mp3',
+         //    description: blogVideo.description || '',
+         //    length: blogVideo.length || 30,
+         //    maintopic: props.projectValue.pMainTopic,
+         //    subtopic: props.projectValue.pSubTopic
+         // }
+
          if (blogText?.toggle && blogText.words) {
-            const payloadText = { brand: blogText.brand || 'Greeting', description: blogText.description || '', lang: blogText?.lang || 'English', words: blogText?.words || 5, maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic }
-
-         const payloadImage = { format: blogImage.format || 'png', description: blogImage.description || '', amount: blogImage.amount || 1, scale: blogImage.scale || 0.8, maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic }
-
-         //    const payloadVideo = { format: blogVideo.format || 'mp3', description: blogVideo.description || '', length: blogVideo.length || 30, maintopic: props.projectValue.pMainTopic, subtopic: props.projectValue.pSubTopic }
 
             setIsOpen(true);
             if (props.projectValue.platform) {
@@ -124,7 +168,6 @@ export function CompaignContent(props: Props) {
          }
 
          if (blogImage.toggle) {
-            setImageURL(".")
             // const resImage = await createAIImageAction(payloadImage);
             // if (resImage) {
             //    setImageURL(resImage);
@@ -231,22 +274,7 @@ export function CompaignContent(props: Props) {
                         <Label htmlFor="description" className={""}>
                            {t('Image')}
                         </Label>
-                        <div className="relative w-auto h-auto">
-                           <Image
-                              src='/images/livingroom5.png'
-                              layout="intrinsic"
-                              width={1024}
-                              height={1024}
-                              alt="Picture of the author"
-                              className="z-0 rounded-lg"
-                           />
-                           <div className={''}>
-                              <div className={"flex flex-row gap-16 justify-center absolute bottom-2 left-1/2 transform -translate-x-1/2 p-0"}>
-                                 <DownloadImageIcon imageUrl="/images/livingroom5.png" fileName="downloadfile" />
-                                 <RegenerateImageIcon initialImageUrl="/images/livingroom5.png" />
-                              </div>
-                           </div>
-                        </div>
+                        <CarouselImage imageURL={imageURL} initialImageUrl={"/images/livingroom5.png"} />
                      </div>
                   </div>
                   <DialogFooter className={'flex flex-row justify-between'}>

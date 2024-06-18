@@ -17,17 +17,17 @@ type Props = {
 export const SelectFormat:React.FC<Props> = (props) =>  {  
 
   return (
-    <Select onValueChange={(e) => {props.onChange(e)}}>
+    <Select onValueChange={(e) => {props.onChange(e); console.log(e)}}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select a Format" />
       </SelectTrigger>
       <SelectContent >
         <SelectGroup >
           <SelectLabel>Format</SelectLabel>
-          <SelectItem value="English">PNG</SelectItem>
-          <SelectItem value="German">JPG</SelectItem>
-          <SelectItem value="Japanese">BMP</SelectItem>
-          <SelectItem value="Chinese">SVG</SelectItem>
+          <SelectItem value="PNG">PNG</SelectItem>
+          <SelectItem value="JPG">JPG</SelectItem>
+          <SelectItem value="BMP">BMP</SelectItem>
+          <SelectItem value="SVG">SVG</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

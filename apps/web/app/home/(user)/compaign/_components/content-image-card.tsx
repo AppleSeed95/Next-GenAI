@@ -8,8 +8,10 @@ import { SelectDemo } from "./language-selector"
 import { Textarea } from "@kit/ui/textarea"
 import { BlogImage } from "./compaign-content"
 import { FC } from "react"
-import { SelectFormat } from "./format-image-selector"
+import { SelectFormat } from "./image-format-selector"
 import { number } from "zod"
+import { useTranslation } from "react-i18next"
+import { SelectResolution } from "./image-resolution-selector"
 
 type Props = {
    blogImage: BlogImage;
@@ -17,6 +19,7 @@ type Props = {
 }
 
 const CompaignImageCard: FC<Props> = (props) => {
+   const { t } = useTranslation();
 
    return (
 
@@ -30,13 +33,19 @@ const CompaignImageCard: FC<Props> = (props) => {
                </label>
             </div>
             <SelectFormat onChange={(format) => { props.onChange({ ...props.blogImage, format }) }} />
+            <SelectResolution onChange={(size) => { props.onChange({ ...props.blogImage, size }) }} />
          </div>
          <div className={'flex flex-row gap-6 items-center'}>
             <Heading level={5} children={'Images'} />
             <Input
-               onChange={(e: React.ChangeEvent<HTMLInputElement>) => { props.onChange({ ...props.blogImage, amount: Number(e.target.value || '1') }) }}
+               onChange={
+                  (e: React.ChangeEvent<HTMLInputElement>) => {
+                     props.onChange({ ...props.blogImage, amount: Number(e.target.value || '1') });
+                     console.log(e.target.value);
+                  }}
                type="number"
                defaultValue={1}
+               placeholder={t('You can input 1 to 3')}
                max={3}
                className={'[-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]'}
             />

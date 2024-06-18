@@ -141,7 +141,7 @@ class AiEditorService {
    * @param {string} params.context - The context to be used for generating the Content.
    * @return {Promise<object>} A promise that resolves to an object representing the generated Content.
    */
-  async completeImageContent(params: { format: string, context: string, scale: number, amount: number }) {
+  async completeImageContent(params: { format: string, context: string, size: string, amount: number }) {
 
     const prompt = [
       {
@@ -154,17 +154,17 @@ class AiEditorService {
       // model: DEFAULT_MODEL,
       model: "dall-e-3",
       prompt: "a white siamese cat",
-      n: 1,
+      quality: "standard",
+      n: params.amount,
       size: "1024x1024",
     });
 
-    // for await (const chunk of GPT_response) {
-    //   console.log(chunk.choices[0]?.delta.content); // this code from the doc runs
-    // }
+    const image_urls = Image_response.data.map(image => image.url)
+
     const image_url = Image_response.data[0]?.url;
 
-    console.log("GPT_Response", image_url);
-    return image_url;
+    console.log("GPT_Response", image_urls);
+    return image_urls;
   }
 
   async saveProject(params: { format: string, context: string, scale: number, amount: number }) {

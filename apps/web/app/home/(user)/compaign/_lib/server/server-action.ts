@@ -53,12 +53,9 @@ export const createAIImageAction = enhanceAction(
          const response = await createAiEditorService().completeImageContent({
             format: data.format,
             context: data.description,
-            scale: data.scale,
+            size: data.size,
             amount: data.amount,
          });
-
-         // const stream = OpenAIStream(response);
-         // return new StreamingTextResponse(stream);
          return response;
 
       } catch (e) {
@@ -101,37 +98,6 @@ export const createAIVideoAction = enhanceAction(
  * @name saveProject
  * @description Creates a AI for a personal account.
  */
-// export async function saveProjectAction(params: z.infer<typeof SaveProjectSchema>) {
-//    'use server';
-
-//    const saveData = SaveProjectSchema.parse(params);
-
-//    const logger = await getLogger();
-//    const client = getSupabaseServerActionClient();
-//    const auth = await requireUser(client);
-
-//    if (!auth.data) {
-//       //   redirect(auth.redirectTo);
-//    }
-
-//    logger.info(saveData, `Adding saveData...`);
-
-//    const { data, error } = await client.from('project_table')
-//       .insert({ ...saveData, account_id: params.account_id });
-
-//    if (error) {
-//       logger.error(error, `Failed to save Content`);
-//       console.log(error);
-
-//       throw new Error(`Failed to save Content`);
-//    }
-
-//    logger.info(data, `Content saved successfully`);
-
-//    revalidatePath('/home', 'page');
-
-//    return null;
-// }
 
 
 export const saveProjectAction = enhanceAction(
