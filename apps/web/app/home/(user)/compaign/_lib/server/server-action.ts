@@ -3,7 +3,7 @@
 import { enhanceAction } from '@kit/next/actions';
 import { getSupabaseServerActionClient } from '@kit/supabase/server-actions-client';
 
-import { CreateAIImageSchema, CreateAITextSchema, CreateAIVideoSchema } from '../schema/create-ai.schema';
+import { CreateAIImageSchema, CreateAITextSchema, CreateAIVideoSchema, downloadImageSchema } from '../schema/create-ai.schema';
 import { getLogger } from '@kit/shared/logger';
 import createAiEditorService from './create-ai.service';
 import { SaveProjectSchema } from '../schema/save-project.schema';
@@ -12,6 +12,7 @@ import { z } from 'zod';
 import { redirect } from 'next/dist/server/api-utils';
 import { revalidatePath } from 'next/cache';
 import { SuggestTopicIdeaSchema } from '../schema/suggest-topic-ideas';
+import { NextResponse } from 'next/server';
 
 
 /**
@@ -66,6 +67,27 @@ export const createAIImageAction = enhanceAction(
    },
    {
       schema: CreateAIImageSchema,
+   }
+);
+
+export const downloadImageAction = enhanceAction(
+   async function (data) {
+      const client = getSupabaseServerActionClient();
+      try {
+         const response = await createAiEditorService().completeImageDownload({
+            url: data.url,
+         });
+         console.log("Last server response :", response);
+         return response;
+
+      } catch (e) {
+         console.log("Bug: ", e);
+         return NextResponse.error();
+         // return ("Error");
+      }
+   },
+   {
+      schema: downloadImageSchema,
    }
 );
 

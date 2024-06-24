@@ -24,14 +24,9 @@ import { ProjectsType } from "./personal-compaign-creator-container"
 import { createAIImageAction, createAITextAction, saveProjectAction } from "../_lib/server/server-action"
 import { useSupabase } from "@kit/supabase/hooks/use-supabase"
 import { requireUser } from "@kit/supabase/require-user"
-import Image from "next/image";
-import { Icons } from "../../_components/icons";
-import { Icon } from "lucide-react";
-import { url } from "inspector";
-import DownloadImageIcon from "./image-dwonload-regenerate/image-download";
-import RegenerateImageIcon from "./image-dwonload-regenerate/image-regnerate";
 import { CarouselImage } from "./image-dwonload-regenerate/image-carousel";
 
+const PROJECT_BUCKET = 'personal_project_image'
 
 export type BlogText = {
    type: string;
@@ -77,12 +72,11 @@ export function CompaignContent(props: Props) {
    const [imageURL, setImageURL] = useState<string[]>([
       "/images/livingroom5.png",
       "/images/livingroom9.png",
-      "/images/livingroom11.png",
+      "https://oaidalleapiprodscus.blob.core.windows.net/private/org-5eECVlNlzgYpGArCjZzz7S8t/user-pV6QxN1n6FNrLvpHUSMjSnEp/img-bBqawmHPDXxZPuUextUz2ZsO.png?st=2024-06-18T14%3A48%3A17Z&se=2024-06-18T16%3A48%3A17Z&sp=r&sv=2023-11-03&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2024-06-17T16%3A02%3A13Z&ske=2024-06-18T16%3A02%3A13Z&sks=b&skv=2023-11-03&sig=dV7ozweWYGpNuDtAj9auh7UMOY1hxxkMGZFU7u5H1BE%3D",
    ]);
    const { t } = useTranslation();
    const client = useSupabase();
    const auth = requireUser(client);
-   // const context = useContext(ProjectContext);
 
    const [blogText, setBlogText] = useState<BlogText>(
       {
@@ -141,38 +135,45 @@ export function CompaignContent(props: Props) {
          //    subtopic: props.projectValue.pSubTopic
          // }
 
-         if (blogText?.toggle && blogText.words) {
+         // if (blogText?.toggle && blogText.words) {
 
-            setIsOpen(true);
-            if (props.projectValue.platform) {
-               const resText = await createAITextAction(payloadText);
-               if (resText) {
-                  const responseArray = resText.split("\n");
-                  const title = responseArray[0];
-                  const content = responseArray.slice(1).join("\n");
-                  setTitleText(title || "No Title");
-                  setContentText(content || "No Content")
+         //    setIsOpen(true);
+         //    if (props.projectValue.platform) {
+         //       const resText = await createAITextAction(payloadText);
+         //       if (resText) {
+         //          const responseArray = resText.split("\n");
+         //          const title = responseArray[0];
+         //          const content = responseArray.slice(1).join("\n");
+         //          setTitleText(title || "No Title");
+         //          setContentText(content || "No Content")
 
-                  console.log("Response", { resText });
-               } else {
-                  setContentText("Please confirm your Network Connection");
-               }
-            } else {
-               setContentText("Select Platform");
-            }
-            setIsOpen(false);
+         //          console.log("Response", { resText });
+         //       } else {
+         //          setContentText("Please confirm your Network Connection");
+         //       }
+         //    } else {
+         //       setContentText("Select Platform");
+         //    }
+         //    setIsOpen(false);
 
 
-         } else {
-            setContentText("Please confirm options. You have to set toggle true and input number of sentences");
-         }
+         // } else {
+         //    setContentText("Please confirm options. You have to set toggle true and input number of sentences");
+         // }
 
          if (blogImage.toggle) {
-            // const resImage = await createAIImageAction(payloadImage);
-            // if (resImage) {
-            //    setImageURL(resImage);
-            //    console.log(resImage);
-            // }
+            const resImage = await createAIImageAction(payloadImage);
+
+            if (resImage != "Error") {
+               const filteredImageUrls: string[] = resImage.filter((url): url is string => url !== undefined);
+               setImageURL(filteredImageUrls);
+               console.log(filteredImageUrls);
+            } else {
+               setImageURL(['']);
+               setContentText("Please confirm your Network Connection");
+            }
+         } else {
+            setContentText("Please confirm options. You have to set toggle true and input number of images");
          }
          // if (blogVideo.toggle) {
          //    // const resVideo = await createAIVideoAction(payloadVideo);
@@ -210,6 +211,7 @@ export function CompaignContent(props: Props) {
          console.log(payload);
 
          const res = await saveProjectAction(payload);
+
       }
 
 
@@ -274,7 +276,8 @@ export function CompaignContent(props: Props) {
                         <Label htmlFor="description" className={""}>
                            {t('Image')}
                         </Label>
-                        <CarouselImage imageURL={imageURL} initialImageUrl={"/images/livingroom5.png"} />
+                        {imageURL &&
+                           (<CarouselImage imageURL={imageURL} initialImageUrl={"/images/livingroom5.png"} />)}
                      </div>
                   </div>
                   <DialogFooter className={'flex flex-row justify-between'}>

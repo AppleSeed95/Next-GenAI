@@ -80,7 +80,8 @@ function getRemotePatterns() {
 
     remotePatterns.push({
       protocol: 'https',
-      hostname,
+      hostname: 'oaidalleapiprodscus.blob.core.windows.net',
+      pathname: '/private/**', 
     });
   }
 
@@ -95,9 +96,15 @@ function getRemotePatterns() {
           protocol: 'http',
           hostname: 'localhost',
         },
+        {
+          protocol: 'https',
+          hostname: 'oaidalleapiprodscus.blob.core.windows.net',
+          port: '',
+          pathname: '/private/**',
+        },
         // {
         //   protocol: 'http',
-        //   hostname: 'http://3.78.194.225/',
+        //   hostname: 'http://85.214.100.152/',
         // },
         
       ];

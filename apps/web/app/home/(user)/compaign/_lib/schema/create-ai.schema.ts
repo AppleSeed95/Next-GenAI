@@ -20,6 +20,11 @@ export const CreateAIImageSchema = z
    subtopic: z.string(),
 })
 
+export const downloadImageSchema = z
+.object({
+   url: z.string(),
+})
+
 export const CreateAIVideoSchema = z
 .object({
    format: z.string(),

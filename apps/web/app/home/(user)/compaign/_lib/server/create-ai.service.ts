@@ -1,3 +1,4 @@
+import { NextResponse } from 'next/server';
 import { OpenAI } from 'openai';
 
 const DEFAULT_MODEL = process.env.OPENAI_MODEL_NAME as string;
@@ -155,16 +156,44 @@ class AiEditorService {
       model: "dall-e-3",
       prompt: "a white siamese cat",
       quality: "standard",
-      n: params.amount,
+      n: 1,
       size: "1024x1024",
     });
 
     const image_urls = Image_response.data.map(image => image.url)
 
-    const image_url = Image_response.data[0]?.url;
+    // const image_url = Image_response.data[0]?.url;
 
     console.log("GPT_Response", image_urls);
     return image_urls;
+  }
+
+
+  async completeImageDownload(params: { url: string }) {
+
+    if (!params.url) {
+      return NextResponse.json({ error: 'Image URL is required' }, { status: 400 });
+    }
+
+    try {
+      const response = await fetch(params.url);
+      if (!response.ok) {
+        throw new Error('Failed to fetch image');
+      }
+      console.log("URL Response : ", response)
+      const contentType = response.headers.get('content-type');
+      const body = await response.arrayBuffer();
+      console.log("Body :", body)
+
+      return new NextResponse(body, {
+        headers: {
+          'Content-Type': contentType || 'application/octet-stream',
+          'Content-Disposition': 'attachment; filename="image.png"',
+        },
+      });
+    } catch (error) {
+      return NextResponse.json({ error: error }, { status: 500 });
+    }
   }
 
   async saveProject(params: { format: string, context: string, scale: number, amount: number }) {
