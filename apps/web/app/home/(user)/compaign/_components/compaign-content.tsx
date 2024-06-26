@@ -240,7 +240,7 @@ export function CompaignContent(props: Props) {
                      </Button>
                   </div>
                </DialogTrigger>
-               <DialogContent className="sm:max-w-[600px] overflow-y-auto">
+               <DialogContent className="sm:max-w-[600px] max-h-full overflow-y-auto scrollbar-hide">
                   <DialogHeader>
                      <DialogTitle>{t('Display Content')}</DialogTitle>
                      <DialogDescription>
@@ -268,7 +268,7 @@ export function CompaignContent(props: Props) {
                            id="description"
                            defaultValue=""
                            value={contentText}
-                           className={"w-full h-80"}
+                           className={"w-full h-40"}
                            onChange={(e) => { setContentText(e.target.value) }}
                         />
                      </div>
