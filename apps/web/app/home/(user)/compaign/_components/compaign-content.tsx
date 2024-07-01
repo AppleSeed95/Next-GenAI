@@ -106,82 +106,81 @@ export function CompaignContent(props: Props) {
    );
 
    const handleClicked = async () => {
-      // console.log(context);
-      // try {
-      //    const payloadText = {
-      //       brand: blogText.brand,
-      //       description: blogText.description || '',
-      //       lang: blogText.lang,
-      //       words: blogText.words,
-      //       maintopic: props.projectValue.pMainTopic,
-      //       subtopic: props.projectValue.pSubTopic
-      //    }
+      try {
+         const payloadText = {
+            brand: blogText.brand,
+            description: blogText.description || '',
+            lang: blogText.lang,
+            words: blogText.words,
+            maintopic: props.projectValue.pMainTopic,
+            subtopic: props.projectValue.pSubTopic
+         }
 
-      //    const payloadImage = {
-      //       format: blogImage.format,
-      //       description: blogImage.description || '',
-      //       amount: blogImage.amount,
-      //       size: blogImage.size,
-      //       maintopic: props.projectValue.pMainTopic,
-      //       subtopic: props.projectValue.pSubTopic
-      //    }
+         const payloadImage = {
+            format: blogImage.format,
+            description: blogImage.description || '',
+            amount: blogImage.amount,
+            size: blogImage.size,
+            maintopic: props.projectValue.pMainTopic,
+            subtopic: props.projectValue.pSubTopic
+         }
 
-      //    // const payloadVideo = {
-      //    //    format: blogVideo.format || 'mp3',
-      //    //    description: blogVideo.description || '',
-      //    //    length: blogVideo.length || 30,
-      //    //    maintopic: props.projectValue.pMainTopic,
-      //    //    subtopic: props.projectValue.pSubTopic
-      //    // }
+         // const payloadVideo = {
+         //    format: blogVideo.format || 'mp3',
+         //    description: blogVideo.description || '',
+         //    length: blogVideo.length || 30,
+         //    maintopic: props.projectValue.pMainTopic,
+         //    subtopic: props.projectValue.pSubTopic
+         // }
 
-      //    // if (blogText?.toggle && blogText.words) {
+         if (blogText?.toggle && blogText.words) {
 
-      //    //    setIsOpen(true);
-      //    //    if (props.projectValue.platform) {
-      //    //       const resText = await createAITextAction(payloadText);
-      //    //       if (resText) {
-      //    //          const responseArray = resText.split("\n");
-      //    //          const title = responseArray[0];
-      //    //          const content = responseArray.slice(1).join("\n");
-      //    //          setTitleText(title || "No Title");
-      //    //          setContentText(content || "No Content")
+            setIsOpen(true);
+            if (props.projectValue.platform) {
+               const resText = await createAITextAction(payloadText);
+               if (resText) {
+                  const responseArray = resText.split("\n");
+                  const title = responseArray[0];
+                  const content = responseArray.slice(1).join("\n");
+                  setTitleText(title || "No Title");
+                  setContentText(content || "No Content")
 
-      //    //          console.log("Response", { resText });
-      //    //       } else {
-      //    //          setContentText("Please confirm your Network Connection");
-      //    //       }
-      //    //    } else {
-      //    //       setContentText("Select Platform");
-      //    //    }
-      //    //    setIsOpen(false);
+                  console.log("Response", { resText });
+               } else {
+                  setContentText("Please confirm your Network Connection");
+               }
+            } else {
+               setContentText("Select Platform");
+            }
+            setIsOpen(false);
 
 
-      //    // } else {
-      //    //    setContentText("Please confirm options. You have to set toggle true and input number of sentences");
-      //    // }
+         } else {
+            setContentText("Please confirm options. You have to set toggle true and input number of sentences");
+         }
 
-      //    if (blogImage.toggle) {
-      //       const resImage = await createAIImageAction(payloadImage);
+         if (blogImage.toggle) {
+            const resImage = await createAIImageAction(payloadImage);
 
-      //       if (resImage != "Error") {
-      //          const filteredImageUrls: string[] = resImage.filter((url): url is string => url !== undefined);
-      //          setImageURL(filteredImageUrls);
-      //          console.log(filteredImageUrls);
-      //       } else {
-      //          setImageURL(['']);
-      //          setContentText("Please confirm your Network Connection");
-      //       }
-      //    } else {
-      //       setContentText("Please confirm options. You have to set toggle true and input number of images");
-      //    }
-      //    // if (blogVideo.toggle) {
-      //    //    // const resVideo = await createAIVideoAction(payloadVideo);
-      //    // }
+            if (resImage != "Error") {
+               const filteredImageUrls: string[] = resImage.filter((url): url is string => url !== undefined);
+               setImageURL(filteredImageUrls);
+               console.log(filteredImageUrls);
+            } else {
+               setImageURL(['']);
+               setContentText("Please confirm your Network Connection");
+            }
+         } else {
+            setContentText("Please confirm options. You have to set toggle true and input number of images");
+         }
+         // if (blogVideo.toggle) {
+         //    // const resVideo = await createAIVideoAction(payloadVideo);
+         // }
 
-      // } catch (error: any) {
-      //    console.log(error);
-      //    setContentText("You can't create Content. Please check your subscription");
-      // }
+      } catch (error: any) {
+         console.log(error);
+         setContentText("You can't create Content. Please check your subscription");
+      }
 
    }
 
