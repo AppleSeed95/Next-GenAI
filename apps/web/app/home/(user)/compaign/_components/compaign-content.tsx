@@ -187,6 +187,7 @@ export function CompaignContent(props: Props) {
    const handleSave = async () => {
       setTitleText("");
       setContentText("");
+      const client = useSupabase();
       const account_id = (await auth).data?.id
       console.log(account_id);
 
@@ -205,7 +206,6 @@ export function CompaignContent(props: Props) {
             created_by: account_id || '',
             updated_by: null,
          }
-
          console.log(payload);
 
          const res = await saveProjectAction(payload);

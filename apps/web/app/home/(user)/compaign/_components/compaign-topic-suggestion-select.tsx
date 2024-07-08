@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { Option } from "./compaign-platform-multi-type-select";
 import { createSuggestTopic } from "../_lib/server/server-action";
 import { Input } from "@kit/ui/input";
+// import { Alert, AlertTitle, AlertDescription } from "@kit/ui/alert";
 
 
 type PropsType = {
@@ -22,23 +23,31 @@ type PropsType = {
 
 export function ContentTopicSuggestion(props: PropsType) {
     const { t } = useTranslation();
+    const [saveEnable, setSaveEnable] =useState(false);
     const [selectedTopic, setSelectedTopic] = useState('No found Idea');
     const [topicsSuggestion, setTopicsSuggestion] = useState('');
     const randomContent = getRandomOption(props.selectedOptions);
-    const [topicIdeasTitle, setTopicIdeasTitle] = useState([''])
+    const [selectedTopicIdeasTitle, setSelectedTopicIdeasTitle] = useState(['']);
+
 
     const handleDisplayTopicIdea = (e: number) => {
         const inputValue = e;
         if ( inputValue > 0 && inputValue < 6 ) {
-            setSelectedTopic(topicIdeasTitle[inputValue - 1] ?? 'No Found Idea');
+            setSelectedTopic(selectedTopicIdeasTitle[inputValue - 1] ?? 'No Found Idea');
+            setSaveEnable(true);
             console.log(selectedTopic);
         } else {
             setSelectedTopic('Please input correct Nmber');
+            setSaveEnable(false);
         }
     }
 
     const handleSaveIdea = () => {
-        
+        if (saveEnable == true) {
+            console.log("Success");
+        } else {
+            console.log("Faild");
+        }
     }
 
     const handleTopics = async () => {
@@ -53,7 +62,6 @@ export function ContentTopicSuggestion(props: PropsType) {
                 const regex = /\d+\.\s\*\*([^\*]+)\*\*/g;
                 let match;
                 const titles: string[] = [];
-                // Use the regex to find all matches
                 while ((match = regex.exec(resText)) !== null) {
                     if (match[1]) {
                         titles.push(match[1].trim());
@@ -64,8 +72,7 @@ export function ContentTopicSuggestion(props: PropsType) {
                     setSelectedTopic(titles[Math.floor(Math.random() * 5)] ?? 'Not Found Idea');
                 }
 
-                setTopicIdeasTitle(titles);
-                console.log('Titles', titles);
+                setSelectedTopicIdeasTitle(titles);
             } else {
                 setTopicsSuggestion(t("Can't create Topic ideas!"));
             }
