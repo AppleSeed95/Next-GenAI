@@ -154,7 +154,7 @@ class AiEditorService {
     const Image_response = await this.client.images.generate({
       // model: DEFAULT_MODEL,
       model: "dall-e-3",
-      prompt: "a white siamese cat",
+      prompt: `generate a image base on "${params.context}"`,
       quality: "standard",
       n: 1,
       size: "1024x1024",
