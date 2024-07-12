@@ -14,6 +14,7 @@ import { deleteUserProject, editUserProject } from "../_lib/server/server-action
 import React, { useState } from "react"
 import { Alert, AlertDescription, AlertTitle } from "@kit/ui/alert"
 import { usePathname, useRouter } from "next/navigation"
+import Image from "next/image"
 
 type SaveOneProjectType = {
     saveValue: ProjectType
@@ -66,6 +67,16 @@ export function SaveOneProject(saveValue: SaveOneProjectType) {
                 <div className={'flex flex-col gap-6'}>
                     <Heading level={4} children={saveValue.saveValue.topic} />
                     <Heading level={6} children={saveValue.saveValue.subtopic} />
+                </div>
+                <div>
+                    <Image
+                        src={'/images/livingroom5.png'}
+                        layout="intrinsic"
+                        width={70}
+                        height={60}
+                        alt="Picture of the author"
+                        className="z-0 rounded-lg"
+                    />
                 </div>
                 <div className={'flex flex-col gap-8'}>
                     <div className={'flex flex-row gap-2 justify-between'}>

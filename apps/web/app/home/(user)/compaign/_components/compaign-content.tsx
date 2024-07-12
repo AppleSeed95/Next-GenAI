@@ -26,7 +26,7 @@ import { useSupabase } from "@kit/supabase/hooks/use-supabase"
 import { requireUser } from "@kit/supabase/require-user"
 import { CarouselImage } from "./image-dwonload-regenerate/image-carousel";
 
-const PROJECT_BUCKET = 'personal_project_image'
+const PROJECT_BUCKET = 'project_image_storage'
 
 export type BlogText = {
    type: string;
@@ -62,6 +62,7 @@ export type BlogVideo = {
 
 type Props = {
    projectValue: ProjectsType,
+   userId: string,
    onChange: (projectValue: ProjectsType) => void,
 }
 
@@ -207,13 +208,57 @@ export function CompaignContent(props: Props) {
             updated_by: null,
          }
          console.log(payload);
-
          const res = await saveProjectAction(payload);
-
       }
+   }
+   const upload = async () => {
+      console.log("Starting upload...", imageURL[0]);
+      const form = new FormData();
+      try {
+         // const response = await fetch(imageURL[0] || "/images/livingroom5.png",);
+         const response = await fetch('http://localhost:3000/api/extra-fetch',{
+            method: 'POST',   // Specify the HTTP method
+            headers: {
+                'Content-Type': 'application/json',  // Required for JSON payloads
+            },
+            body: JSON.stringify({url:imageURL[0]})  // Convert the JavaScript object to a JSON string
+         })
+         if (!response.ok) {
+            throw new Error('Network response was not ok');
+         }
+         if(response.body){    
+            const bucket = client.storage.from(PROJECT_BUCKET);
+            const reader = response.body.getReader();
+            const chunks = [];
+            let push;
+            while (!(push = await reader.read()).done) {
+               chunks.push(push.value);
+            }
+            const blob = new Blob(chunks, { type: 'image/png' });            
+            const filename = "your_image.png"
+            const file = new File([blob], filename, {
+               type: blob.type,
+               lastModified: new Date().getTime() // or any timestamp representing file's last modification
+           })
+           console.log(file);
+            const bytes = await file.arrayBuffer();
+            const extension = blogImage.format;
+            const fileName = await getImageFileName(props.userId, extension);
+            console.log(typeof(bytes))
+            const uploaded = await bucket.upload(fileName, bytes);
+         }
+         
+      } catch (error) {
+         console.error('Error uploading image:', error);
+      }
+   }
 
-
-      // console.log(props.projectValue)
+   async function getImageFileName( userId: string, extenstion: string | undefined) {
+      const { nanoid } = await import ('nanoid');
+      const uniqueId = nanoid(16);
+      console.log(uniqueId);
+      return `${userId}.${extenstion}?v=${uniqueId}`;
+      // return `${userId}${props.projectValue.pName}.${extenstion}?v=${uniqueId}`;
    }
 
    return (
@@ -284,6 +329,7 @@ export function CompaignContent(props: Props) {
                            {t('Close')}
                         </Button>
                      </DialogClose>
+                     <Button variant={'outline'} onClick={upload}>{t('Upload')}</Button>
                      <DialogClose asChild>
                         <Button variant={'outline'} onClick={handleSave}>{t('Save changes')}</Button>
                      </DialogClose>

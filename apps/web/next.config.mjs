@@ -106,6 +106,5 @@ function getRemotePatterns() {
         //   protocol: 'http',
         //   hostname: 'http://85.214.100.152/',
         // },
-        
       ];
 }
