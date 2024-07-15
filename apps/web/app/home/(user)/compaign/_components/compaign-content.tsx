@@ -188,9 +188,7 @@ export function CompaignContent(props: Props) {
    const handleSave = async () => {
       setTitleText("");
       setContentText("");
-      const client = useSupabase();
       const account_id = (await auth).data?.id
-      console.log(account_id);
 
       if ((await auth).data) {
          const payload = {
@@ -207,15 +205,17 @@ export function CompaignContent(props: Props) {
             created_by: account_id || '',
             updated_by: null,
          }
-         console.log(payload);
          const res = await saveProjectAction(payload);
+         if(res) {
+            alert("saved successfully!")
+         } else {
+            alert("can't save content!")
+         }
       }
    }
+
    const upload = async () => {
-      console.log("Starting upload...", imageURL[0]);
-      const form = new FormData();
       try {
-         // const response = await fetch(imageURL[0] || "/images/livingroom5.png",);
          const response = await fetch('http://localhost:3000/api/extra-fetch',{
             method: 'POST',   // Specify the HTTP method
             headers: {
@@ -240,7 +240,6 @@ export function CompaignContent(props: Props) {
                type: blob.type,
                lastModified: new Date().getTime() // or any timestamp representing file's last modification
            })
-           console.log(file);
             const bytes = await file.arrayBuffer();
             const extension = blogImage.format;
             const fileName = await getImageFileName(props.userId, extension);
@@ -256,7 +255,6 @@ export function CompaignContent(props: Props) {
    async function getImageFileName( userId: string, extenstion: string | undefined) {
       const { nanoid } = await import ('nanoid');
       const uniqueId = nanoid(16);
-      console.log(uniqueId);
       return `${userId}.${extenstion}?v=${uniqueId}`;
       // return `${userId}${props.projectValue.pName}.${extenstion}?v=${uniqueId}`;
    }

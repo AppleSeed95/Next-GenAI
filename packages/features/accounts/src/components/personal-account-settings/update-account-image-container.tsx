@@ -143,7 +143,7 @@ async function uploadUserProfilePhoto(
   const bucket = client.storage.from(AVATARS_BUCKET);
   const extension = photoFile.name.split('.').pop();
   const fileName = await getAvatarFileName(userId, extension);
-
+  console.log(typeof(bytes))
   const result = await bucket.upload(fileName, bytes);
 
   if (!result.error) {

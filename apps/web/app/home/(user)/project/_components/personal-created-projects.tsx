@@ -19,7 +19,7 @@ const FiltersSchema = z.object({
    state: z.string().optional(),
 });
 
-export function SearchOptions(props: Props) {
+export function PersonalCreatedProjects(props: Props) {
    const form = useForm({
       resolver: zodResolver(FiltersSchema),
       defaultValues: {
@@ -44,8 +44,6 @@ export function SearchOptions(props: Props) {
       console.log(params);
 
       const url = `${pathName}?${params.toString()}`;
-      console.log(url);
-
       router.push(url);
    };
 

@@ -31,8 +31,8 @@ export function CardProject(props: PropsType) {
 
    return (
       <div className="flex flex-col items-center space-x-4 w-full gap-8">
-         {savedProject.map((item) => (
-            <SaveOneProject saveValue={item} />
+         {savedProject.map((item, index) => (
+            <SaveOneProject saveValue={item} key={index}/>
          ))}
       </div>
    )

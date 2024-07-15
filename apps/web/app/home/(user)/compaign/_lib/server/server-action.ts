@@ -151,7 +151,7 @@ export const saveProjectAction = enhanceAction(
       logger.info(data, `Content saved successfully`);
 
 
-      return null;
+      return true;
    },
    {
       schema: SaveProjectSchema,

@@ -14,13 +14,14 @@ import { deleteUserProject, editUserProject } from "../_lib/server/server-action
 import React, { useState } from "react"
 import { Alert, AlertDescription, AlertTitle } from "@kit/ui/alert"
 import { usePathname, useRouter } from "next/navigation"
-import Image from "next/image"
+import Image from "next/image";
 
-type SaveOneProjectType = {
-    saveValue: ProjectType
+type Props = {
+    saveValue: ProjectType,
 }
 
-export function SaveOneProject(saveValue: SaveOneProjectType) {
+
+export function SaveOneProject(saveValue: Props) {
     const router = useRouter();
     const pathName = usePathname();
     const url = `${pathName}`;
@@ -72,8 +73,8 @@ export function SaveOneProject(saveValue: SaveOneProjectType) {
                     <Image
                         src={'/images/livingroom5.png'}
                         layout="intrinsic"
-                        width={70}
-                        height={60}
+                        width={100}
+                        height={80}
                         alt="Picture of the author"
                         className="z-0 rounded-lg"
                     />
