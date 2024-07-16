@@ -102,9 +102,9 @@ function getRemotePatterns() {
           port: '',
           pathname: '/private/**',
         },
-        // {
-        //   protocol: 'http',
-        //   hostname: 'http://85.214.100.152/',
-        // },
+        {
+          protocol: 'http',
+          hostname: 'http://85.214.100.152/',
+        },
       ];
 }
