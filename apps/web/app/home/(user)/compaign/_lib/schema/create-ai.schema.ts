@@ -16,6 +16,7 @@ export const CreateAIImageSchema = z
    description: z.string(),
    size: z.string(),
    amount: z.number(),
+   topicIdea: z.string(),
    maintopic: z.string(),
    subtopic: z.string(),
 })

@@ -18,6 +18,8 @@ import { ContentTopicSuggestion } from "./compaign-topic-suggestion-select";
 
 type Props = {
    projectValue: ProjectsType,
+   generatedTopicIdeas: string,
+   setGeneratedTopicIdeas: (data: string) => void,
    onChange: (projectValue: ProjectsType) => void,
 }
 
@@ -101,7 +103,7 @@ export function CompaignPlatformSelect(props: Props) {
                      options={options}
                      onChange={(data) => { setSelectedOptions(data) }}
                   />
-                  <ContentTopicSuggestion selectedOptions={options} topic={props.projectValue.pMainTopic} isAuto={props.projectValue.pmode} onChange={() => { setSelectedOptions([]) }} />
+                  <ContentTopicSuggestion selectedOptions={options} topic={props.projectValue.pMainTopic} isAuto={props.projectValue.pmode} onChange={() => { setSelectedOptions([]) }} generatedTopicIdeas={props.generatedTopicIdeas} setGeneratedTopicIdeas={(data) => props.setGeneratedTopicIdeas(data)}/>
                </div>
             </Card>
          </div>

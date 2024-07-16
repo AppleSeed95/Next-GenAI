@@ -56,6 +56,7 @@ export const createAIImageAction = enhanceAction(
             context: data.description,
             size: data.size,
             amount: data.amount,
+            topicIdea: data.topicIdea,
          });
          return response;
 

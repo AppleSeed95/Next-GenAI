@@ -36,14 +36,14 @@ export function PersonalContentCreatorContainer(
       platform: 'Linkedin',
       platformurl: ''
    })
-
+   const [generatedTopicIdeas, setGeneratedTopicIdeas] = useState('');
 
    return (
       <>
          <div className={'flex flex-col gap-10'}>
             <CompaignHeader projectValue={projectValue} onChange={(data) => { setProjectValue(data) }} />
-            <CompaignPlatformSelect projectValue={projectValue} onChange={(data) => { setProjectValue(data) }} />
-            <CompaignContent projectValue={projectValue} onChange={(data) => { setProjectValue(data) }} userId={props.userId}/>
+            <CompaignPlatformSelect projectValue={projectValue} onChange={(data) => { setProjectValue(data)}} generatedTopicIdeas={generatedTopicIdeas} setGeneratedTopicIdeas={(data) => setGeneratedTopicIdeas(data)}/>
+            <CompaignContent projectValue={projectValue} onChange={(data) => { setProjectValue(data) }} userId={props.userId} generatedTopicIdeas={generatedTopicIdeas}/>
          </div>
       </>
    )

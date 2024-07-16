@@ -16,6 +16,8 @@ type PropsType = {
     selectedOptions: Option[],
     topic: string,
     isAuto: string,
+    generatedTopicIdeas: string,
+    setGeneratedTopicIdeas: (data: string) => void,
     onChange: () => void
 }
 
@@ -33,9 +35,9 @@ export function ContentTopicSuggestion(props: PropsType) {
     const handleDisplayTopicIdea = (e: number) => {
         const inputValue = e;
         if ( inputValue > 0 && inputValue < 6 ) {
-            setSelectedTopic(selectedTopicIdeasTitle[inputValue - 1] ?? 'No Found Idea');
+            props.setGeneratedTopicIdeas(selectedTopicIdeasTitle[inputValue - 1] ?? 'No Found Idea');
             setSaveEnable(true);
-            console.log(selectedTopic);
+            console.log(props.generatedTopicIdeas);
         } else {
             setSelectedTopic('Please input correct Nmber');
             setSaveEnable(false);

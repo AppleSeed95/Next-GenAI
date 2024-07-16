@@ -30,6 +30,7 @@ export function SaveOneProject(saveValue: Props) {
     const [editedProjectName, setEditedProjectName] = useState(saveValue.saveValue.project_name);
     const [editedTopic, setEditedTopic] = useState(saveValue.saveValue.topic);
     const [resultMessage, setResultMessage] = useState('');
+    const account_id = saveValue.saveValue.account_id;
 
 
     const handleDelete = async (id: number) => {

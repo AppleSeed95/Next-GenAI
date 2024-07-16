@@ -63,6 +63,7 @@ export type BlogVideo = {
 type Props = {
    projectValue: ProjectsType,
    userId: string,
+   generatedTopicIdeas: string,
    onChange: (projectValue: ProjectsType) => void,
 }
 
@@ -122,6 +123,7 @@ export function CompaignContent(props: Props) {
             description: blogImage.description || '',
             amount: blogImage.amount,
             size: blogImage.size,
+            topicIdea: props.generatedTopicIdeas,
             maintopic: props.projectValue.pMainTopic,
             subtopic: props.projectValue.pSubTopic
          }
@@ -161,6 +163,7 @@ export function CompaignContent(props: Props) {
          }
 
          if (blogImage.toggle) {
+            console.log(props.generatedTopicIdeas);
             const resImage = await createAIImageAction(payloadImage);
 
             if (resImage != "Error") {
@@ -206,7 +209,7 @@ export function CompaignContent(props: Props) {
             updated_by: null,
          }
          const res = await saveProjectAction(payload);
-         if(res) {
+         if (res) {
             alert("saved successfully!")
          } else {
             alert("can't save content!")
@@ -215,18 +218,19 @@ export function CompaignContent(props: Props) {
    }
 
    const upload = async () => {
+      console.log(process.env.NEXT_PUBLIC_SITE_URL)
       try {
-         const response = await fetch('http://localhost:3000/api/extra-fetch',{
+         const response = await fetch('http://localhost:3000/api/extra-fetch', {
             method: 'POST',   // Specify the HTTP method
             headers: {
-                'Content-Type': 'application/json',  // Required for JSON payloads
+               'Content-Type': 'application/json',  // Required for JSON payloads
             },
-            body: JSON.stringify({url:imageURL[0]})  // Convert the JavaScript object to a JSON string
+            body: JSON.stringify({ url: imageURL[0] })  // Convert the JavaScript object to a JSON string
          })
          if (!response.ok) {
             throw new Error('Network response was not ok');
          }
-         if(response.body){    
+         if (response.body) {
             const bucket = client.storage.from(PROJECT_BUCKET);
             const reader = response.body.getReader();
             const chunks = [];
@@ -234,29 +238,30 @@ export function CompaignContent(props: Props) {
             while (!(push = await reader.read()).done) {
                chunks.push(push.value);
             }
-            const blob = new Blob(chunks, { type: 'image/png' });            
+            const blob = new Blob(chunks, { type: 'image/png' });
             const filename = "your_image.png"
             const file = new File([blob], filename, {
                type: blob.type,
                lastModified: new Date().getTime() // or any timestamp representing file's last modification
-           })
+            })
             const bytes = await file.arrayBuffer();
             const extension = blogImage.format;
             const fileName = await getImageFileName(props.userId, extension);
-            console.log(typeof(bytes))
+            console.log(typeof (bytes))
             const uploaded = await bucket.upload(fileName, bytes);
          }
-         
+
       } catch (error) {
          console.error('Error uploading image:', error);
       }
    }
 
-   async function getImageFileName( userId: string, extenstion: string | undefined) {
-      const { nanoid } = await import ('nanoid');
+   async function getImageFileName(userId: string, extenstion: string | undefined) {
+      const { nanoid } = await import('nanoid');
       const uniqueId = nanoid(16);
+      const formattedProjectName = props.projectValue.pName.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_-]/g, '');
       return `${userId}.${extenstion}?v=${uniqueId}`;
-      // return `${userId}${props.projectValue.pName}.${extenstion}?v=${uniqueId}`;
+      // return `${userId}_${formattedProjectName}.${extenstion}?v=${uniqueId}`;
    }
 
    return (

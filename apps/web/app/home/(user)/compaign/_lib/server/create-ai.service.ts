@@ -142,7 +142,7 @@ class AiEditorService {
    * @param {string} params.context - The context to be used for generating the Content.
    * @return {Promise<object>} A promise that resolves to an object representing the generated Content.
    */
-  async completeImageContent(params: { format: string, context: string, size: string, amount: number }) {
+  async completeImageContent(params: { format: string, context: string, size: string, amount: number, topicIdea: string }) {
 
     const prompt = [
       {
@@ -154,7 +154,7 @@ class AiEditorService {
     const Image_response = await this.client.images.generate({
       // model: DEFAULT_MODEL,
       model: "dall-e-3",
-      prompt: `generate a image base on "${params.context}"`,
+      prompt: `generate a image base on "${params.topicIdea}"`,
       quality: "standard",
       n: 1,
       size: "1024x1024",
