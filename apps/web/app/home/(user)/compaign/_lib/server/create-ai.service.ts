@@ -149,12 +149,41 @@ class AiEditorService {
         "role": SYSTEM,
         "content": `You are assisting USER in writing professional text. Never use double quotes.`,
       },
+      {
+
+        "role": USER,
+
+        "content": `
+        
+        Generate a prompt based on the provided parameters:
+        -Topic idea: "${params.topicIdea}".
+        - Language: "English"
+        This is the prompt to generate image using Dall-E 3 model.
+        
+          Requirements:
+          - Generate prompt to generate Realistic and high resolution image, High definition image.  
+          - Generate prompt in 3 ~ 5 sentences.
+          - You have to generate in English.
+        `.trim()
+
+      },
     ];
+
+    const GPT_response = await this.client.chat.completions.create({
+      // model: DEFAULT_MODEL,
+      model: "gpt-4-turbo",
+      messages: prompt,
+      // baseURL: "https://api.openai.com/v1/assistants",
+      // max_tokens: 50,
+      temperature: 0.8,
+      // stream: true,
+      // top_p: 1,
+    });
 
     const Image_response = await this.client.images.generate({
       // model: DEFAULT_MODEL,
       model: "dall-e-3",
-      prompt: `generate a image base on "${params.topicIdea}"`,
+      prompt: `generate a image base on "${GPT_response}"`,
       quality: "standard",
       n: 1,
       size: "1024x1024",

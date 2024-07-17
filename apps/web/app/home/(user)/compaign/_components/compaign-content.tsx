@@ -220,7 +220,7 @@ export function CompaignContent(props: Props) {
    const upload = async () => {
       console.log(process.env.NEXT_PUBLIC_SITE_URL)
       try {
-         const response = await fetch('http://localhost:3000/api/extra-fetch', {
+         const response = await fetch('process.env.NEXT_PUBLIC_SITE_URL', {
             method: 'POST',   // Specify the HTTP method
             headers: {
                'Content-Type': 'application/json',  // Required for JSON payloads
