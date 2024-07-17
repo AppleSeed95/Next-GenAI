@@ -76,40 +76,42 @@ function getRemotePatterns() {
   const remotePatterns = [
     {
       protocol: 'http',
-      hostname: 'http://85.214.100.152/',
+      hostname: 'http://85.214.100.152',
     }
   ];
 
   if (SUPABASE_URL) {
     const hostname = new URL(SUPABASE_URL).hostname;
 
-    remotePatterns.push({
-      protocol: 'https',
-      hostname: 'oaidalleapiprodscus.blob.core.windows.net',
-      pathname: '/private/**', 
-    });
+    remotePatterns.push(
+      {
+        protocol: 'https',
+        hostname: 'oaidalleapiprodscus.blob.core.windows.net',
+        pathname: '/private/**',
+      }
+    );
   }
 
   return IS_PRODUCTION
     ? remotePatterns
     : [
-        {
-          protocol: 'http',
-          hostname: '127.0.0.1',
-        },
-        {
-          protocol: 'http',
-          hostname: 'localhost',
-        },
-        {
-          protocol: 'https',
-          hostname: 'oaidalleapiprodscus.blob.core.windows.net',
-          port: '',
-          pathname: '/private/**',
-        },
-        {
-          protocol: 'http',
-          hostname: 'http://85.214.100.152/',
-        },
-      ];
+      {
+        protocol: 'http',
+        hostname: '127.0.0.1',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+      {
+        protocol: 'https',
+        hostname: 'oaidalleapiprodscus.blob.core.windows.net',
+        port: '',
+        pathname: '/private/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'http://85.214.100.152',
+      },
+    ];
 }
