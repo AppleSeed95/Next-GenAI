@@ -163,6 +163,7 @@ class AiEditorService {
           - Prompt should not contain text that is not allowed by Openai safety system.
           - Generate prompt to generate Realistic and high resolution image, High definition image.  
           - Generate prompt 3 ~ 5 sentences.
+          - Generate realistic and rich prompt.
           - You have to generate in English.
         `.trim()
       },

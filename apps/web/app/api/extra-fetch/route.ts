@@ -6,12 +6,12 @@ import { enhanceRouteHandler } from '@kit/next/routes';
  */
 export const POST = enhanceRouteHandler(
   async ({ request }) => {
-    console.log("Here !")
 
     try {
       // handle the webhook event
         const {url} = await request.json();
         const response = await fetch(url);
+        console.log("Response :", response)
         if (!response.ok) throw new Error('Failed to fetch the image');
         const buffer = await response.arrayBuffer();
         console.log("Buffer : ", buffer)

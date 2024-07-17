@@ -219,8 +219,10 @@ export function CompaignContent(props: Props) {
 
    const upload = async () => {
       console.log(process.env.NEXT_PUBLIC_SITE_URL)
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+      const url = `${baseUrl}/api/extra-fetch`;
       try {
-         const response = await fetch('process.env.NEXT_PUBLIC_SITE_URL', {
+         const response = await fetch(url, {
             method: 'POST',   // Specify the HTTP method
             headers: {
                'Content-Type': 'application/json',  // Required for JSON payloads
