@@ -12,7 +12,6 @@ export const POST = enhanceRouteHandler(
         const {url} = await request.json();
         const response = await fetch(url);
         if (!response.ok) throw new Error('Failed to fetch the image');
-
         const buffer = await response.arrayBuffer();
       // return a successful response
       return new Response(buffer, { status: 200 });
