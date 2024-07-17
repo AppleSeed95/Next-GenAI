@@ -209,11 +209,14 @@ export function CompaignContent(props: Props) {
             updated_by: null,
          }
          const res = await saveProjectAction(payload);
+         await upload();
+
          if (res) {
             alert("saved successfully!")
          } else {
             alert("can't save content!")
          }
+
       }
    }
 
@@ -334,7 +337,6 @@ export function CompaignContent(props: Props) {
                            {t('Close')}
                         </Button>
                      </DialogClose>
-                     <Button variant={'outline'} onClick={upload}>{t('Upload')}</Button>
                      <DialogClose asChild>
                         <Button variant={'outline'} onClick={handleSave}>{t('Save changes')}</Button>
                      </DialogClose>

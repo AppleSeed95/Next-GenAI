@@ -11,10 +11,11 @@ import { Textarea } from "@kit/ui/textarea"
 import { ProjectType } from "./card-saved-project"
 import { Trans, useTranslation } from "react-i18next"
 import { deleteUserProject, editUserProject } from "../_lib/server/server-action-user-project"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Alert, AlertDescription, AlertTitle } from "@kit/ui/alert"
 import { usePathname, useRouter } from "next/navigation"
 import Image from "next/image";
+import { useSupabase } from "@kit/supabase/hooks/use-supabase"
 
 type Props = {
     saveValue: ProjectType,
@@ -30,7 +31,21 @@ export function SaveOneProject(saveValue: Props) {
     const [editedProjectName, setEditedProjectName] = useState(saveValue.saveValue.project_name);
     const [editedTopic, setEditedTopic] = useState(saveValue.saveValue.topic);
     const [resultMessage, setResultMessage] = useState('');
+    const [imageUrl, setImageUrl] = useState('');
     const account_id = saveValue.saveValue.account_id;
+    const client = useSupabase();
+
+    useEffect(() => {
+        const fetchImageUrl = async () => {
+            const { data } = client
+                .storage
+                .from('project_image_storage')
+                .getPublicUrl(`${account_id}`);
+            setImageUrl(data.publicUrl);
+        };
+
+        fetchImageUrl();
+    }, []);
 
 
     const handleDelete = async (id: number) => {
@@ -72,7 +87,7 @@ export function SaveOneProject(saveValue: Props) {
                 </div>
                 <div>
                     <Image
-                        src={'/images/livingroom5.png'}
+                        src={imageUrl}
                         layout="intrinsic"
                         width={100}
                         height={80}
