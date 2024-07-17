@@ -98,7 +98,7 @@ class AiEditorService {
    * @return {Promise<object>} A promise that resolves to an object representing the generated Content.
    */
   async completeSuggestTopics(params: { topic: string, contentType: string }) {
-
+    
     const prompt = [
       {
         "role": SYSTEM,
@@ -147,24 +147,21 @@ class AiEditorService {
     const prompt = [
       {
         "role": SYSTEM,
-        "content": `You are assisting USER in writing professional text. Never use double quotes.`,
+        "content": "You are assisting USER in writing professional text. Never use double quotes."
       },
       {
-
         "role": USER,
-
         "content": `
-        
-        Generate a prompt based on the provided parameters for image generation using Dall-E 3 model:
-        -Topic idea: "${params.topicIdea}".
-        - Language: "English"
-        
+          Generate a prompt for image generation using the DALL-E 3 model:
+          - Topic idea: "${params.topicIdea}".
+          - Language: English.
+    
           Requirements:
-          - Prompt should not contain text that is not allowed by Openai safety system.
-          - Generate prompt to generate Realistic and high resolution image, High definition image.  
-          - Generate prompt 3 ~ 5 sentences.
-          - Generate realistic and rich prompt.
-          - You have to generate in English.
+          - The prompt should be compliant with OpenAI's safety guidelines.
+          - Create a realistic, high-resolution, high-definition image.
+          - The prompt should be rich and descriptive, spanning 3 to 5 sentences.
+          - The resultant image should appear lifelike and detailed.
+          - All text for the prompt must be in English.
         `.trim()
       },
     ];
