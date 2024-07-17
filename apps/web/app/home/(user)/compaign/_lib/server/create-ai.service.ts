@@ -155,17 +155,16 @@ class AiEditorService {
 
         "content": `
         
-        Generate a prompt based on the provided parameters:
+        Generate a prompt based on the provided parameters for image generation using Dall-E 3 model:
         -Topic idea: "${params.topicIdea}".
         - Language: "English"
-        This is the prompt to generate image using Dall-E 3 model.
         
           Requirements:
+          - Prompt should not contain text that is not allowed by Openai safety system.
           - Generate prompt to generate Realistic and high resolution image, High definition image.  
-          - Generate prompt in 3 ~ 5 sentences.
+          - Generate prompt 3 ~ 5 sentences.
           - You have to generate in English.
         `.trim()
-
       },
     ];
 
@@ -180,10 +179,12 @@ class AiEditorService {
       // top_p: 1,
     });
 
+    console.log("Prompt : ", GPT_response.choices[0]?.message.content)
+
     const Image_response = await this.client.images.generate({
       // model: DEFAULT_MODEL,
       model: "dall-e-3",
-      prompt: `generate a image base on "${GPT_response}"`,
+      prompt: `generate a image base on "${GPT_response.choices[0]?.message.content}"`,
       quality: "standard",
       n: 1,
       size: "1024x1024",
@@ -193,7 +194,7 @@ class AiEditorService {
 
     // const image_url = Image_response.data[0]?.url;
 
-    console.log("GPT_Response", image_urls);
+    console.log("Image URL : ", image_urls);
     return image_urls;
   }
 

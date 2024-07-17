@@ -35,11 +35,12 @@ export function ContentTopicSuggestion(props: PropsType) {
     const handleDisplayTopicIdea = (e: number) => {
         const inputValue = e;
         if ( inputValue > 0 && inputValue < 6 ) {
+            setSelectedTopic(selectedTopicIdeasTitle[inputValue - 1] ?? 'No Found Idea');
             props.setGeneratedTopicIdeas(selectedTopicIdeasTitle[inputValue - 1] ?? 'No Found Idea');
             setSaveEnable(true);
             console.log(props.generatedTopicIdeas);
         } else {
-            setSelectedTopic('Please input correct Nmber');
+            setSelectedTopic('Please input correct Number');
             setSaveEnable(false);
         }
     }

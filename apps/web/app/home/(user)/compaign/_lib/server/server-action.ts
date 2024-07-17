@@ -8,8 +8,6 @@ import { getLogger } from '@kit/shared/logger';
 import createAiEditorService from './create-ai.service';
 import { SaveProjectSchema } from '../schema/save-project.schema';
 import { requireUser } from '@kit/supabase/require-user';
-import { z } from 'zod';
-import { redirect } from 'next/dist/server/api-utils';
 import { revalidatePath } from 'next/cache';
 import { SuggestTopicIdeaSchema } from '../schema/suggest-topic-ideas';
 import { NextResponse } from 'next/server';
