@@ -19,7 +19,7 @@ export const CompaignStepIndicatorCpn = ({ steps, currentStep, setCurrentStep }:
                             backgroundColor: '#02ab51'
                         } : {}}
                         onClick={() => {
-                            setCurrentStep(idx)
+                            // setCurrentStep(idx)
                         }}
                     >
                         {/* {idx + 1} */}

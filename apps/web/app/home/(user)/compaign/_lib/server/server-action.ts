@@ -3,7 +3,7 @@
 import { enhanceAction } from '@kit/next/actions';
 import { getSupabaseServerActionClient } from '@kit/supabase/server-actions-client';
 
-import { CreateAIImageSchema, CreateAITextSchema, CreateAIVideoSchema, downloadImageSchema } from '../schema/create-ai.schema';
+import { SuggestPostTopicSchema, generatePostContentSchema, CreateAIImageSchema, CreateAITextSchema, CreateAIVideoSchema, downloadImageSchema } from '../schema/create-ai.schema';
 import { getLogger } from '@kit/shared/logger';
 import createAiEditorService from './create-ai.service';
 import { SaveProjectSchema } from '../schema/save-project.schema';
@@ -21,14 +21,7 @@ export const createAITextAction = enhanceAction(
    async function (data) {
       const client = getSupabaseServerActionClient();
       try {
-         const response = await createAiEditorService().completeTextContent({
-            brand: data.brand,
-            context: data.description,
-            lang: data.lang,
-            words: data.words,
-            maintopic: data.maintopic,
-            subtopic: data.subtopic,
-         });
+         const response = await createAiEditorService().suggestTextTopic(data);
 
          // const stream = OpenAIStream(response);
          // return new StreamingTextResponse(stream);
@@ -41,7 +34,47 @@ export const createAITextAction = enhanceAction(
       }
    },
    {
-      schema: CreateAITextSchema,
+      schema: SuggestPostTopicSchema,
+   }
+);
+export const suggestPostTopicAction = enhanceAction(
+   async function (data) {
+      const client = getSupabaseServerActionClient();
+      try {
+         const response = await createAiEditorService().suggestTextTopic(data);
+
+         // const stream = OpenAIStream(response);
+         // return new StreamingTextResponse(stream);
+         return response as String;
+
+      } catch (e) {
+         console.log("Bug: ", e);
+         // return NextResponse.error();
+         return ("Error");
+      }
+   },
+   {
+      schema: SuggestPostTopicSchema,
+   }
+);
+export const generatePostTextContentAction = enhanceAction(
+   async function (data) {
+      const client = getSupabaseServerActionClient();
+      try {
+         const response = await createAiEditorService().generatePostTextContent(data);
+
+         // const stream = OpenAIStream(response);
+         // return new StreamingTextResponse(stream);
+         return response;
+
+      } catch (e) {
+         console.log("Bug: ", e);
+         // return NextResponse.error();
+         return ("Error");
+      }
+   },
+   {
+      schema: generatePostContentSchema,
    }
 );
 
@@ -50,11 +83,7 @@ export const createAIImageAction = enhanceAction(
       const client = getSupabaseServerActionClient();
       try {
          const response = await createAiEditorService().completeImageContent({
-            format: data.format,
-            context: data.description,
-            size: data.size,
-            amount: data.amount,
-            topicIdea: data.topicIdea,
+            idea: data.idea
          });
          return response;
 
@@ -133,7 +162,7 @@ export const saveProjectAction = enhanceAction(
          //   redirect(auth.redirectTo);
       }
 
-      logger.info(params, `Adding saveData...` );
+      logger.info(params, `Adding saveData...`);
       logger.info(saveData, `Adding saveData...`);
 
       const { data, error } = await client.from('project_table')

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { OpenAI } from 'openai';
+import { ProjectsType } from '../../_components/personal-compaign-creator-container';
 
 const DEFAULT_MODEL = process.env.OPENAI_MODEL_NAME as string;
 const SYSTEM = 'system' as const;
@@ -89,6 +90,104 @@ class AiEditorService {
     console.log("GPT_Response", GPT_response.choices[0]?.message.content);
     return GPT_response.choices[0]?.message.content;
   }
+  async suggestTextTopic(projectValue: { mainTopic: string, subTopic: string, atmosphere: string }) {
+    const generateAtmosphere = (array: string[]): string => {
+      let result = '';
+      array.forEach(((a) => {
+        result += a + ','
+      }));
+      return result;
+    }
+    const prompt = [
+      {
+        "role": SYSTEM,
+        "content": `You are assisting USER in writing professional text. Never use double quotes.`,
+      },
+      {
+
+        "role": USER,
+
+        "content": `
+          
+        Generate 3 topics seperated with '|' based on the provided parameters:
+        - Main Topic: "${projectValue.mainTopic}"
+        - Subtopic: "${projectValue.subTopic}"
+        - Language: "${'english'}"
+        - Atmosphere: "${generateAtmosphere(JSON.parse(projectValue.atmosphere))}"
+        
+          Requirements:
+          Each sentence should not exceed 20 words.
+           - each topic should not contain any commas.
+           - Do not provide number-ordered topics, I need '|'-seperated results.
+           - Compose a title of 4 to 10 impactful words related to the main topic, subtopic, and Atmosphere.
+           - Avoid using the word "Title."
+           - Ensure the title is in the specified language, "${'english'}".
+           - you have to don't use "Title" word
+        `.trim()
+
+      },
+    ];
+
+    const GPT_response = await this.client.chat.completions.create({
+      // model: DEFAULT_MODEL,
+      model: "gpt-4-turbo",
+      messages: prompt,
+      // baseURL: "https://api.openai.com/v1/assistants",
+      // max_tokens: 50,
+      temperature: 0.8,
+      // stream: true,
+      // top_p: 1,
+    });
+
+    // for await (const chunk of GPT_response) {
+    //   console.log(chunk.choices[0]?.delta.content); // this code from the doc runs
+    // }
+
+
+    console.log("GPT_Response", GPT_response.choices[0]?.message.content);
+    return GPT_response.choices[0]?.message.content;
+  }
+  async generatePostTextContent(data: { topic: string }) {
+    const prompt = [
+      {
+        "role": SYSTEM,
+        "content": `You are assisting USER in writing professional text. Never use double quotes.`,
+      },
+      {
+
+        "role": USER,
+
+        "content": `
+          
+        Generate contents based on the current topic:${data.topic}:
+        
+          Requirements:
+          
+           - provide with about 5 sentences.
+        `.trim()
+
+      },
+    ];
+
+    const GPT_response = await this.client.chat.completions.create({
+      // model: DEFAULT_MODEL,
+      model: "gpt-4-turbo",
+      messages: prompt,
+      // baseURL: "https://api.openai.com/v1/assistants",
+      // max_tokens: 50,
+      temperature: 0.8,
+      // stream: true,
+      // top_p: 1,
+    });
+
+    // for await (const chunk of GPT_response) {
+    //   console.log(chunk.choices[0]?.delta.content); // this code from the doc runs
+    // }
+
+
+    console.log("GPT_Response", GPT_response.choices[0]?.message.content);
+    return GPT_response.choices[0]?.message.content;
+  }
 
   /**
    * Generates a complete Suggest Topic Ideas.
@@ -98,7 +197,7 @@ class AiEditorService {
    * @return {Promise<object>} A promise that resolves to an object representing the generated Content.
    */
   async completeSuggestTopics(params: { topic: string, contentType: string }) {
-    
+
     const prompt = [
       {
         "role": SYSTEM,
@@ -142,47 +241,47 @@ class AiEditorService {
    * @param {string} params.context - The context to be used for generating the Content.
    * @return {Promise<object>} A promise that resolves to an object representing the generated Content.
    */
-  async completeImageContent(params: { format: string, context: string, size: string, amount: number, topicIdea: string }) {
+  async completeImageContent(params: { idea: string }) {
 
-    const prompt = [
-      {
-        "role": SYSTEM,
-        "content": "You are assisting USER in writing professional text. Never use double quotes."
-      },
-      {
-        "role": USER,
-        "content": `
-          Generate a prompt for image generation using the DALL-E 3 model:
-          - Topic idea: "${params.topicIdea}".
-          - Language: English.
-    
-          Requirements:
-          - The prompt should be compliant with OpenAI's safety guidelines.
-          - Create a realistic, high-resolution, high-definition image.
-          - The prompt should be rich and descriptive, spanning 3 to 5 sentences.
-          - The resultant image should appear lifelike and detailed.
-          - All text for the prompt must be in English.
-        `.trim()
-      },
-    ];
+    // const prompt = [
+    //   {
+    //     "role": SYSTEM,
+    //     "content": "You are assisting USER in writing professional text. Never use double quotes."
+    //   },
+    //   {
+    //     "role": USER,
+    //     "content": `
+    //       Generate a prompt for image generation using the DALL-E 3 model:
+    //       - Topic idea: "${params.topicIdea}".
+    //       - Language: English.
 
-    const GPT_response = await this.client.chat.completions.create({
-      // model: DEFAULT_MODEL,
-      model: "gpt-4-turbo",
-      messages: prompt,
-      // baseURL: "https://api.openai.com/v1/assistants",
-      // max_tokens: 50,
-      temperature: 0.8,
-      // stream: true,
-      // top_p: 1,
-    });
+    //       Requirements:
+    //       - The prompt should be compliant with OpenAI's safety guidelines.
+    //       - Create a realistic, high-resolution, high-definition image.
+    //       - The prompt should be rich and descriptive, spanning 3 to 5 sentences.
+    //       - The resultant image should appear lifelike and detailed.
+    //       - All text for the prompt must be in English.
+    //     `.trim()
+    //   },
+    // ];
 
-    console.log("Prompt : ", GPT_response.choices[0]?.message.content)
+    // const GPT_response = await this.client.chat.completions.create({
+    //   // model: DEFAULT_MODEL,
+    //   model: "gpt-4-turbo",
+    //   messages: prompt,
+    //   // baseURL: "https://api.openai.com/v1/assistants",
+    //   // max_tokens: 50,
+    //   temperature: 0.8,
+    //   // stream: true,
+    //   // top_p: 1,
+    // });
+
+    // console.log("Prompt : ", GPT_response.choices[0]?.message.content)
 
     const Image_response = await this.client.images.generate({
       // model: DEFAULT_MODEL,
       model: "dall-e-3",
-      prompt: `generate a image base on "${GPT_response.choices[0]?.message.content}"`,
+      prompt: `generate a realistic image representing that content: "${params.idea}"`,
       quality: "standard",
       n: 1,
       size: "1024x1024",

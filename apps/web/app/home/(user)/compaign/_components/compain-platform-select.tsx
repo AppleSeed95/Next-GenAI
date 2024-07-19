@@ -22,7 +22,7 @@ import {
    AlertDescription,
    AlertTitle,
 } from "@kit/ui/alert"
-import { AlertCircle } from "lucide-react"
+import { AlertCircle, ChevronLeft, ChevronRight } from "lucide-react"
 
 type Props = {
    setCurrentStep: (v: number) => void,
@@ -70,7 +70,6 @@ export function CompaignPlatformSelect(props: Props) {
       setMessage('');
    }
    const handleNext = () => {
-      console.log(selectedOptions);
 
       if (!(selectedOptions.length > 0)) {
          setError('Please select at least one atmosphere.');
@@ -156,8 +155,8 @@ export function CompaignPlatformSelect(props: Props) {
                </Alert>
             </div>}
             <div className="flex justify-center mt-[20px] w-full gap-[10px]">
-               <Button variant={'outline'} onClick={() => props.setCurrentStep(0)}>Prev</Button>
-               <Button variant={'outline'} onClick={handleNext}>Next</Button>
+               <Button variant={'outline'} onClick={() => props.setCurrentStep(0)}><ChevronLeft /> Prev</Button>
+               <Button variant={'outline'} onClick={handleNext}>Next <ChevronRight /></Button>
             </div>
             {/* <div className={'flex flex-col gap-4 px-7 py-6 justify-center sm:justify-between items-center'}>
                <div className={'flex flex-col gap-4'}>

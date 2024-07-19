@@ -15,7 +15,7 @@ import {
    AlertDescription,
    AlertTitle,
 } from "@kit/ui/alert"
-import { AlertCircle } from "lucide-react"
+import { AlertCircle, ChevronLeft, ChevronRight } from "lucide-react"
 
 
 
@@ -150,8 +150,8 @@ export function CompaignHeader(props: Props) {
                </Alert>
             </div>}
             <div className="flex justify-center mt-[30px] w-full gap-[10px]">
-               <Button disabled variant={'outline'}>Prev</Button>
-               <Button onClick={handleNext} variant={'outline'}>Next</Button>
+               <Button disabled variant={'outline'}><ChevronLeft /> Prev</Button>
+               <Button onClick={handleNext} variant={'outline'}>Next<ChevronRight /></Button>
             </div>
          </div>
       </PageBody>

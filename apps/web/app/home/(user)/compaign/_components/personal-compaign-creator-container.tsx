@@ -5,6 +5,9 @@ import { CompaignPlatformSelect } from "./compain-platform-select";
 import { CompaignStepIndicatorCpn } from "./compaign-step-indicator";
 import React, { useState } from "react";
 import { CampaignTextResultCpn } from "./campaign-text-result";
+import { CampaignImageResultCpn } from "./campaign-image-result";
+import { CampaignVideoResultCpn } from "./campaign-video-result";
+import { CampaignResultFinalCpn } from "./campaign-result-final";
 
 export type ProjectsType = {
    pName: string;
@@ -18,7 +21,10 @@ export type ProjectsType = {
    platformurl: string,
    pCnt: number,
    pAtmosphere: string,
-   pPostMode: string
+   pPostMode: string,
+   pTitle: string,
+   pTextContent: string,
+   pImages: string[]
 }
 
 
@@ -31,11 +37,11 @@ export function PersonalContentCreatorContainer(
    }>
 ) {
    const [step, setStep] = useState(0);
-   const stepDescriptions = ['Config your campaign', 'Platform settings']
+   const stepDescriptions = ['Config your campaign', 'Platform settings', 'Text generation', 'Image generation', 'Video generation', "Save your project!"]
    const [projectValue, setProjectValue] = useState<ProjectsType>({
       pName: 'test',
-      pMainTopic: 'test',
-      pSubTopic: 'test',
+      pMainTopic: 'football',
+      pSubTopic: 'goalkeeper',
       pmode: 'auto',
       pstate: true,
       pCnt: 1,
@@ -44,7 +50,10 @@ export function PersonalContentCreatorContainer(
       platform: 'linkedin',
       platformurl: '',
       pAtmosphere: JSON.stringify([]),
-      pPostMode: 'weekly'
+      pPostMode: 'weekly',
+      pTitle: '',
+      pTextContent: '',
+      pImages: [],
    })
    const [generatedTopicIdeas, setGeneratedTopicIdeas] = useState('');
 
@@ -59,7 +68,10 @@ export function PersonalContentCreatorContainer(
             </div>
             {step === 0 && <CompaignHeader currentStep={0} setCurrentStep={setStep} projectValue={projectValue} onChange={(data) => { setProjectValue(data) }} />}
             {step === 1 && <CompaignPlatformSelect setCurrentStep={setStep} projectValue={projectValue} onChange={(data) => { setProjectValue(data) }} generatedTopicIdeas={generatedTopicIdeas} setGeneratedTopicIdeas={(data) => setGeneratedTopicIdeas(data)} />}
-            {step === 2 && <CampaignTextResultCpn projectProps={projectValue} />}
+            {step === 2 && <CampaignTextResultCpn setCurrentStep={setStep} projectProps={projectValue} setProjectValue={setProjectValue} />}
+            {step === 3 && <CampaignImageResultCpn setCurrentStep={setStep} projectProps={projectValue} setProjectValue={setProjectValue} />}
+            {step === 4 && <CampaignVideoResultCpn setCurrentStep={setStep} projectProps={projectValue} setProjectValue={setProjectValue} />}
+            {step === 5 && <CampaignResultFinalCpn setCurrentStep={setStep} projectProps={projectValue} />}
             {/* <CompaignContent projectValue={projectValue} onChange={(data) => { setProjectValue(data) }} userId={props.userId} generatedTopicIdeas={generatedTopicIdeas} /> */}
          </div>
       </>

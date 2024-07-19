@@ -25,7 +25,7 @@ const INTERNAL_PACKAGES = [
 
 /** @type {import('next').NextConfig} */
 const config = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: INTERNAL_PACKAGES,
   images: {
@@ -81,30 +81,30 @@ function getRemotePatterns() {
     remotePatterns.push({
       protocol: 'https',
       hostname: 'oaidalleapiprodscus.blob.core.windows.net',
-      pathname: '/private/**', 
+      pathname: '/private/**',
     });
   }
 
   return IS_PRODUCTION
     ? remotePatterns
     : [
-        {
-          protocol: 'http',
-          hostname: '127.0.0.1',
-        },
-        {
-          protocol: 'http',
-          hostname: 'localhost',
-        },
-        {
-          protocol: 'https',
-          hostname: 'oaidalleapiprodscus.blob.core.windows.net',
-          port: '',
-          pathname: '/private/**',
-        },
-        {
-          protocol: 'http',
-          hostname: '85.214.100.152',
-        },
-      ];
+      {
+        protocol: 'http',
+        hostname: '127.0.0.1',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+      {
+        protocol: 'https',
+        hostname: 'oaidalleapiprodscus.blob.core.windows.net',
+        port: '',
+        pathname: '/private/**',
+      },
+      {
+        protocol: 'http',
+        hostname: '85.214.100.152',
+      },
+    ];
 }
