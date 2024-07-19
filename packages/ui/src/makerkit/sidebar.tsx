@@ -28,11 +28,11 @@ export function Sidebar(props: {
   collapsed?: boolean;
   className?: string;
   children:
-    | React.ReactNode
-    | ((props: {
-        collapsed: boolean;
-        setCollapsed: (collapsed: boolean) => void;
-      }) => React.ReactNode);
+  | React.ReactNode
+  | ((props: {
+    collapsed: boolean;
+    setCollapsed: (collapsed: boolean) => void;
+  }) => React.ReactNode);
 }) {
   const [collapsed, setCollapsed] = useState(props.collapsed ?? false);
 
@@ -44,11 +44,15 @@ export function Sidebar(props: {
 
   return (
     <SidebarContext.Provider value={ctx}>
-      <div className={className}>
-        {typeof props.children === 'function'
-          ? props.children(ctx)
-          : props.children}
+      <div className='fixed h-screen'>
+        <div className={className}>
+          {typeof props.children === 'function'
+            ? props.children(ctx)
+            : props.children}
+        </div>
       </div>
+      <div className='w-[20vw]'></div>
+
     </SidebarContext.Provider>
   );
 }

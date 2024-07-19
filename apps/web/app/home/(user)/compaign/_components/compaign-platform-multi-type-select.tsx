@@ -1,4 +1,8 @@
 import { Input } from '@kit/ui/input';
+
+import { Checkbox } from "@kit/ui/checkbox"
+
+
 import React, { useState } from 'react';
 
 export type Option = {
@@ -9,36 +13,54 @@ export type Option = {
 
 export type MultiOption = {
    options: Option[],
-   onChange: (options: Option[]) => void,
+   onChange: (options: string[]) => void,
+   selectedOptions: string[]
 }
 const MultiSelectableCheckboxGroup = (props: MultiOption) => {
+
+   console.log('props', props.selectedOptions);
+
    const option1 = props.options.slice(0, 5);
    const option2 = props.options.slice(5);
-   const [isSelected, setIsSelected] = useState(false);
-   console.log(props.options);
-
+   const [selected, setSelected] = useState<string[]>(props.selectedOptions);
    return (
       <div className='flex flex-row gap-3'>
          <div className={'flex flex-col gap-1'}>
             {option1.map((option) => (
-               <div key={option.value} className={'flex flex-row gap-2 '}>
-                  <Input className={'appearance-none w-auto h-auto border border-gray-300 rounded-full checked:bg-blue-500 checked:border-transparent focus:outline-none'}
-                     type="checkbox"
-                     id={option.value}
-                     value={option.value}
-                  />
+               <div key={option.value} className={'flex flex-row items-center gap-2 '}>
+                  <Checkbox
+                     onCheckedChange={(value) => {
+                        let nextSelected = selected;
+                        if (!value) {
+                           nextSelected = (selected.filter(((t) => t !== option.value)));
+                        } else {
+                           nextSelected = ([...selected, option.value]);
+                        }
+                        setSelected(nextSelected)
+                        props.onChange(nextSelected)
+                     }}
+                     checked={props.selectedOptions.some((a) => a === option.value)}
+                     id={option.value} />
                   <label htmlFor={option.value}>{option.label}</label>
                </div>
             ))}
          </div>
          <div className={'flex flex-col gap-1'}>
             {option2.map((option) => (
-               <div key={option.value} className={'flex flex-row gap-2 '}>
-                  <Input className={'appearance-none w-auto h-auto border border-gray-300 rounded-full checked:bg-blue-500 checked:border-transparent focus:outline-none'}
-                     type="checkbox"
-                     id={option.value}
-                     value={option.value}
-                  />
+               <div key={option.value} className={'flex flex-row items-center gap-2'}>
+                  <Checkbox
+                     onCheckedChange={(value) => {
+                        let nextSelected = selected;
+                        if (!value) {
+                           nextSelected = (selected.filter(((t) => t !== option.value)));
+                        } else {
+                           nextSelected = ([...selected, option.value]);
+                        }
+                        setSelected(nextSelected)
+                        props.onChange(nextSelected)
+                     }}
+                     checked={props.selectedOptions.some((a) => a === option.value)}
+                     id={option.value} />
                   <label htmlFor={option.value}>{option.label}</label>
                </div>
             ))}

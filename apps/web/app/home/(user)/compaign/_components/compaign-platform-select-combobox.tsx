@@ -24,38 +24,38 @@ type Platform = {
 }
 
 const platforms: Platform[] = [
-   {
-      value: "facebook",
-      label: "Facebook",
-   },
-   {
-      value: "instagram",
-      label: "Instagram",
-   },
-   {
-      value: "linkedin",
-      label: "LinkedIn",
-   },
-   {
-      value: "youtube",
-      label: "YouTube",
-   },
-   {
-      value: "tiktok",
-      label: "TikTok",
-   },
-   {
-      value: "wordpress",
-      label: "Wordpress",
-   },
-   {
-      value: "contao",
-      label: "Contao",
-   },
-   {
-      value: "joomla",
-      label: "Joomla",
-   },
+  {
+    value: "facebook",
+    label: "Facebook",
+  },
+  {
+    value: "instagram",
+    label: "Instagram",
+  },
+  {
+    value: "linkedin",
+    label: "LinkedIn",
+  },
+  {
+    value: "youtube",
+    label: "YouTube",
+  },
+  {
+    value: "tiktok",
+    label: "TikTok",
+  },
+  {
+    value: "wordpress",
+    label: "Wordpress",
+  },
+  {
+    value: "contao",
+    label: "Contao",
+  },
+  {
+    value: "joomla",
+    label: "Joomla",
+  },
 ]
 
 type Props = {
@@ -66,7 +66,10 @@ type Props = {
 export function PlatformSelectForCompaingnComboboxDemo(props: Props) {
   const [open, setOpen] = React.useState(false)
   const [selectedPlatform, setSelectedPlatform] = React.useState<Platform | null>(
-    null
+    {
+      value: "linkedin",
+      label: "LinkedIn",
+    },
   )
   const { t } = useTranslation();
 
@@ -77,7 +80,7 @@ export function PlatformSelectForCompaingnComboboxDemo(props: Props) {
           <Button
             variant="outline"
             size="sm"
-            className="w-[150px] justify-start"
+            className="w-[200px] justify-start"
           >
             {selectedPlatform ? (
               <>
