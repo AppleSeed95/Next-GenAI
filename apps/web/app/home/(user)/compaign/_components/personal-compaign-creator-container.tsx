@@ -39,9 +39,9 @@ export function PersonalContentCreatorContainer(
    const [step, setStep] = useState(0);
    const stepDescriptions = ['Config your campaign', 'Platform settings', 'Text generation', 'Image generation', 'Video generation', "Save your project!"]
    const [projectValue, setProjectValue] = useState<ProjectsType>({
-      pName: 'test',
-      pMainTopic: 'football',
-      pSubTopic: 'goalkeeper',
+      pName: '',
+      pMainTopic: '',
+      pSubTopic: '',
       pmode: 'auto',
       pstate: true,
       pCnt: 1,
