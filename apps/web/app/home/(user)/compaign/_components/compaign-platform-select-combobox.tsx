@@ -18,12 +18,12 @@ import {
 } from "@kit/ui/popover"
 import { useTranslation } from "react-i18next"
 
-type Platform = {
+type pPlatform = {
   value: string
   label: string
 }
 
-const platforms: Platform[] = [
+const pPlatforms: pPlatform[] = [
   {
     value: "facebook",
     label: "Facebook",
@@ -59,13 +59,13 @@ const platforms: Platform[] = [
 ]
 
 type Props = {
-  onChange: (platform: string) => void,
+  onChange: (pPlatform: string) => void,
 }
 
 
 export function PlatformSelectForCompaingnComboboxDemo(props: Props) {
   const [open, setOpen] = React.useState(false)
-  const [selectedPlatform, setSelectedPlatform] = React.useState<Platform | null>(
+  const [selectedpPlatform, setSelectedpPlatform] = React.useState<pPlatform | null>(
     {
       value: "linkedin",
       label: "LinkedIn",
@@ -82,28 +82,28 @@ export function PlatformSelectForCompaingnComboboxDemo(props: Props) {
             size="sm"
             className="w-[200px] justify-start"
           >
-            {selectedPlatform ? (
+            {selectedpPlatform ? (
               <>
-                {selectedPlatform.label}
+                {selectedpPlatform.label}
               </>
             ) : (
-              <>{t('Platform')}</>
+              <>{t('pPlatform')}</>
             )}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0" side="right" align="start">
           <Command>
-            <CommandInput placeholder="Change Platform..." />
+            <CommandInput placeholder="Change pPlatform..." />
             <CommandList>
               <CommandEmpty>{t('No results found.')}</CommandEmpty>
               <CommandGroup>
-                {platforms.map((platform) => (
+                {pPlatforms.map((pPlatform) => (
                   <CommandItem
-                    key={platform.value}
-                    value={platform.value}
+                    key={pPlatform.value}
+                    value={pPlatform.value}
                     onSelect={(value) => {
-                      setSelectedPlatform(
-                        platforms.find((priority) => priority.value === value) ||
+                      setSelectedpPlatform(
+                        pPlatforms.find((priority) => priority.value === value) ||
                         null
                       )
                       console.log(value)
@@ -111,7 +111,7 @@ export function PlatformSelectForCompaingnComboboxDemo(props: Props) {
                       setOpen(false)
                     }}
                   >
-                    <span>{platform.label}</span>
+                    <span>{pPlatform.label}</span>
                   </CommandItem>
                 ))}
               </CommandGroup>

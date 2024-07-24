@@ -10,12 +10,14 @@ import React, { useState } from "react";
 import { ModeSelectComboDemo } from "./compaign-mode-select-combobox";
 import { RadioGroup, RadioGroupItem } from "@kit/ui/radio-group"
 import { Button } from "@kit/ui/button";
+import { Checkbox } from "@kit/ui/checkbox"
+
 import {
    Alert,
    AlertDescription,
    AlertTitle,
 } from "@kit/ui/alert"
-import { AlertCircle, ChevronLeft, ChevronRight } from "lucide-react"
+import { AlertCircle, Check, ChevronLeft, ChevronRight } from "lucide-react"
 
 
 
@@ -27,17 +29,17 @@ type Props = {
    onChange: (projectValue: ProjectsType) => void,
 }
 
-// export type DateRangeType = {
-//    from: Date,
-//    to: Date
-// }
+export type DateRangeType = {
+   from?: Date | undefined,
+   to?: Date | undefined
+}
 
 export function CompaignHeader(props: Props) {
    const { t } = useTranslation();
    const [error, setError] = useState('');
    // const [dateRange, setDateRange] = useState<DateRangeType>({
-   //    from: props.projectValue.pstartDate,
-   //    to: props.projectValue.pendDate,
+   //    from: props.projectValue.pStartDate,
+   //    to: props.projectValue.pEndDate,
    // })
 
    const handleNext = () => {
@@ -53,6 +55,10 @@ export function CompaignHeader(props: Props) {
          setError('Please input sub topic.');
          return;
       }
+      if (!props.projectValue.pUseText && !props.projectValue.pUseImage && !props.projectValue.pUseVideo) {
+         setError('You should select at least one context.');
+         return;
+      }
       props.setCurrentStep(1)
    }
    return (
@@ -64,15 +70,19 @@ export function CompaignHeader(props: Props) {
                   <div className="flex gap-[20px]  flex-wrap">
                      <div className="flex flex-col gap-[10px]">
                         <Label children={t('Project Duration')} />
-                        <DatePickerWithRange />
+                        <DatePickerWithRange
+                           onChange={(v: DateRangeType) => {
+                              props.onChange({ ...props.projectValue, pStartDate: v.from, pEndDate: v.to });
+                           }}
+                        />
                      </div>
                      <div className="flex flex-col gap-[10px]">
                         <Label children={t('Project State')} />
                         <RadioGroup
                            onValueChange={(data: string) => {
-                              props.onChange({ ...props.projectValue, pstate: data === 'Active' });
+                              props.onChange({ ...props.projectValue, pState: data === 'Active' });
                            }}
-                           value={props.projectValue.pstate ? 'Active' : 'Inactive'}
+                           value={props.projectValue.pState ? 'Active' : 'Inactive'}
                            className="h-full" defaultValue="Active">
                            <div className="flex items-center gap-[10px] h-full">
                               <div className="flex items-center space-x-2">
@@ -88,8 +98,8 @@ export function CompaignHeader(props: Props) {
                      </div>
 
                      {/* <label className="inline-flex items-center cursor-pointer">
-                        <input type="checkbox" className="sr-only peer" checked={props.projectValue.pstate} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                           props.onChange({ ...props.projectValue, pstate: !props.projectValue.pstate })
+                        <input type="checkbox" className="sr-only peer" checked={props.projectValue.pState} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                           props.onChange({ ...props.projectValue, pState: !props.projectValue.pState })
                         }} />
                         <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                      </label> */}
@@ -107,9 +117,9 @@ export function CompaignHeader(props: Props) {
                         <Label children={t('Project Mode')} />
                         <RadioGroup
                            onValueChange={(data: string) => {
-                              props.onChange({ ...props.projectValue, pmode: data });
+                              props.onChange({ ...props.projectValue, pMode: data });
                            }}
-                           value={props.projectValue.pmode}
+                           value={props.projectValue.pMode}
                            className="h-full" defaultValue="Autopilot">
                            <div className="flex items-center gap-[10px] h-full">
                               <div className="flex items-center space-x-2">
@@ -133,6 +143,38 @@ export function CompaignHeader(props: Props) {
                   <div className="flex grow flex-col gap-[10px]">
                      <Label children={t('Sub Topic')} />
                      <Input value={props.projectValue.pSubTopic} placeholder={t('Input project sub topic (e.g Insurance)')} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { props.onChange({ ...props.projectValue, pSubTopic: e.target.value }) }} />
+                  </div>
+               </div>
+               <div className={'flex flex-col gap-5 '}>
+                  <div className="flex grow flex-col gap-[10px]">
+                     <Label children={t('Context settings')} />
+                     <div className="flex gap-[20px]">
+                        <div className="flex items-center gap-[5px]">
+                           <Checkbox
+                              checked={props.projectValue.pUseText}
+                              onCheckedChange={(v: boolean) => {
+                                 props.onChange({ ...props.projectValue, pUseText: v })
+                              }} />
+                           <label>Text</label>
+                        </div>
+                        <div className="flex items-center gap-[5px]">
+                           <Checkbox
+                              checked={props.projectValue.pUseImage}
+                              onCheckedChange={(v: boolean) => {
+                                 props.onChange({ ...props.projectValue, pUseImage: v })
+                              }} />
+                           <label>Image</label>
+                        </div>
+                        <div className="flex items-center gap-[5px]">
+                           <Checkbox
+                              checked={props.projectValue.pUseVideo}
+                              onCheckedChange={(v: boolean) => {
+                                 props.onChange({ ...props.projectValue, pUseVideo: v })
+                              }} />
+                           <label>Video</label>
+                        </div>
+
+                     </div>
                   </div>
                </div>
             </div>

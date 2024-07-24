@@ -30,6 +30,8 @@ type Props = {
    generatedTopicIdeas: string,
    setGeneratedTopicIdeas: (data: string) => void,
    onChange: (projectValue: ProjectsType) => void,
+   previousStep: number,
+   nextStep: number
 }
 
 const options = [
@@ -47,9 +49,9 @@ const options = [
 ];
 
 
-export function CompaignPlatformSelect(props: Props) {
+export function CompaignpPlatformSelect(props: Props) {
    const { t } = useTranslation();
-   const [platform, setPlatform] = useState<string>(props.projectValue.platform);
+   const [platform, setPlatform] = useState<string>(props.projectValue.pPlatform);
    const [platformurl, setPlatformUrl] = useState<string>('');
    const [index, setIndex] = useState([0]);
    const [message, setMessage] = useState('');
@@ -75,23 +77,23 @@ export function CompaignPlatformSelect(props: Props) {
          setError('Please select at least one atmosphere.');
          return;
       }
-      props.setCurrentStep(2)
+      props.setCurrentStep(props.nextStep);
    }
    return (
       <PageBody>
          <div className={'flex flex-col gap-4 bg-[#000208] p-[50px] mx-[200px] mb-[20px] rounded-lg shadow-lg '}>
             {/* <div className={'flex flex-col sm:flex-row justify-between'}>
                <div className={'flex flex-row justify-between sm:gap-4'}>
-                  <PlatformSelectForCompaingnComboboxDemo onChange={(data) => { setPlatform(data), props.onChange({ ...props.projectValue, platform: data }) }} />
-                  <ComboboxDemoDetail platformurl={props.projectValue.platformurl} onChange={(data) => { setPlatformUrl(data), props.onChange({ ...props.projectValue, platformurl: data }) }} />
+                  <pPlatformSelectForCompaingnComboboxDemo onChange={(data) => { setpPlatform(data), props.onChange({ ...props.projectValue, pPlatform: data }) }} />
+                  <ComboboxDemoDetail pPlatformurl={props.projectValue.pPlatformurl} onChange={(data) => { setpPlatformUrl(data), props.onChange({ ...props.projectValue, pPlatformurl: data }) }} />
                </div>
             </div> */}
             <div className={'flex justify-center'}>
-               <IconSelect platform={props.projectValue.platform as string} />
+               <IconSelect platform={props.projectValue.pPlatform as string} />
             </div>
             <div className="flex flex-col gap-[10px] w-full">
-               <Label children={t('Target Platform')} />
-               <PlatformSelectForCompaingnComboboxDemo onChange={(data) => { setPlatform(data), props.onChange({ ...props.projectValue, platform: data }) }} />
+               <Label children={t('Target pPlatform')} />
+               <PlatformSelectForCompaingnComboboxDemo onChange={(data) => { setPlatform(data), props.onChange({ ...props.projectValue, pPlatform: data }) }} />
             </div>
             <div className="flex flex-col gap-[10px] w-full">
                <Label children={t('Post settings')} />
@@ -99,8 +101,12 @@ export function CompaignPlatformSelect(props: Props) {
                   <Input
                      type="number"
                      max={3}
+                     min={0}
                      value={props.projectValue.pCnt}
-                     // onChange={(e) => props.onChange({ ...props.projectValue, pCnt: e.target.value })}
+                     onChange={(e) => {
+                        const value = parseInt(e.target.value)
+                        props.onChange({ ...props.projectValue, pCnt: value })
+                     }}
                      placeholder="input number of count"
                      className={'w-[200px] [moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]'}
                   />
@@ -138,7 +144,7 @@ export function CompaignPlatformSelect(props: Props) {
                         selectedOptions={selectedOptions}
                      />
                   </div>
-                  {/* <ContentTopicSuggestion selectedOptions={options} topic={props.projectValue.pMainTopic} isAuto={props.projectValue.pmode} onChange={() => { setSelectedOptions([]) }} generatedTopicIdeas={props.generatedTopicIdeas} setGeneratedTopicIdeas={(data) => props.setGeneratedTopicIdeas(data)} /> */}
+                  {/* <ContentTopicSuggestion selectedOptions={options} topic={props.projectValue.pMainTopic} isAuto={props.projectValue.pMode} onChange={() => { setSelectedOptions([]) }} generatedTopicIdeas={props.generatedTopicIdeas} setGeneratedTopicIdeas={(data) => props.setGeneratedTopicIdeas(data)} /> */}
                </div>
             </div>
             {error !== '' && <div className="my-[20px]">
@@ -180,7 +186,7 @@ export function CompaignPlatformSelect(props: Props) {
                      options={options}
                      onChange={(data) => { setSelectedOptions(data) }}
                   />
-                  <ContentTopicSuggestion selectedOptions={options} topic={props.projectValue.pMainTopic} isAuto={props.projectValue.pmode} onChange={() => { setSelectedOptions([]) }} generatedTopicIdeas={props.generatedTopicIdeas} setGeneratedTopicIdeas={(data) => props.setGeneratedTopicIdeas(data)} />
+                  <ContentTopicSuggestion selectedOptions={options} topic={props.projectValue.pMainTopic} isAuto={props.projectValue.pMode} onChange={() => { setSelectedOptions([]) }} generatedTopicIdeas={props.generatedTopicIdeas} setGeneratedTopicIdeas={(data) => props.setGeneratedTopicIdeas(data)} />
                </div>
             </div> */}
          </div>

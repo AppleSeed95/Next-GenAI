@@ -10,14 +10,15 @@ import { useTranslation } from "react-i18next"
 import { ProjectsType } from "./personal-compaign-creator-container"
 export interface CampaignResultFinalProps {
     projectProps: ProjectsType,
-    setCurrentStep: (v: number) => void
+    setCurrentStep: (v: number) => void,
+    previousStep: number
 }
-export const CampaignResultFinalCpn = ({ setCurrentStep, projectProps }: CampaignResultFinalProps) => {
+export const CampaignResultFinalCpn = ({ setCurrentStep, projectProps, previousStep }: CampaignResultFinalProps) => {
     const { t } = useTranslation();
     return (
         <div className="bg-[#000208] flex flex-col gap-[20px] p-[50px] mx-[100px] mb-[20px]">
             <div className="m-[20px] flex justify-center">
-                <IconSelect platform={projectProps.platform as string} />
+                <IconSelect pPlatform={projectProps.pPlatform as string} />
             </div>
             <div className="text-[25px] bold">{projectProps.pTitle}</div>
 
@@ -45,13 +46,13 @@ export const CampaignResultFinalCpn = ({ setCurrentStep, projectProps }: Campaig
                     <div className="flex flex-col gap-[10px] w-full">
                         <Label children={t('State')} />
                         <div className="rounded-full  shadow-md">
-                            <Badge variant="secondary">{projectProps.pstate ? 'Active' : 'Inactive'}</Badge>
+                            <Badge variant="secondary">{projectProps.pState ? 'Active' : 'Inactive'}</Badge>
                         </div>
                     </div>
                     <div className="flex flex-col gap-[10px] w-full">
                         <Label children={t('Mode')} />
                         <div className="rounded-full  shadow-md">
-                            <Badge variant="secondary">{projectProps.pmode}</Badge>
+                            <Badge variant="secondary">{projectProps.pMode}</Badge>
                         </div>
                     </div>
                     <div className="flex flex-col gap-[10px] w-full">
@@ -69,7 +70,7 @@ export const CampaignResultFinalCpn = ({ setCurrentStep, projectProps }: Campaig
                 </div>
             </div>
             <div className="flex justify-center mt-[20px] w-full gap-[10px]">
-                <Button variant={'outline'} onClick={() => setCurrentStep(4)}><ChevronLeft /> Prev</Button>
+                <Button variant={'outline'} onClick={() => setCurrentStep(previousStep)}><ChevronLeft /> Prev</Button>
                 <Button variant={'outline'} onClick={() => { }}><Check />save</Button>
             </div>
         </div>

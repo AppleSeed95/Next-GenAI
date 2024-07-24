@@ -139,7 +139,7 @@ export function CompaignContent(props: Props) {
          if (blogText?.toggle && blogText.words) {
 
             setIsOpen(true);
-            if (props.projectValue.platform) {
+            if (props.projectValue.pPlatform) {
                const resText = await createAITextAction(payloadText);
                if (resText) {
                   const responseArray = resText.split("\n");
@@ -153,7 +153,7 @@ export function CompaignContent(props: Props) {
                   setContentText("Please confirm your Network Connection");
                }
             } else {
-               setContentText("Select Platform");
+               setContentText("Select pPlatform");
             }
             setIsOpen(false);
 
@@ -198,13 +198,13 @@ export function CompaignContent(props: Props) {
             project_name: props.projectValue.pName.toLowerCase(),
             account_id: account_id?.toLowerCase() || '',
             title: titleText.toLowerCase(),
-            platform: props.projectValue.platform.toLowerCase(),
+            pPlatform: props.projectValue.pPlatform.toLowerCase(),
             topic: props.projectValue.pMainTopic.toLowerCase(),
             subtopic: props.projectValue.pSubTopic.toLowerCase(),
-            start_date: props.projectValue.pstartDate.toISOString(),
-            end_date: props.projectValue.pendDate.toISOString(),
-            state: props.projectValue.pstate,
-            mode: props.projectValue.pmode.toLowerCase(),
+            start_date: props.projectValue.pStartDate.toISOString(),
+            end_date: props.projectValue.pEndDate.toISOString(),
+            state: props.projectValue.pState,
+            mode: props.projectValue.pMode.toLowerCase(),
             created_by: account_id || '',
             updated_by: null,
          }

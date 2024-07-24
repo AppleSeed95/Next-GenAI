@@ -11,11 +11,13 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 export interface CampaignVideoResultProps {
     projectProps: ProjectsType,
     setCurrentStep: (v: number) => void,
-    setProjectValue: (v: ProjectsType) => void
+    setProjectValue: (v: ProjectsType) => void,
+    previousStep: number,
+    nextStep: number
 }
 
 
-export const CampaignVideoResultCpn = ({ projectProps, setCurrentStep, setProjectValue }: CampaignVideoResultProps) => {
+export const CampaignVideoResultCpn = ({ projectProps, setCurrentStep, setProjectValue, previousStep, nextStep }: CampaignVideoResultProps) => {
     const { t } = useTranslation();
     const [loading, setLoading] = useState(true);
     const [result, setResult] = useState<string[]>([]);
@@ -39,9 +41,9 @@ export const CampaignVideoResultCpn = ({ projectProps, setCurrentStep, setProjec
                 {loading ?
                     <div className="animate-pulse flex justify-center space-x-4">
                         <div className="flex justify-center space-y-2 py-1">
-                            <div className="h-[300px] w-[500px] bg-slate-200 rounded"></div>
-                            {/* <div className="h-4 bg-slate-200 rounded"></div> */}
-                            {/* <div className="h-4 bg-slate-200 rounded"></div> */}
+                            <div className="h-[300px] w-[500px] bg-slate-800 rounded"></div>
+                            {/* <div className="h-4 bg-slate-800 rounded"></div> */}
+                            {/* <div className="h-4 bg-slate-800 rounded"></div> */}
                         </div>
                     </div>
                     :
@@ -58,8 +60,8 @@ export const CampaignVideoResultCpn = ({ projectProps, setCurrentStep, setProjec
                 }
             </div>
             <div className="flex justify-center mt-[20px] w-full gap-[10px]">
-                <Button variant={'outline'} onClick={() => setCurrentStep(3)}> <ChevronLeft />Prev</Button>
-                <Button variant={'outline'} onClick={() => setCurrentStep(5)}>Next <ChevronRight /></Button>
+                <Button variant={'outline'} onClick={() => setCurrentStep(previousStep)}> <ChevronLeft />Prev</Button>
+                <Button variant={'outline'} onClick={() => setCurrentStep(nextStep)}>Next <ChevronRight /></Button>
             </div>
         </div>
     )

@@ -6,7 +6,7 @@ import { Label } from "@kit/ui/label";
 import { Textarea } from "@kit/ui/textarea";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Option } from "./compaign-platform-multi-type-select";
+import { Option } from "./compaign-pPlatform-multi-type-select";
 import { createSuggestTopic } from "../_lib/server/server-action";
 import { Input } from "@kit/ui/input";
 // import { Alert, AlertTitle, AlertDescription } from "@kit/ui/alert";
@@ -25,7 +25,7 @@ type PropsType = {
 
 export function ContentTopicSuggestion(props: PropsType) {
     const { t } = useTranslation();
-    const [saveEnable, setSaveEnable] =useState(false);
+    const [saveEnable, setSaveEnable] = useState(false);
     const [selectedTopic, setSelectedTopic] = useState('No found Idea');
     const [topicsSuggestion, setTopicsSuggestion] = useState('');
     const randomContent = getRandomOption(props.selectedOptions);
@@ -34,7 +34,7 @@ export function ContentTopicSuggestion(props: PropsType) {
 
     const handleDisplayTopicIdea = (e: number) => {
         const inputValue = e;
-        if ( inputValue > 0 && inputValue < 6 ) {
+        if (inputValue > 0 && inputValue < 6) {
             setSelectedTopic(selectedTopicIdeasTitle[inputValue - 1] ?? 'No Found Idea');
             props.setGeneratedTopicIdeas(selectedTopicIdeasTitle[inputValue - 1] ?? 'No Found Idea');
             setSaveEnable(true);

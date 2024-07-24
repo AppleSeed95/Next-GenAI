@@ -18,58 +18,58 @@ import {
   PopoverTrigger,
 } from "@kit/ui/popover"
 
-type Platform = {
+type pPlatform = {
   value: string
   label: string
 }
 
-const platforms: Platform[] = [
-   {
-      value: "all",
-      label: "All",
-   },
-   {
-      value: "facebook",
-      label: "Facebook",
-   },
-   {
-      value: "instagram",
-      label: "Instagram",
-   },
-   {
-      value: "linkedin",
-      label: "LinkedIn",
-   },
-   {
-      value: "youtube",
-      label: "YouTube",
-   },
-   {
-      value: "tiktok",
-      label: "TikTok",
-   },
-   {
-      value: "wordpress",
-      label: "Wordpress",
-   },
-   {
-      value: "contao",
-      label: "Contao",
-   },
-   {
-      value: "joomla",
-      label: "Joomla",
-   },
+const pPlatforms: pPlatform[] = [
+  {
+    value: "all",
+    label: "All",
+  },
+  {
+    value: "facebook",
+    label: "Facebook",
+  },
+  {
+    value: "instagram",
+    label: "Instagram",
+  },
+  {
+    value: "linkedin",
+    label: "LinkedIn",
+  },
+  {
+    value: "youtube",
+    label: "YouTube",
+  },
+  {
+    value: "tiktok",
+    label: "TikTok",
+  },
+  {
+    value: "wordpress",
+    label: "Wordpress",
+  },
+  {
+    value: "contao",
+    label: "Contao",
+  },
+  {
+    value: "joomla",
+    label: "Joomla",
+  },
 ]
 
 type Props = {
-  platformurl: string,
-  onChange: (platform: string) => void,
+  pPlatformurl: string,
+  onChange: (pPlatform: string) => void,
 }
 
 export function ComboboxDemoDetail(props: Props) {
   const [open, setOpen] = React.useState(false)
-  const [selectedPlatform, setSelectedPlatform] = React.useState<Platform | null>(
+  const [selectedpPlatform, setSelectedpPlatform] = React.useState<pPlatform | null>(
     null
   )
 
@@ -82,28 +82,28 @@ export function ComboboxDemoDetail(props: Props) {
             size="sm"
             className="w-[150px] justify-start"
           >
-            {selectedPlatform ? (
+            {selectedpPlatform ? (
               <>
-                {selectedPlatform.label}
+                {selectedpPlatform.label}
               </>
             ) : (
-              <>Platform</>
+              <>pPlatform</>
             )}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0" side="right" align="start">
           <Command>
-            <CommandInput placeholder="Change Platform..." />
+            <CommandInput placeholder="Change pPlatform..." />
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>
-                {platforms.map((platform) => (
+                {pPlatforms.map((pPlatform) => (
                   <CommandItem
-                    key={platform.value}
-                    value={platform.value}
+                    key={pPlatform.value}
+                    value={pPlatform.value}
                     onSelect={(value) => {
-                      setSelectedPlatform(
-                        platforms.find((priority) => priority.value === value) ||
+                      setSelectedpPlatform(
+                        pPlatforms.find((priority) => priority.value === value) ||
                         null
                       )
                       console.log(value)
@@ -111,7 +111,7 @@ export function ComboboxDemoDetail(props: Props) {
                       setOpen(false)
                     }}
                   >
-                    <span>{platform.label}</span>
+                    <span>{pPlatform.label}</span>
                   </CommandItem>
                 ))}
               </CommandGroup>

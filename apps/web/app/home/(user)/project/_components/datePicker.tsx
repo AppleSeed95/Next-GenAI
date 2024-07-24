@@ -13,15 +13,19 @@ import { addDays, format } from "date-fns";
 import { cn } from "@kit/ui/utils";
 import { DateRange } from "@kit/ui/calendar";
 import { useTranslation } from "react-i18next";
+import { DateRangeType } from "../../compaign/_components/compaign-header";
 
-// type Props = {
-//   dateRange: DateRangeType,
-//   onChange: (dateRange: DateRangeType) => void,
-// }
+type DatePickerWithRangeProps = {
+  className?: string,
+  dateRange?: DateRangeType,
+  onChange: (dateRange: DateRangeType) => void,
+}
 
 export function DatePickerWithRange({
   className,
-}: React.HTMLAttributes<HTMLDivElement>) {
+  dateRange,
+  onChange
+}: DatePickerWithRangeProps) {
   const [date, setDate] = useState<DateRange | undefined>({
     from: new Date(),
     to: addDays(new Date(), 0),
@@ -63,7 +67,12 @@ export function DatePickerWithRange({
             mode="range"
             defaultMonth={date?.from}
             selected={date}
-            onSelect={setDate}
+            onSelect={(v: DateRange | undefined) => {
+              setDate(v);
+              if (v) {
+                onChange(v);
+              }
+            }}
             numberOfMonths={2}
           />
         </PopoverContent>
