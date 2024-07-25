@@ -227,6 +227,115 @@ export type Database = {
           },
         ]
       }
+      campaign_table: {
+        Row: {
+          created_at: string
+          id: number
+          pAtmosphere: string | null
+          pCnt: number | null
+          pEndDate: string | null
+          pGeneratedTitles: string | null
+          pImageBrand: string | null
+          pImageCnt: number | null
+          pImageFormat: string | null
+          pImageRatio: string | null
+          pImages: string | null
+          pMainTopic: string | null
+          pMode: string | null
+          pName: string | null
+          pPlatform: string | null
+          pPlatformurl: string | null
+          pPostMode: string | null
+          pStartDate: string | null
+          pState: boolean | null
+          pSubTopic: string | null
+          pTextContent: string | null
+          pTitle: string | null
+          pUseImage: boolean | null
+          pUserId: string | null
+          pUseText: boolean | null
+          pUseVideo: boolean | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          pAtmosphere?: string | null
+          pCnt?: number | null
+          pEndDate?: string | null
+          pGeneratedTitles?: string | null
+          pImageBrand?: string | null
+          pImageCnt?: number | null
+          pImageFormat?: string | null
+          pImageRatio?: string | null
+          pImages?: string | null
+          pMainTopic?: string | null
+          pMode?: string | null
+          pName?: string | null
+          pPlatform?: string | null
+          pPlatformurl?: string | null
+          pPostMode?: string | null
+          pStartDate?: string | null
+          pState?: boolean | null
+          pSubTopic?: string | null
+          pTextContent?: string | null
+          pTitle?: string | null
+          pUseImage?: boolean | null
+          pUserId?: string | null
+          pUseText?: boolean | null
+          pUseVideo?: boolean | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          pAtmosphere?: string | null
+          pCnt?: number | null
+          pEndDate?: string | null
+          pGeneratedTitles?: string | null
+          pImageBrand?: string | null
+          pImageCnt?: number | null
+          pImageFormat?: string | null
+          pImageRatio?: string | null
+          pImages?: string | null
+          pMainTopic?: string | null
+          pMode?: string | null
+          pName?: string | null
+          pPlatform?: string | null
+          pPlatformurl?: string | null
+          pPostMode?: string | null
+          pStartDate?: string | null
+          pState?: boolean | null
+          pSubTopic?: string | null
+          pTextContent?: string | null
+          pTitle?: string | null
+          pUseImage?: boolean | null
+          pUserId?: string | null
+          pUseText?: boolean | null
+          pUseVideo?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_campaign_table_pUserId_fkey"
+            columns: ["pUserId"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_campaign_table_pUserId_fkey"
+            columns: ["pUserId"]
+            isOneToOne: false
+            referencedRelation: "user_account_workspace"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_campaign_table_pUserId_fkey"
+            columns: ["pUserId"]
+            isOneToOne: false
+            referencedRelation: "user_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       config: {
         Row: {
           billing_provider: Database["public"]["Enums"]["billing_provider"]

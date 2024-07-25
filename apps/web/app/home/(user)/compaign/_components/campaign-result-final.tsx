@@ -11,14 +11,16 @@ import { ProjectsType } from "./personal-compaign-creator-container"
 export interface CampaignResultFinalProps {
     projectProps: ProjectsType,
     setCurrentStep: (v: number) => void,
-    previousStep: number
+    previousStep: number,
+    saveCampaign: () => void,
+    loading: boolean
 }
-export const CampaignResultFinalCpn = ({ setCurrentStep, projectProps, previousStep }: CampaignResultFinalProps) => {
+export const CampaignResultFinalCpn = ({ loading, setCurrentStep, projectProps, previousStep, saveCampaign }: CampaignResultFinalProps) => {
     const { t } = useTranslation();
     return (
         <div className="bg-[#000208] flex flex-col gap-[20px] p-[50px] mx-[100px] mb-[20px]">
             <div className="m-[20px] flex justify-center">
-                <IconSelect pPlatform={projectProps.pPlatform as string} />
+                <IconSelect platform={projectProps.pPlatform as string} />
             </div>
             <div className="text-[25px] bold">{projectProps.pTitle}</div>
 
@@ -70,8 +72,8 @@ export const CampaignResultFinalCpn = ({ setCurrentStep, projectProps, previousS
                 </div>
             </div>
             <div className="flex justify-center mt-[20px] w-full gap-[10px]">
-                <Button variant={'outline'} onClick={() => setCurrentStep(previousStep)}><ChevronLeft /> Prev</Button>
-                <Button variant={'outline'} onClick={() => { }}><Check />save</Button>
+                <Button disabled={loading} variant={'outline'} onClick={() => setCurrentStep(previousStep)}><ChevronLeft /> Prev</Button>
+                <Button disabled={loading} variant={'outline'} onClick={saveCampaign}><Check />save</Button>
             </div>
         </div>
     )

@@ -19,6 +19,7 @@ import {
     SelectValue,
 } from "@kit/ui/select"
 import { RadioGroup, RadioGroupItem } from "@kit/ui/radio-group"
+import { string } from 'zod';
 
 
 
@@ -35,14 +36,19 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
     const { t } = useTranslation();
     const [loading, setLoading] = useState<boolean | null>(null);
     const [result, setResult] = useState<string[]>([]);
+    const [cnt, setCnt] = useState(projectProps.pImageCnt);
     const generateImage = async () => {
         setLoading(true);
-        const result = await createAIImageAction({ idea: projectProps.pUseText ? projectProps.pTextContent : `topic:${projectProps.pMainTopic}-${projectProps.pSubTopic}, atmosphere: ${projectProps.pAtmosphere} ` });
-        if (result != "Error") {
-            const filteredImageUrls: string[] = result.filter((url): url is string => url !== undefined);
-            setResult(filteredImageUrls);
-            setProjectValue({ ...projectProps, pImages: filteredImageUrls });
+        let generatedResult: string[] = [];
+        for (let index = 0; index < cnt; index++) {
+            const result = await createAIImageAction({ idea: projectProps.pUseText ? projectProps.pTextContent : `topic:${projectProps.pMainTopic}-${projectProps.pSubTopic}, atmosphere: ${projectProps.pAtmosphere} ` });
+            if (result != "Error") {
+                const filteredImageUrls: string[] = result.filter((url): url is string => url !== undefined);
+                generatedResult.push(filteredImageUrls[0] ?? '');
+            }
         }
+        setResult(generatedResult);
+        setProjectValue({ ...projectProps, pImages: generatedResult });
         setLoading(false);
     }
     return (
@@ -54,9 +60,10 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
                         <div className="flex items-center gap-[10px]">
                             <Label className="min-w-[80px]" children={t('Format')} />
                             <Select
+                                disabled={loading === true}
+                                value={projectProps.pImageFormat}
                                 onValueChange={(v: string) => {
-                                    console.log(v);
-
+                                    setProjectValue({ ...projectProps, pImageFormat: v })
                                 }}
                             >
                                 <SelectTrigger >
@@ -74,7 +81,14 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
                         <div className="flex items-center gap-[10px]">
                             <Label className="min-w-[80px]" children={t('Ratio')} />
                             <RadioGroup
-                                className="h-full" defaultValue="horizontal">
+                                disabled={loading === true}
+
+                                className="h-full" defaultValue="horizontal"
+                                onValueChange={(v: string) => {
+                                    setProjectValue({ ...projectProps, pImageRatio: v })
+                                }}
+                                value={projectProps.pImageRatio}
+                            >
                                 <div className="flex items-center justify-start gap-[10px] h-full">
                                     <div className="flex items-center space-x-2">
                                         <RadioGroupItem value="horizontal" />
@@ -93,14 +107,28 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
                         </div>
                         <div className="flex items-center gap-[10px]">
                             <Label className="min-w-[80px]" children={t('number')} />
-                            <Input type='number' />
+                            <Input
+                                disabled={loading === true}
+
+                                type='number'
+                                min={1}
+                                max={3}
+                                value={projectProps.pImageCnt}
+                                onChange={(e) => {
+                                    const value = parseInt(e.target.value);
+                                    setCnt(value);
+                                    setProjectValue({ ...projectProps, pImageCnt: value })
+                                }}
+                            />
                         </div>
                     </div>
                     <div className="flex w-full  gap-[10px]">
                         <div className='pt-[5px]'>
                             <Label children={t('Addition')} />
                         </div>
-                        <Textarea className="h-full w-full grow" placeholder="Additional information to the bot(e.g like photographs, etc.)" />
+                        <Textarea
+                            disabled={loading === true}
+                            className="h-full w-full grow" placeholder="Additional information to the bot(e.g like photographs, etc.)" />
                     </div>
 
                 </div>
@@ -108,13 +136,14 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
             <div className="flex flex-col gap-[10px] w-full">
                 {/* <Label children={t('Generated images based on the content.')} /> */}
                 {loading === true ?
-                    <div className="animate-pulse flex justify-center space-x-4">
-                        <div className="flex justify-center space-y-2 py-1">
-                            <div className="h-[300px] w-[500px] bg-slate-800 rounded"></div>
-                            {/* <div className="h-4 bg-slate-800 rounded"></div> */}
-                            {/* <div className="h-4 bg-slate-800 rounded"></div> */}
-                        </div>
+                    <div className='flex w-full  gap-[20px] justify-center'>
+                        {[...Array(cnt)].map((_, idx) => (
+                            <div key={idx} className="animate-pulse w-full flex justify-center space-x-4">
+                                <div className="h-[300px] w-full bg-slate-800 rounded"></div>
+                            </div>
+                        ))}
                     </div>
+
                     :
                     loading !== null && <div className='flex gap-[10px] justify-center'>
                         {
@@ -130,7 +159,7 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
             </div>
             <div className="flex justify-center mt-[20px] w-full gap-[10px]">
                 <Button variant={'outline'} onClick={() => setCurrentStep(previousStep)}><ChevronLeft />Prev</Button>
-                <Button variant={'outline'} onClick={() => generateImage()}><Check />Generate</Button>
+                <Button disabled={loading === true} variant={'outline'} onClick={() => generateImage()}><Check />Generate</Button>
                 <Button variant={'outline'} onClick={() => setCurrentStep(nextStep)}>Next <ChevronRight /></Button>
             </div>
         </div>

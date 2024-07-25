@@ -145,7 +145,7 @@ export const CampaignTextResultCpn = ({ projectProps, setCurrentStep, setProject
                         className="h-full w-full">
                         <div className="flex flex-col gap-[10px] h-full">
                             {topics.map((aTopic, idx) => (
-                                <div className="flex items-center space-x-2">
+                                <div key={idx} className="flex items-center space-x-2">
                                     <RadioGroupItem value={`${aTopic}`} />
                                     <Label >{aTopic}</Label>
                                 </div>
@@ -193,7 +193,7 @@ export const CampaignTextResultCpn = ({ projectProps, setCurrentStep, setProject
                 </div>}
                 <div className="flex justify-center mt-[20px] w-full gap-[10px]">
                     <Button variant={'outline'} onClick={handlePrev}><ChevronLeft /> Prev</Button>
-                    <Button variant={'outline'} onClick={() => generateSuggestion()}><Check /> Generate</Button>
+                    <Button disabled={loading === true} variant={'outline'} onClick={() => generateSuggestion()}><Check /> Generate</Button>
                     <Button variant={'outline'} onClick={handleNext}>Next<ChevronRight /></Button>
                 </div>
             </div>

@@ -153,6 +153,7 @@ export const createAIVideoAction = enhanceAction(
 export const saveProjectAction = enhanceAction(
    async function (params) {
       const saveData = SaveProjectSchema.parse(params);
+      console.log('saving...', saveData);
 
       const logger = await getLogger();
       const client = getSupabaseServerActionClient();
@@ -165,8 +166,8 @@ export const saveProjectAction = enhanceAction(
       logger.info(params, `Adding saveData...`);
       logger.info(saveData, `Adding saveData...`);
 
-      const { data, error } = await client.from('project_table')
-         .insert({ ...saveData, account_id: params.account_id });
+      const { data, error } = await client.from('campaign_table')
+         .insert({ ...saveData, pUserId: params.pUserId });
 
       if (error) {
          logger.error(error, `Failed to save Content`);
