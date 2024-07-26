@@ -83,7 +83,7 @@ export function ProjectCardCpn({ project }: Props) {
         <div className="bg-slate-900 shadow-lg flex w-full p-4 pr-0   rounded-lg">
             <div className="w-1/4 rounded-lg overflow-hidden">
                 <div >
-                    {/* {images.length > 0 &&
+                    {images.length > 0 &&
                         <Carousel autoPlay interval={3000} showThumbs={false} infiniteLoop showStatus showArrows showIndicators >
                             {images.map((aImage, idx) => (
                                 <div key={idx} className="w-full">
@@ -97,7 +97,7 @@ export function ProjectCardCpn({ project }: Props) {
                                 </div>
                             ))}
                         </Carousel>
-                    } */}
+                    }
 
 
                 </div>
