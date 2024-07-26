@@ -38,7 +38,8 @@ function PersonalSavedProjectContainer(props: React.PropsWithChildren<{
                     <PersonalCreatedProjects searchParams={props.searchParams} />
                     <HeaderPart />
                 </div>
-                <ServerDataLoader
+
+                {/* <ServerDataLoader
                     client={client}
                     table={'campaign_table'}
                     // page={page}
@@ -60,14 +61,6 @@ function PersonalSavedProjectContainer(props: React.PropsWithChildren<{
                                                 values={{ query }}
                                             />
                                         </p>
-
-                                        {/* <form>
-                                            <input type="hidden" name={'query'} value={''} />
-
-                                            <Button variant={'outline'} size={'sm'}>
-                                                <Trans i18nKey={'clearSearch'} />
-                                            </Button>
-                                        </form> */}
                                     </div>
                                 </If>
 
@@ -75,7 +68,8 @@ function PersonalSavedProjectContainer(props: React.PropsWithChildren<{
                             </div>
                         );
                     }}
-                </ServerDataLoader>
+                </ServerDataLoader> */}
+
             </PageBody>
         </>
     );
