@@ -4,7 +4,6 @@ import React, { use } from "react";
 import { loadUserWorkspace } from "../../_lib/server/load-user-workspace";
 import { PageBody } from "@kit/ui/page";
 import { HeaderPart } from "./header-part";
-import { Input } from "@kit/ui/input";
 import { PersonalCreatedProjects } from "./personal-created-projects";
 import { ServerDataLoader } from "@makerkit/data-loader-supabase-nextjs";
 import { If } from "@kit/ui/if";
@@ -12,6 +11,7 @@ import { Trans } from "@kit/ui/trans";
 import { Button } from "@kit/ui/button";
 import { CardProject } from "./card-saved-project";
 import { withI18n } from "~/lib/i18n/with-i18n";
+import { Search } from 'lucide-react'
 
 function PersonalSavedProjectContainer(props: React.PropsWithChildren<{
     searchParams: SearchParams
@@ -31,32 +31,34 @@ function PersonalSavedProjectContainer(props: React.PropsWithChildren<{
     return (
         <>
             <PageBody className={'space-y-4'}>
-                <HeaderPart />
-                <div className={'flex items-center flex-col gap-2 sm:flex-row sm:justify-between'}>
-                    <div className={'flex  space-x-2'}>
-                        <form className={'w-full'}>
-                            <Input
-                                name={'query'}
-                                defaultValue={query}
-                                className={'w-full lg:w-[18rem]'}
-                                placeholder={'Search project'}
-                            />
-                        </form>
+                <div className={'flex justify-center gap-2 w-full'}>
+                    <div className="bg-slate-800 p-2 border-2 border-slate-900 shadow-lg rounded-[50px] gap-2 flex">
+                        <div className="flex items-center  shadow-lg">
+                            <div className="w-10 h-10 flex justify-center items-center rounded-full bg-slate-900"><Search /></div>
+                        </div>
+                        <input
+                            name={'query'}
+                            defaultValue={query}
+                            className={'w-full lg:w-[18rem] outline-none transition bg-transparent'}
+                            placeholder={'Search project'}
+                        />
+                        <button className="flex items-center px-4 rounded-[30px] shadow-lg bg-green-500 hover:bg-green-600 duration-500">
+                            Search
+                        </button>
                     </div>
-                    <PersonalCreatedProjects searchParams={props.searchParams} />
                 </div>
-
+                <div className="flex justify-between items-center pt-6">
+                    <PersonalCreatedProjects searchParams={props.searchParams} />
+                    <HeaderPart />
+                </div>
                 <ServerDataLoader
                     client={client}
-                    table={'project_table'}
+                    table={'campaign_table'}
                     page={page}
                     where={{
                         ...filters,
-                        account_id: {
+                        pUserId: {
                             eq: user.id,
-                        },
-                        title: {
-                            textSearch: query ? `%${query}%` : undefined,
                         },
                     }}
                 >
@@ -100,9 +102,14 @@ function getFilters(params: SearchParams) {
         {
             eq?: boolean | string;
             like?: string;
+            textSearch?: string | undefined
         }
     > = {};
-
+    if (params.query) {
+        filters.title = {
+            textSearch: params.query ? `%${params.query}%` : undefined,
+        }
+    }
     if (params.platform && params.platform !== 'all') {
         let selectedPlatform = '';
         switch (params.platform.toLowerCase()) {
@@ -134,7 +141,7 @@ function getFilters(params: SearchParams) {
                 break;
         }
 
-        filters.platform = {
+        filters.pPlatform = {
             eq: selectedPlatform,
         };
     }
@@ -143,16 +150,16 @@ function getFilters(params: SearchParams) {
         let selectedMode
         switch (params.mode.toLowerCase()) {
             case 'autopilot':
-                selectedMode = 'autopilot'
+                selectedMode = 'auto'
                 break;
             case 'suggestmode':
-                selectedMode = 'suggestmode'
+                selectedMode = 'suggest'
                 break;
             default:
                 break;
         }
 
-        filters.mode = {
+        filters.pMode = {
             eq: selectedMode,
         };
     }
@@ -170,7 +177,7 @@ function getFilters(params: SearchParams) {
                 break;
         }
 
-        filters.state = {
+        filters.pState = {
             eq: selectedState,
         };
     }

@@ -3,18 +3,6 @@ import { z } from 'zod';
 
 export const SaveProjectSchema = z
    .object({
-      // account_id: z.z.string()().uuid(),
-      // project_name: z.z.string()().min(1),
-      // title: z.z.string()().min(1),
-      // platform: z.z.string()(),
-      // topic: z.z.string()(),
-      // subtopic: z.z.string()().nullable(),
-      // state: z.boolean(),
-      // mode: z.z.string()(),
-      // start_date: z.z.string()(),
-      // end_date: z.z.string()(),
-      // created_by: z.z.string()().uuid(),
-      // updated_by: z.z.string()().uuid().nullable(),
       pUserId: z.string().uuid(),
       pName: z.string(),
       pMainTopic: z.string(),
