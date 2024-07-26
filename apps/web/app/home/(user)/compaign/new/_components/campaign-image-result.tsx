@@ -1,7 +1,7 @@
 'use client'
 import { Label } from '@kit/ui/label'
 import { useTranslation } from "react-i18next";
-import { ProjectsType } from "./personal-compaign-creator-container"
+import { ProjectsType } from '../page';
 import { createAIImageAction } from '../_lib/server/server-action';
 import { useState } from 'react';
 import Image from 'next/image';
@@ -145,10 +145,10 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
                     </div>
 
                     :
-                    loading !== null && <div className='flex gap-[10px] justify-center'>
+                    <div className='flex gap-[10px] justify-center'>
                         {
-                            result?.length ?
-                                result.map((a, idx) => (
+                            projectProps.pImages?.length ?
+                                projectProps.pImages.map((a, idx) => (
                                     <div key={idx}>
                                         <Image width={500} height={300} key={idx} alt='img' src={a} />
                                     </div>

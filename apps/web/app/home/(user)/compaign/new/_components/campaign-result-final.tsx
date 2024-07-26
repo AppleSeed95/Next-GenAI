@@ -7,7 +7,7 @@ import Image from "next/image"
 import { Label } from "@kit/ui/label"
 import { useTranslation } from "react-i18next"
 
-import { ProjectsType } from "./personal-compaign-creator-container"
+import { ProjectsType } from '../page';
 export interface CampaignResultFinalProps {
     projectProps: ProjectsType,
     setCurrentStep: (v: number) => void,

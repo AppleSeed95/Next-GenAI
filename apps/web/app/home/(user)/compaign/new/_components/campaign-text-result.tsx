@@ -1,5 +1,5 @@
 'use client'
-import { ProjectsType } from "./personal-compaign-creator-container"
+import { ProjectsType } from '../page';
 import { Label } from '@kit/ui/label'
 import { useTranslation } from "react-i18next";
 import { RadioGroup, RadioGroupItem } from '@kit/ui/radio-group'

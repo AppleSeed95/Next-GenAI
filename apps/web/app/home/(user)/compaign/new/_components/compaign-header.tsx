@@ -5,7 +5,7 @@ import { Input } from "@kit/ui/input";
 import { Comboboxsuggest } from "../../../project/_components/suggestmode-combobox";
 import { useTranslation } from "react-i18next";
 import { Label } from "@kit/ui/label";
-import { ProjectsType } from "./personal-compaign-creator-container";
+import { ProjectsType } from '../page';
 import React, { useState } from "react";
 import { ModeSelectComboDemo } from "./compaign-mode-select-combobox";
 import { RadioGroup, RadioGroupItem } from "@kit/ui/radio-group"

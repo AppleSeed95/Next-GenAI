@@ -154,7 +154,9 @@ export function ProjectCardCpn({ project }: Props) {
                                     {`${toFirstCharToUppercase(project.pPostMode)}`}
                                 </div>
                                 <div className="flex gap-2 justify-center">
-                                    <div className='bg-green-500 py-1 px-3 rounded-full flex items-center justify-center w-10 h-10 shadow-sm cursor-pointer duration-500'>
+                                    <div
+                                        onClick={() => router.push(`/home/compaign/${project.id}`)}
+                                        className='bg-green-500 py-1 px-3 rounded-full flex items-center justify-center w-10 h-10 shadow-sm cursor-pointer duration-500'>
                                         <Settings />
                                     </div>
                                     <div className='bg-red-500 py-1 px-3 rounded-full flex items-center justify-center w-10 h-10 shadow-sm cursor-pointer duration-500'>

@@ -1,7 +1,7 @@
 'use client'
 import { Label } from '@kit/ui/label'
 import { useTranslation } from "react-i18next";
-import { ProjectsType } from "./personal-compaign-creator-container"
+import { ProjectsType } from '../page';
 import { Button } from "@kit/ui/button"
 import { createAIImageAction } from '../_lib/server/server-action';
 import { useEffect, useState } from 'react';

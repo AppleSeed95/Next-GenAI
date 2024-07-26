@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { OpenAI } from 'openai';
-import { ProjectsType } from '../../_components/personal-compaign-creator-container';
 
 const DEFAULT_MODEL = process.env.OPENAI_MODEL_NAME as string;
 const SYSTEM = 'system' as const;

@@ -19,6 +19,7 @@ export const CompaignStepIndicatorCpn = ({ useText, useVideo, useImage, steps, c
                     }
                     return (
                         <div
+                            key={idx}
                             className="flex cursor-pointer text-[20px] bold shadow-lg justify-center items-center rounded-full bg-[#027538] w-[70px] h-[70px]"
                             style={idx === currentStep ? {
                                 width: '80px',

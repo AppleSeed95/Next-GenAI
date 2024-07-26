@@ -6,7 +6,7 @@ import { Card } from "@kit/ui/card";
 import { Button } from "@kit/ui/button";
 import { PageBody } from "@kit/ui/page";
 import { useTranslation } from "react-i18next";
-import { ProjectsType } from "./personal-compaign-creator-container";
+import { ProjectsType } from '../page';
 import { useState } from "react";
 import { IconSelect, Icons } from "../../../_components/icons";
 import { DateTimePicker } from "./date-time-picker/date-time-picker";

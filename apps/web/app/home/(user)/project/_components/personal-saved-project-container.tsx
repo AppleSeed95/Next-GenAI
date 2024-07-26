@@ -41,7 +41,7 @@ function PersonalSavedProjectContainer(props: React.PropsWithChildren<{
                 <ServerDataLoader
                     client={client}
                     table={'campaign_table'}
-                    page={page}
+                    // page={page}
                     where={{
                         ...filters,
                         pUserId: {

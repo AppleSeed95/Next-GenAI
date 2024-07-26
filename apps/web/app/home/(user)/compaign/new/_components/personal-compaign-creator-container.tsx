@@ -13,33 +13,9 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { saveProjectAction } from "../_lib/server/server-action";
 import { requireUser } from "@kit/supabase/require-user"
-
-
-export type ProjectsType = {
-   pName: string;
-   pMainTopic: string;
-   pSubTopic: string;
-   pMode: string;
-   pState: boolean;
-   pStartDate: Date | undefined;
-   pEndDate: Date | undefined;
-   pPlatform: string,
-   pPlatformurl: string,
-   pCnt: number,
-   pAtmosphere: string,
-   pPostMode: string,
-   pTitle: string,
-   pTextContent: string,
-   pGeneratedTitles: string[],
-   pImages: string[],
-   pImageBrand: string,
-   pImageFormat: string,
-   pImageCnt: number,
-   pImageRatio: string,
-   pUseText: boolean,
-   pUseImage: boolean,
-   pUseVideo: boolean,
-}
+import { ProjectsType } from "../page";
+import { updateUserProject } from "~/home/(user)/project/_lib/server/server-action-user-project";
+import { useParams } from "next/navigation";
 
 
 export function PersonalContentCreatorContainer(
@@ -47,40 +23,20 @@ export function PersonalContentCreatorContainer(
       userId: string;
       paths: {
          callback: string;
-      }
+      },
+      projectData: ProjectsType,
+      editMode?: boolean
    }>
 ) {
+   const { id } = useParams();
+   const projectId = parseInt(id ?? 0);
    const client = useSupabase();
    const auth = requireUser(client);
 
    const [step, setStep] = useState(0);
    const [loading, setLoading] = useState(false);
    const stepDescriptions = ['Config your campaign', 'Platform settings', 'Text generation', 'Image generation', 'Video generation', "Save your project!"]
-   const [projectValue, setProjectValue] = useState<ProjectsType>({
-      pName: 'test',
-      pMainTopic: 'test',
-      pSubTopic: 'test',
-      pMode: 'auto',
-      pState: true,
-      pCnt: 1,
-      pStartDate: new Date(),
-      pEndDate: new Date(),
-      pPlatform: 'linkedin',
-      pPlatformurl: '',
-      pAtmosphere: JSON.stringify([]),
-      pPostMode: 'weekly',
-      pTitle: '',
-      pTextContent: '',
-      pGeneratedTitles: [],
-      pImages: [],
-      pImageBrand: '',
-      pImageFormat: 'png',
-      pImageCnt: 1,
-      pImageRatio: 'horizontal',
-      pUseText: true,
-      pUseImage: true,
-      pUseVideo: true
-   })
+   const [projectValue, setProjectValue] = useState<ProjectsType>(props.projectData)
    const [generatedTopicIdeas, setGeneratedTopicIdeas] = useState('');
    const { t } = useTranslation('');
 
@@ -88,9 +44,9 @@ export function PersonalContentCreatorContainer(
    const createToaster = useCallback(
       (promise: () => Promise<unknown>) => {
          return toast.promise(promise, {
-            success: t(`createProjectSuccess`),
-            error: t(`createProjectError`),
-            loading: t(`createProjectLoading`),
+            success: t(`${props.editMode ? 'edit' : 'create'}ProjectSuccess`),
+            error: t(`${props.editMode ? 'edit' : 'create'}ProjectError`),
+            loading: t(`${props.editMode ? 'edit' : 'create'}ProjectLoading`),
          });
       },
       [t],
@@ -146,6 +102,7 @@ export function PersonalContentCreatorContainer(
       setLoading(true);
 
       const promise = async () => {
+
          const uploadedList: any[] = [];
          if (projectValue.pImages.length > 0) {
             await Promise.all(projectValue.pImages.map(async (v) => {
@@ -155,22 +112,35 @@ export function PersonalContentCreatorContainer(
             }));
 
          }
-         const pUserId = (await auth).data?.id
-
-         if ((await auth).data && pUserId) {
+         if (props.editMode) {
             const project = {
                ...projectValue,
-               pUserId,
                pStartDate: projectValue.pStartDate?.toISOString() ?? '',
                pEndDate: projectValue.pEndDate?.toISOString() ?? '',
                pGeneratedTitles: JSON.stringify(projectValue.pGeneratedTitles),
                pImages: JSON.stringify(uploadedList),
             };
-            const payload = {
-               ...project
+            const res = await updateUserProject({ ...project, id: projectId })
+         } else {
+            const pUserId = (await auth).data?.id
+
+            if ((await auth).data && pUserId) {
+               const project = {
+                  ...projectValue,
+                  pUserId,
+                  pStartDate: projectValue.pStartDate?.toISOString() ?? '',
+                  pEndDate: projectValue.pEndDate?.toISOString() ?? '',
+                  pGeneratedTitles: JSON.stringify(projectValue.pGeneratedTitles),
+                  pImages: JSON.stringify(uploadedList),
+               };
+               const payload = {
+                  ...project
+               }
+               const res = await saveProjectAction(payload);
             }
-            const res = await saveProjectAction(payload);
          }
+
+
          setLoading(false);
       }
 

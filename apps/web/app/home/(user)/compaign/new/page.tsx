@@ -10,6 +10,58 @@ const paths = {
    callback: pathsConfig.auth.callback + `?next=${pathsConfig.app.accountHome}`,
 };
 
+export type ProjectsType = {
+   pName: string;
+   pMainTopic: string;
+   pSubTopic: string;
+   pMode: string;
+   pState: boolean;
+   pStartDate: Date | undefined;
+   pEndDate: Date | undefined;
+   pPlatform: string,
+   pPlatformurl: string,
+   pCnt: number,
+   pAtmosphere: string,
+   pPostMode: string,
+   pTitle: string,
+   pTextContent: string,
+   pGeneratedTitles: string[],
+   pImages: string[],
+   pImageBrand: string,
+   pImageFormat: string,
+   pImageCnt: number,
+   pImageRatio: string,
+   pUseText: boolean,
+   pUseImage: boolean,
+   pUseVideo: boolean,
+}
+
+const initial: ProjectsType = {
+   pName: 'test',
+   pMainTopic: 'test',
+   pSubTopic: 'test',
+   pMode: 'auto',
+   pState: true,
+   pCnt: 1,
+   pStartDate: new Date(),
+   pEndDate: new Date(),
+   pPlatform: 'linkedin',
+   pPlatformurl: '',
+   pAtmosphere: JSON.stringify([]),
+   pPostMode: 'weekly',
+   pTitle: '',
+   pTextContent: '',
+   pGeneratedTitles: [],
+   pImages: [],
+   pImageBrand: '',
+   pImageFormat: 'png',
+   pImageCnt: 1,
+   pImageRatio: 'horizontal',
+   pUseText: true,
+   pUseImage: true,
+   pUseVideo: true
+}
+
 function PersonalContentCreatorPage() {
    const { user } = use(loadUserWorkspace());
    return (
@@ -17,6 +69,7 @@ function PersonalContentCreatorPage() {
          <PersonalContentCreatorContainer
             userId={user.id}
             paths={paths}
+            projectData={initial}
          />
       </PageBody>
 
