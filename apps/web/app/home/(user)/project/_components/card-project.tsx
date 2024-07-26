@@ -84,20 +84,19 @@ export function ProjectCardCpn({ project }: Props) {
             <div className="w-1/4 rounded-lg overflow-hidden">
                 <div >
                     {images.length > 0 &&
-                        <Carousel autoPlay interval={3000} showThumbs={false} infiniteLoop showStatus showArrows showIndicators >
-                            {images.map((aImage, idx) => (
-                                <div className="w-full">
-                                    <Image
-                                        className="rounded-lg"
-                                        key={idx}
-                                        src={aImage}
-                                        width={450}
-                                        layout="responsive"
-                                        height={150}
-                                        alt='image' />
-                                </div>
-                            ))}
-                        </Carousel>
+                        // <Carousel autoPlay interval={3000} showThumbs={false} infiniteLoop showStatus showArrows showIndicators >
+                        //     {images.map((aImage, idx) => (
+                        //         <div key={idx} className="w-full">
+                        //             <Image
+                        //                 className="rounded-lg"
+                        //                 src={aImage}
+                        //                 width={450}
+                        //                 layout="responsive"
+                        //                 height={150}
+                        //                 alt='image' />
+                        //         </div>
+                        //     ))}
+                        // </Carousel>
                     }
 
 
