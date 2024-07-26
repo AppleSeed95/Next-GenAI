@@ -39,7 +39,7 @@ function PersonalSavedProjectContainer(props: React.PropsWithChildren<{
                     <HeaderPart />
                 </div>
 
-                {/* <ServerDataLoader
+                <ServerDataLoader
                     client={client}
                     table={'campaign_table'}
                     // page={page}
@@ -68,7 +68,7 @@ function PersonalSavedProjectContainer(props: React.PropsWithChildren<{
                             </div>
                         );
                     }}
-                </ServerDataLoader> */}
+                </ServerDataLoader>
 
             </PageBody>
         </>
@@ -165,5 +165,7 @@ function getFilters(params: SearchParams) {
             eq: selectedState,
         };
     }
+    console.log(filters);
+
     return filters;
 }

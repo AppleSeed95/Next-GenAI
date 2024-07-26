@@ -50,57 +50,57 @@ export function PersonalCreatedProjects(props: Props) {
    return (
 
       <div >
-         <Form {...form}>
-            <form className={'flex flex-col gap-2 display-end sm:flex-row gap-4'}
-               onSubmit={form.handleSubmit((data) => onSubmit(data))}
-            >
-               <ComboboxDemo
-                  onChange={(value) => {
-                     form.setValue(
-                        'platform',
-                        value as PlatformType,
-                        {
-                           shouldValidate: true,
-                           shouldDirty: true,
-                           shouldTouch: true,
-                        },
-                     );
-                     console.log(form.getValues());
-                     return onSubmit(form.getValues());
-                  }}
-               />
-               <ComboboxPopover
-                  onChange={(value) => {
-                     form.setValue(
-                        'state',
-                        value as StateType,
-                        {
-                           shouldValidate: true,
-                           shouldDirty: true,
-                           shouldTouch: true,
-                        },
-                     );
+         {/* <Form {...form}> */}
+         <form className={'flex flex-col gap-2 display-end sm:flex-row gap-4'}
+            onSubmit={form.handleSubmit((data) => onSubmit(data))}
+         >
+            <ComboboxDemo
+               onChange={(value) => {
+                  form.setValue(
+                     'platform',
+                     value as PlatformType,
+                     {
+                        shouldValidate: true,
+                        shouldDirty: true,
+                        shouldTouch: true,
+                     },
+                  );
+                  console.log(form.getValues());
+                  return onSubmit(form.getValues());
+               }}
+            />
+            <ComboboxPopover
+               onChange={(value) => {
+                  form.setValue(
+                     'state',
+                     value as StateType,
+                     {
+                        shouldValidate: true,
+                        shouldDirty: true,
+                        shouldTouch: true,
+                     },
+                  );
 
-                     return onSubmit(form.getValues());
-                  }}
-               />
-               <Comboboxsuggest
-                  onChange={(value) => {
-                     form.setValue(
-                        'mode',
-                        value as ModeType,
-                        {
-                           shouldValidate: true,
-                           shouldDirty: true,
-                           shouldTouch: true,
-                        },
-                     );
+                  return onSubmit(form.getValues());
+               }}
+            />
+            <Comboboxsuggest
+               onChange={(value) => {
+                  form.setValue(
+                     'mode',
+                     value as ModeType,
+                     {
+                        shouldValidate: true,
+                        shouldDirty: true,
+                        shouldTouch: true,
+                     },
+                  );
 
-                     return onSubmit(form.getValues());
-                  }}
-               />
-            </form>
-         </Form>
+                  return onSubmit(form.getValues());
+               }}
+            />
+         </form>
+         {/* </Form> */}
       </div>
    )
 }
