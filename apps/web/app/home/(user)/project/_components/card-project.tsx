@@ -86,7 +86,7 @@ export function ProjectCardCpn({ project }: Props) {
                     {images.length > 0 &&
                         <Carousel autoPlay interval={3000} showThumbs={false} infiniteLoop showStatus showArrows showIndicators >
                             {images.map((aImage, idx) => (
-                                <div key={idx} className="w-full">
+                                aImage && (<div key={idx} className="w-full">
                                     <Image
                                         className="rounded-lg"
                                         src={aImage}
@@ -94,7 +94,7 @@ export function ProjectCardCpn({ project }: Props) {
                                         layout="responsive"
                                         height={150}
                                         alt='image' />
-                                </div>
+                                </div>)
                             ))}
                         </Carousel>
                     }
