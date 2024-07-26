@@ -53,7 +53,7 @@ const DownloadImageIcon: React.FC<DownloadImageIconProps> = ({ imageUrl, fileNam
       headers: {}
     })
       .then(response => {
-        response.arrayBuffer().then(function(buffer) {
+        response.arrayBuffer().then(function (buffer) {
           const url = window.URL.createObjectURL(new Blob([buffer]));
           const link = document.createElement("a");
           link.href = url;

@@ -8,7 +8,7 @@ import { PageBody } from "@kit/ui/page";
 import { useTranslation } from "react-i18next";
 import { ProjectsType } from "./personal-compaign-creator-container";
 import { useState } from "react";
-import { IconSelect, Icons } from "../../_components/icons";
+import { IconSelect, Icons } from "../../../_components/icons";
 import { DateTimePicker } from "./date-time-picker/date-time-picker";
 import { SelectDuration } from "./compaign-platform-duration-select";
 import { Input } from "@kit/ui/input";

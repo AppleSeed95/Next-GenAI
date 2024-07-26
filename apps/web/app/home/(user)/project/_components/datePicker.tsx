@@ -13,7 +13,7 @@ import { addDays, format } from "date-fns";
 import { cn } from "@kit/ui/utils";
 import { DateRange } from "@kit/ui/calendar";
 import { useTranslation } from "react-i18next";
-import { DateRangeType } from "../../compaign/_components/compaign-header";
+import { DateRangeType } from "../../compaign/new/_components/compaign-header";
 
 type DatePickerWithRangeProps = {
   className?: string,

@@ -2,7 +2,7 @@ import { Button } from "@kit/ui/button"
 import { Badge } from "@kit/ui/badge"
 
 import { ChevronLeft, Check } from "lucide-react"
-import { IconSelect } from "../../_components/icons"
+import { IconSelect } from "../../../_components/icons"
 import Image from "next/image"
 import { Label } from "@kit/ui/label"
 import { useTranslation } from "react-i18next"
