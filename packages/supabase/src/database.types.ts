@@ -235,6 +235,7 @@ export type Database = {
           pCnt: number | null
           pEndDate: string | null
           pGeneratedTitles: string | null
+          pImageAddition: string | null
           pImageBrand: string | null
           pImageCnt: number | null
           pImageFormat: string | null
@@ -249,7 +250,11 @@ export type Database = {
           pStartDate: string | null
           pState: boolean | null
           pSubTopic: string | null
+          pTextAddition: string | null
+          pTextBrand: string | null
           pTextContent: string | null
+          pTextLanguage: string | null
+          pTextWordsCnt: number | null
           pTitle: string | null
           pUseImage: boolean | null
           pUserId: string | null
@@ -263,6 +268,7 @@ export type Database = {
           pCnt?: number | null
           pEndDate?: string | null
           pGeneratedTitles?: string | null
+          pImageAddition?: string | null
           pImageBrand?: string | null
           pImageCnt?: number | null
           pImageFormat?: string | null
@@ -277,7 +283,11 @@ export type Database = {
           pStartDate?: string | null
           pState?: boolean | null
           pSubTopic?: string | null
+          pTextAddition?: string | null
+          pTextBrand?: string | null
           pTextContent?: string | null
+          pTextLanguage?: string | null
+          pTextWordsCnt?: number | null
           pTitle?: string | null
           pUseImage?: boolean | null
           pUserId?: string | null
@@ -291,6 +301,7 @@ export type Database = {
           pCnt?: number | null
           pEndDate?: string | null
           pGeneratedTitles?: string | null
+          pImageAddition?: string | null
           pImageBrand?: string | null
           pImageCnt?: number | null
           pImageFormat?: string | null
@@ -305,7 +316,11 @@ export type Database = {
           pStartDate?: string | null
           pState?: boolean | null
           pSubTopic?: string | null
+          pTextAddition?: string | null
+          pTextBrand?: string | null
           pTextContent?: string | null
+          pTextLanguage?: string | null
+          pTextWordsCnt?: number | null
           pTitle?: string | null
           pUseImage?: boolean | null
           pUserId?: string | null

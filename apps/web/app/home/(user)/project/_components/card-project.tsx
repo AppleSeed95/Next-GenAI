@@ -120,7 +120,9 @@ export function ProjectCardCpn({ project }: Props) {
 
                     <div className="flex gap-1 justify-between">
                         <div className="text-base   flex flex-col gap-2">
-                            {project.pTextContent}
+                            <div className="h-full w-full grow">
+                                {project.pTextContent}
+                            </div>
                             <div className="flex gap-2 w-full justify-between pr-6">
                                 <div className='flex gap-2 flex-wrap '>
                                     {JSON.parse(project.pAtmosphere ?? JSON.stringify([])).length > 0 &&

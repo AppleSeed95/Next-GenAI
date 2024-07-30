@@ -4,11 +4,17 @@ export const SuggestPostTopicSchema = z
    .object({
       mainTopic: z.string(),
       subTopic: z.string(),
-      atmosphere: z.string()
+      atmosphere: z.string(),
+      language: z.string(),
+
    })
 export const generatePostContentSchema = z
    .object({
       topic: z.string(),
+      wordsCnt: z.number(),
+      language: z.string(),
+      brand: z.string(),
+      addition: z.string(),
    })
 export const CreateAITextSchema = z
    .object({

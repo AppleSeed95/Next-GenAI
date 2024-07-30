@@ -89,7 +89,7 @@ class AiEditorService {
     console.log("GPT_Response", GPT_response.choices[0]?.message.content);
     return GPT_response.choices[0]?.message.content;
   }
-  async suggestTextTopic(projectValue: { mainTopic: string, subTopic: string, atmosphere: string }) {
+  async suggestTextTopic(projectValue: { mainTopic: string, subTopic: string, atmosphere: string, language: string }) {
     const generateAtmosphere = (array: string[]): string => {
       let result = '';
       array.forEach(((a) => {
@@ -111,7 +111,7 @@ class AiEditorService {
         Generate 3 topics seperated with '|' based on the provided parameters:
         - Main Topic: "${projectValue.mainTopic}"
         - Subtopic: "${projectValue.subTopic}"
-        - Language: "${'english'}"
+        - Language: "${projectValue.language}"
         - Atmosphere: "${generateAtmosphere(JSON.parse(projectValue.atmosphere))}"
         
           Requirements:
@@ -120,7 +120,7 @@ class AiEditorService {
            - Do not provide number-ordered topics, I need '|'-seperated results.
            - Compose a title of 4 to 10 impactful words related to the main topic, subtopic, and Atmosphere.
            - Avoid using the word "Title."
-           - Ensure the title is in the specified language, "${'english'}".
+           - Ensure the title is in the specified language, "${projectValue.language}".
            - you have to don't use "Title" word
         `.trim()
 
@@ -146,7 +146,7 @@ class AiEditorService {
     console.log("GPT_Response", GPT_response.choices[0]?.message.content);
     return GPT_response.choices[0]?.message.content;
   }
-  async generatePostTextContent(data: { topic: string }) {
+  async generatePostTextContent(data: { topic: string, language: string, wordsCnt: number, brand: string, addition: string }) {
     const prompt = [
       {
         "role": SYSTEM,
@@ -162,7 +162,11 @@ class AiEditorService {
         
           Requirements:
           
-           - provide with about 5 sentences.
+           - provide with about ${data.wordsCnt} words.
+           - provide with this brand: ${data.brand}.
+           - consider this addition info and reflect in the result: ${data.addition}.
+           - provide with this language: ${data.language}.
+
         `.trim()
 
       },

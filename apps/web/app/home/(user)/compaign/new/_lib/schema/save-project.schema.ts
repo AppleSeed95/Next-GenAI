@@ -27,4 +27,9 @@ export const SaveProjectSchema = z
       pUseText: z.boolean(),
       pUseImage: z.boolean(),
       pUseVideo: z.boolean(),
+      pTextBrand: z.string(),
+      pTextWordsCnt: z.number(),
+      pTextLanguage: z.string(),
+      pTextAddition: z.string(),
+      pImageAddition: z.string()
    })

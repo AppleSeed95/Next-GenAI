@@ -29,7 +29,7 @@ export function PersonalContentCreatorContainer(
    }>
 ) {
    const { id } = useParams();
-   const projectId = parseInt(id ?? 0);
+   const projectId = parseInt(id?.toString() ?? '0');
    const client = useSupabase();
    const auth = requireUser(client);
 
@@ -136,6 +136,7 @@ export function PersonalContentCreatorContainer(
                const payload = {
                   ...project
                }
+               console.log(project);
                const res = await saveProjectAction(payload);
             }
          }

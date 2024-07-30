@@ -41,7 +41,6 @@ export function PersonalCreatedProjects(props: Props) {
          mode: mode ? mode : '',
          state: state ? state : '',
       });
-      console.log(params);
 
       const url = `${pathName}?${params.toString()}`;
       router.push(url);

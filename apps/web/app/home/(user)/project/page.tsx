@@ -17,6 +17,8 @@ export interface SearchParams {
    platform?: PlatformType;
    state?: string;
    mode?: ModeType;
+   start?: string;
+   endt?: string;
 }
 
 export const generateMetadata = async () => {

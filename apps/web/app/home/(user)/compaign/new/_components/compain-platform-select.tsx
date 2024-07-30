@@ -1,7 +1,6 @@
 'use client'
 
 import { Heading } from "@kit/ui/heading";
-import { ComboboxDemoDetail } from "./compaign-page-details";
 import { Card } from "@kit/ui/card";
 import { Button } from "@kit/ui/button";
 import { PageBody } from "@kit/ui/page";
@@ -14,7 +13,6 @@ import { SelectDuration } from "./compaign-platform-duration-select";
 import { Input } from "@kit/ui/input";
 import MultiSelectableCheckboxGroup, { Option } from "./compaign-platform-multi-type-select";
 import { PlatformSelectForCompaingnComboboxDemo } from "./compaign-platform-select-combobox";
-import { ContentTopicSuggestion } from "./compaign-topic-suggestion-select";
 import { Label } from "@kit/ui/label";
 import { RadioGroup, RadioGroupItem } from "@kit/ui/radio-group"
 import {

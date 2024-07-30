@@ -33,7 +33,7 @@ export interface ComapaignTextResultProps {
     nextStep: number
 }
 export const CampaignTextResultCpn = ({ projectProps, setCurrentStep, setProjectValue, nextStep, previousStep }: ComapaignTextResultProps) => {
-    console.log(projectProps);
+    console.log("receive", projectProps);
 
     const { t } = useTranslation();
     const [loading, setLoading] = useState<boolean | null>(null);
@@ -41,12 +41,23 @@ export const CampaignTextResultCpn = ({ projectProps, setCurrentStep, setProject
     const [topics, setTopics] = useState<string[]>(projectProps.pGeneratedTitles);
     const [currentTopic, setCurrentTopic] = useState<string>(projectProps.pTitle);
     const [content, setContent] = useState<string>(projectProps.pTextContent);
+    const [brand, setBrand] = useState<string>(projectProps.pTextBrand);
+    const [wordsCnt, setWordsCnt] = useState<number>(projectProps.pTextWordsCnt);
+    const [language, setLanguage] = useState<string>(projectProps.pTextLanguage);
+    const [addition, setAddition] = useState<string>(projectProps.pTextAddition);
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        setBrand(projectProps.pTextBrand);
+        setWordsCnt(projectProps.pTextWordsCnt);
+        setLanguage(projectProps.pTextLanguage);
+        setAddition(projectProps.pTextAddition);
+    }, [projectProps])
 
     const generateSuggestion = async () => {
         setLoading(true);
         setContentLoading(true);
-        const result = await suggestPostTopicAction({ mainTopic: projectProps.pMainTopic, subTopic: projectProps.pSubTopic, atmosphere: projectProps.pAtmosphere });
+        const result = await suggestPostTopicAction({ mainTopic: projectProps.pMainTopic, subTopic: projectProps.pSubTopic, atmosphere: projectProps.pAtmosphere, language });
         const generatedResults = result?.split('|') ?? [];
         if (generatedResults.length > 0) {
             setTopics(generatedResults);
@@ -58,7 +69,7 @@ export const CampaignTextResultCpn = ({ projectProps, setCurrentStep, setProject
     }
     const generateContent = async (topic: string, generatedTopics: string[]) => {
         setContentLoading(true);
-        const contentResult = await generatePostTextContentAction({ topic: topic });
+        const contentResult = await generatePostTextContentAction({ topic, wordsCnt, language, brand, addition });
         setContent(contentResult ?? '');
         setProjectValue({ ...projectProps, pTitle: topic, pGeneratedTitles: generatedTopics, pTextContent: contentResult ?? '' });
         setContentLoading(false);
@@ -87,19 +98,30 @@ export const CampaignTextResultCpn = ({ projectProps, setCurrentStep, setProject
                     <div className="flex flex-col gap-[20px]">
                         <div className="flex items-center gap-[10px]">
                             <Label className="w-[100px]" children={t('Brand')} />
-                            <Input />
+                            <Input
+                                value={projectProps.pTextBrand}
+                                onChange={(e) => {
+                                    setProjectValue({ ...projectProps, pTextBrand: e.target.value })
+                                }} />
                         </div>
                         <div className="flex  items-center gap-[10px]">
                             <Label className="w-[100px]" children={t('Word number')} />
-                            <Input type="number" />
+                            <Input type="number"
+                                value={projectProps.pTextWordsCnt}
+
+                                onChange={(e) => {
+                                    const value = parseInt(e.target.value)
+                                    setProjectValue({ ...projectProps, pTextWordsCnt: value })
+                                }}
+                            />
                         </div>
                         <div className="flex items-center gap-[10px]">
                             <Label className="w-[100px]" children={t('Language')} />
                             <Select
                                 onValueChange={(v: string) => {
-                                    console.log(v);
-
+                                    setProjectValue({ ...projectProps, pTextLanguage: v })
                                 }}
+                                value={projectProps.pTextLanguage}
                             >
                                 <SelectTrigger >
                                     <SelectValue placeholder="Select a language" />
@@ -118,7 +140,12 @@ export const CampaignTextResultCpn = ({ projectProps, setCurrentStep, setProject
                         <div className="pt-[5px]">
                             <Label children={t('Addition')} />
                         </div>
-                        <Textarea className="h-full w-full grow" placeholder="Additional information to the bot(e.g like photographs, etc.)" />
+                        <Textarea className="h-full w-full grow" placeholder="Additional information to the bot(e.g like photographs, etc.)"
+                            value={projectProps.pTextAddition}
+                            onChange={(e) => {
+                                setProjectValue({ ...projectProps, pTextAddition: e.target.value })
+                            }}
+                        />
                     </div>
 
                 </div>
