@@ -1,14 +1,19 @@
 'use client'
 import { DatePickerWithRange } from "./datePicker";
 import { Trans } from "@kit/ui/trans";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useTranslation } from 'react-i18next';
 import { Plus } from 'lucide-react'
 import { DateRangeType } from "../../compaign/new/_components/compaign-header";
+import { SearchParams } from "../page";
 
-
-export function HeaderPart() {
+type Props = {
+   searchParams: SearchParams
+}
+export function HeaderPart(props: Props) {
    const router = useRouter();
+   const pathName = usePathname();
+
    const { t } = useTranslation('projects');
 
 
@@ -17,7 +22,14 @@ export function HeaderPart() {
          <div className={'flex justify-end'}>
             <DatePickerWithRange
                onChange={(v: DateRangeType) => {
+                  const params = new URLSearchParams({
+                     ...props.searchParams,
+                     start: v.from?.toISOString().split("T")[0] ?? "",
+                     to: v.to?.toISOString().split("T")[0] ?? "",
+                  });
 
+                  const url = `${pathName}?${params.toString()}`;
+                  router.push(url);
                }}
             />
          </div>

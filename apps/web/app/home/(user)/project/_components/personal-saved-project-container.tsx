@@ -36,7 +36,7 @@ function PersonalSavedProjectContainer(props: React.PropsWithChildren<{
                 <ProjectSearchBar searchParams={props.searchParams} />
                 <div className="flex justify-between items-center pt-6">
                     <PersonalCreatedProjects searchParams={props.searchParams} />
-                    <HeaderPart />
+                    <HeaderPart searchParams={props.searchParams} />
                 </div>
 
                 <ServerDataLoader
@@ -48,6 +48,7 @@ function PersonalSavedProjectContainer(props: React.PropsWithChildren<{
                         pUserId: {
                             eq: user.id,
                         },
+
                     }}
                 >
                     {(props) => {
@@ -83,7 +84,9 @@ function getFilters(params: SearchParams) {
         {
             eq?: boolean | string;
             like?: string;
-            textSearch?: string | undefined
+            textSearch?: string | undefined,
+            gte?: string;
+            lte?: string;
         }
     > = {};
     if (params.query) {
@@ -163,6 +166,16 @@ function getFilters(params: SearchParams) {
 
         filters.pState = {
             eq: selectedState,
+        };
+    }
+    if (params.start && params.end) {
+
+
+        filters.pStartDate = {
+            gte: params.start,
+        };
+        filters.pEndDate = {
+            lte: params.end,
         };
     }
     console.log(filters);
