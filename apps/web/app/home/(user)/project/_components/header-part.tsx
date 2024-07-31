@@ -38,6 +38,11 @@ export function HeaderPart(props: Props) {
                }}
             />
          </div>
+         {/* <button
+            className="w-14 h-14 flex justify-center duration-500 items-center bg-green-500 hover:bg-green-600 rounded-full shadow-lg"
+         >
+            clear search
+         </button> */}
          <button className="w-14 h-14 flex justify-center duration-500 items-center bg-green-500 hover:bg-green-600 rounded-full shadow-lg" onClick={() => { router.push(('/home/compaign/new') as string) }}>
             <Plus />
          </button>

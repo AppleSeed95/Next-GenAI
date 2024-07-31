@@ -71,6 +71,8 @@ export function CompaignHeader(props: Props) {
                      <div className="flex flex-col gap-[10px]">
                         <Label children={t('Project Duration')} />
                         <DatePickerWithRange
+                           from=""
+                           to=""
                            onChange={(v: DateRangeType) => {
                               props.onChange({ ...props.projectValue, pStartDate: v.from, pEndDate: v.to });
                            }}

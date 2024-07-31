@@ -8,7 +8,7 @@ import {
 } from "@kit/ui/popover"
 import { Button } from "@kit/ui/button";
 import { CalendarIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addDays, format } from "date-fns";
 import { cn } from "@kit/ui/utils";
 import { DateRange } from "@kit/ui/calendar";
@@ -30,14 +30,20 @@ export function DatePickerWithRange({
   dateRange,
   onChange
 }: DatePickerWithRangeProps) {
+  console.log(from, to);
+
   const [date, setDate] = useState<DateRange | undefined>({
-    from: from ? new Date(from) : undefined,
-    to: from ? addDays(new Date(to), 0) : undefined,
+    from: from?.length > 0 ? new Date(from) : undefined,
+    to: from?.length > 0 ? addDays(new Date(to), 0) : undefined,
   })
 
   const { t } = useTranslation();
-  console.log(date?.from, date?.to);
-
+  useEffect(() => {
+    setDate({
+      from: from?.length > 0 ? new Date(from) : undefined,
+      to: from?.length > 0 ? addDays(new Date(to), 0) : undefined,
+    })
+  }, [from, to]);
   return (
     <div className={cn("grid gap-2", className)}>
       <Popover>
