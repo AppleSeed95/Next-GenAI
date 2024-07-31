@@ -40,8 +40,9 @@ export function PersonalCreatedProjects(props: Props) {
          platform: platform ? platform : '',
          mode: mode ? mode : '',
          state: state ? state : '',
+         start: props.searchParams.start ?? '',
+         end: props.searchParams.end ?? '',
       });
-      console.log(params);
 
       const url = `${pathName}?${params.toString()}`;
       router.push(url);

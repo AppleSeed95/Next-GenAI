@@ -14,6 +14,7 @@ export function HeaderPart(props: Props) {
    const router = useRouter();
    const pathName = usePathname();
 
+
    const { t } = useTranslation('projects');
 
 
@@ -21,12 +22,16 @@ export function HeaderPart(props: Props) {
       <div className="flex items-center gap-5 justify-end">
          <div className={'flex justify-end'}>
             <DatePickerWithRange
+               from={props.searchParams.start ?? ''}
+               to={props.searchParams.end ?? ''}
                onChange={(v: DateRangeType) => {
+
                   const params = new URLSearchParams({
                      ...props.searchParams,
                      start: v.from?.toISOString().split("T")[0] ?? "",
-                     to: v.to?.toISOString().split("T")[0] ?? "",
+                     end: v.to?.toISOString().split("T")[0] ?? "",
                   });
+
 
                   const url = `${pathName}?${params.toString()}`;
                   router.push(url);

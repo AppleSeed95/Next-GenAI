@@ -19,16 +19,20 @@ type DatePickerWithRangeProps = {
   className?: string,
   dateRange?: DateRangeType,
   onChange: (dateRange: DateRangeType) => void,
+  from: string,
+  to: string
 }
 
 export function DatePickerWithRange({
+  from,
+  to,
   className,
   dateRange,
   onChange
 }: DatePickerWithRangeProps) {
   const [date, setDate] = useState<DateRange | undefined>({
-    from: new Date(),
-    to: addDays(new Date(), 0),
+    from: from ? new Date(from) : undefined,
+    to: from ? addDays(new Date(to), 0) : undefined,
   })
 
   const { t } = useTranslation();
