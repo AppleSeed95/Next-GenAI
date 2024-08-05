@@ -51,7 +51,7 @@ export function Sidebar(props: {
             : props.children}
         </div>
       </div>
-      <div className='w-[20vw]'></div>
+      <div className='w-[300px]'></div>
 
     </SidebarContext.Provider>
   );

@@ -177,6 +177,9 @@ importers:
       recharts:
         specifier: ^2.12.7
         version: 2.12.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      replicate:
+        specifier: ^0.32.0
+        version: 0.32.0
       sonner:
         specifier: ^1.4.41
         version: 1.4.41(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -6836,6 +6839,10 @@ packages:
 
   remove-accents@0.5.0:
     resolution: {integrity: sha512-8g3/Otx1eJaVD12e31UbJj1YzdtVvzH85HV7t+9MJYk/u3XmkOUJ5Ys9wQrf9PCPK8+xn4ymzqYCiZl6QWKn+A==}
+
+  replicate@0.32.0:
+    resolution: {integrity: sha512-XOJBnV/FpRsz/r7DEj8KL4pdDk9BpptkljGOhKmjlZGdNcBvt532GxxmjT4ZaqdExg7STxrh1JHhI91zg+CZTw==}
+    engines: {git: '>=2.11.0', node: '>=18.0.0', npm: '>=7.19.0', yarn: '>=1.7.0'}
 
   require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
@@ -14710,6 +14717,10 @@ snapshots:
       rc: 1.2.8
 
   remove-accents@0.5.0: {}
+
+  replicate@0.32.0:
+    optionalDependencies:
+      readable-stream: 4.5.2
 
   require-directory@2.1.1: {}
 

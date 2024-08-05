@@ -1,12 +1,10 @@
 'use client'
-import { Label } from '@kit/ui/label'
 import { useTranslation } from "react-i18next";
 import { ProjectsType } from '../page';
 import { Button } from "@kit/ui/button"
-import { createAIImageAction } from '../_lib/server/server-action';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check } from 'lucide-react';
 
 export interface CampaignVideoResultProps {
     projectProps: ProjectsType,
@@ -19,20 +17,35 @@ export interface CampaignVideoResultProps {
 
 export const CampaignVideoResultCpn = ({ projectProps, setCurrentStep, setProjectValue, previousStep, nextStep }: CampaignVideoResultProps) => {
     const { t } = useTranslation();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [result, setResult] = useState<string[]>([]);
-    // useEffect(() => {
-    //     const generateImage = async () => {
-    //         setLoading(true);
-    //         const result = await createAIImageAction({ idea: projectProps.pTextContent });
-    //         if (result != "Error") {
-    //             const filteredImageUrls: string[] = result.filter((url): url is string => url !== undefined);
-    //             setResult(filteredImageUrls)
-    //         }
-    //         setLoading(false);
-    //     }
-    //     generateImage();
-    // }, [])
+
+    const generateVideo = async () => {
+        try {
+            setLoading(true);
+            const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+            const url = `${baseUrl}/api/video`;
+
+            const response = await fetch(url, {
+                method: 'POST',   // Specify the HTTP method
+                headers: {
+                    'Content-Type': 'application/json',  // Required for JSON payloads
+                },
+                body: JSON.stringify({ prompt: projectProps.pTextContent ?? '' })  // Convert the JavaScript object to a JSON string
+            })
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log(response);
+            setLoading(false);
+        }
+        catch (e) {
+            console.log(e);
+            setLoading(false);
+        }
+
+    }
+
     return (
         <div className="bg-[#000208] flex flex-col gap-[20px] p-[50px] mx-[100px] mb-[20px]">
 
@@ -61,6 +74,7 @@ export const CampaignVideoResultCpn = ({ projectProps, setCurrentStep, setProjec
             </div>
             <div className="flex justify-center mt-[20px] w-full gap-[10px]">
                 <Button variant={'outline'} onClick={() => setCurrentStep(previousStep)}> <ChevronLeft />Prev</Button>
+                <Button disabled={loading === true} variant={'outline'} onClick={() => generateVideo()}><Check /> Generate</Button>
                 <Button variant={'outline'} onClick={() => setCurrentStep(nextStep)}>Next <ChevronRight /></Button>
             </div>
         </div>
