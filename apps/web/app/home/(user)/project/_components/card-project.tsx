@@ -36,10 +36,17 @@ export function ProjectCardCpn({ project }: Props) {
     const url = `${pathName}`;
 
     const { t } = useTranslation(`projects`);
-    const images: string[] = project.pVideo?.length ?? 0 > 0 ?
-        [...(JSON.parse(project.pImages ?? JSON.stringify([]))), project.pVideo]
-        :
-        JSON.parse(project.pImages ?? JSON.stringify([]));
+    const images: string[] = JSON.parse(project.pImages ?? JSON.stringify([]));
+    let carouselItems = images.map((aImage) => ({
+        type: 'image',
+        src: aImage
+    }))
+    if (project.pVideo?.length ?? 0 > 0) {
+        carouselItems.push({
+            type: 'video',
+            src: project.pVideo ?? ''
+        })
+    }
     const toFirstCharToUppercase = (value: string | null) => {
         const first = value ? value[0] : '';
         return `${first?.toUpperCase()}${value?.slice(1, value.length)}`
@@ -86,18 +93,27 @@ export function ProjectCardCpn({ project }: Props) {
         <div className="bg-slate-900 shadow-lg flex w-full p-4 pr-0   rounded-lg">
             <div className="w-1/4 rounded-lg overflow-hidden">
                 <div >
-                    {images.length > 0 &&
-                        <Carousel autoPlay interval={3000} showThumbs={false} infiniteLoop showStatus showArrows showIndicators >
-                            {images.map((aImage, idx) => (
-                                aImage && (<div key={idx} className="w-full">
-                                    <Image
-                                        className="rounded-lg"
-                                        src={aImage}
-                                        width={450}
-                                        layout="responsive"
-                                        height={150}
-                                        alt='image' />
-                                </div>)
+                    {carouselItems.length > 0 &&
+                        <Carousel autoPlay interval={3000} showThumbs={false} infiniteLoop showStatus stopOnHover showArrows showIndicators >
+                            {carouselItems.map((aSrc, idx) => (
+                                aSrc.type === 'image' ?
+                                    (<div key={idx} className="w-full">
+                                        <Image
+                                            className="rounded-lg"
+                                            src={aSrc.src}
+                                            width={450}
+                                            layout="responsive"
+                                            height={150}
+                                            alt='image' />
+                                    </div>) :
+                                    (<div key={idx} className="flex items-center h-full grow w-full">
+                                        <video
+                                            className="w-full aspect-video mt-8 rounded-lg border bg-black"
+                                            controls
+                                        >
+                                            <source src={aSrc.src} />
+                                        </video>
+                                    </div>)
                             ))}
                         </Carousel>
                     }
