@@ -30,6 +30,7 @@ export type ProjectType = {
    pUserId: string | null,
    pUseText: boolean | null,
    pUseVideo: boolean | null,
+   pVideo: string | null
 }
 
 

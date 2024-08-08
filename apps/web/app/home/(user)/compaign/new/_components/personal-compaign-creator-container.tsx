@@ -41,6 +41,7 @@ export function PersonalContentCreatorContainer(
    const { t } = useTranslation('');
 
    const PROJECT_IMAGE_BUCKET = 'project_image';
+   const PROJECT_VIDEO_BUCKET = 'project_video';
    const createToaster = useCallback(
       (promise: () => Promise<unknown>) => {
          return toast.promise(promise, {
@@ -52,7 +53,7 @@ export function PersonalContentCreatorContainer(
       [t],
    );
 
-   const upload = async (resultUrl: string | undefined) => {
+   const upload = async (resultUrl: string | undefined, mode: string) => {
       const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
       const url = `${baseUrl}/api/extra-fetch`;
 
@@ -68,7 +69,7 @@ export function PersonalContentCreatorContainer(
             throw new Error('Network response was not ok');
          }
          if (response.body) {
-            const bucket = client.storage.from(PROJECT_IMAGE_BUCKET);
+            const bucket = client.storage.from(mode === 'image' ? PROJECT_IMAGE_BUCKET : PROJECT_VIDEO_BUCKET);
             const reader = response.body.getReader();
             const chunks = [];
             let push;
@@ -106,12 +107,16 @@ export function PersonalContentCreatorContainer(
          const uploadedList: any[] = [];
          if (projectValue.pImages.length > 0) {
             await Promise.all(projectValue.pImages.map(async (v) => {
-               const temp = await upload(v);
-               console.log('temp', temp)
+               const temp = await upload(v, 'image');
                uploadedList.push(temp);
             }));
-
          }
+         let uploadedVideo: string | undefined = '';
+         if (projectValue.pVideo?.length > 0) {
+            uploadedVideo = await upload(projectValue.pVideo, 'video');
+         }
+         console.log(projectValue.pVideo, uploadedVideo);
+
          if (props.editMode) {
             const project = {
                ...projectValue,
@@ -119,6 +124,7 @@ export function PersonalContentCreatorContainer(
                pEndDate: projectValue.pEndDate?.toISOString() ?? '',
                pGeneratedTitles: JSON.stringify(projectValue.pGeneratedTitles),
                pImages: JSON.stringify(uploadedList),
+               pVideo: uploadedVideo ?? ''
             };
             const res = await updateUserProject({ ...project, id: projectId })
          } else {
@@ -132,11 +138,11 @@ export function PersonalContentCreatorContainer(
                   pEndDate: projectValue.pEndDate?.toISOString() ?? '',
                   pGeneratedTitles: JSON.stringify(projectValue.pGeneratedTitles),
                   pImages: JSON.stringify(uploadedList),
+                  pVideo: uploadedVideo ?? ''
                };
                const payload = {
                   ...project
                }
-               console.log(project);
                const res = await saveProjectAction(payload);
             }
          }
@@ -178,7 +184,6 @@ export function PersonalContentCreatorContainer(
                loading={loading}
                previousStep={projectValue.pUseVideo ? 4 : projectValue.pUseImage ? 3 : projectValue.pUseText ? 2 : 1}
                setCurrentStep={setStep} projectProps={projectValue} saveCampaign={saveCampaign} />}
-            {/* <CompaignContent projectValue={projectValue} onChange={(data) => { setProjectValue(data) }} userId={props.userId} generatedTopicIdeas={generatedTopicIdeas} /> */}
          </div>
       </>
    )

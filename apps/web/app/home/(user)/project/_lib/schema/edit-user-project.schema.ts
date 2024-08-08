@@ -33,4 +33,5 @@ export const UpdateProjectSchema = z
       pUseText: z.boolean().nullable(),
       pUseImage: z.boolean().nullable(),
       pUseVideo: z.boolean().nullable(),
+      pVideo: z.string().nullable()
    })

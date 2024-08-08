@@ -44,7 +44,8 @@ const initial: ProjectsType = {
     pImageRatio: 'horizontal',
     pUseText: true,
     pUseImage: true,
-    pUseVideo: true
+    pUseVideo: true,
+    pVideo: ''
 }
 
 function PersonalContentCreatorPage({ params }: { params: { id: string } }) {

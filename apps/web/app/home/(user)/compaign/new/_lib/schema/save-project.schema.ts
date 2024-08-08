@@ -31,5 +31,6 @@ export const SaveProjectSchema = z
       pTextWordsCnt: z.number(),
       pTextLanguage: z.string(),
       pTextAddition: z.string(),
-      pImageAddition: z.string()
+      pImageAddition: z.string(),
+      pVideo: z.string()
    })

@@ -36,7 +36,10 @@ export function ProjectCardCpn({ project }: Props) {
     const url = `${pathName}`;
 
     const { t } = useTranslation(`projects`);
-    const images: string[] = JSON.parse(project.pImages ?? JSON.stringify([]));
+    const images: string[] = project.pVideo?.length ?? 0 > 0 ?
+        [...(JSON.parse(project.pImages ?? JSON.stringify([]))), project.pVideo]
+        :
+        JSON.parse(project.pImages ?? JSON.stringify([]));
     const toFirstCharToUppercase = (value: string | null) => {
         const first = value ? value[0] : '';
         return `${first?.toUpperCase()}${value?.slice(1, value.length)}`

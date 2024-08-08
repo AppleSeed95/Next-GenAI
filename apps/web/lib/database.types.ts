@@ -260,6 +260,7 @@ export type Database = {
           pUserId: string | null
           pUseText: boolean | null
           pUseVideo: boolean | null
+          pVideo: string | null
         }
         Insert: {
           created_at?: string
@@ -293,6 +294,7 @@ export type Database = {
           pUserId?: string | null
           pUseText?: boolean | null
           pUseVideo?: boolean | null
+          pVideo?: string | null
         }
         Update: {
           created_at?: string
@@ -326,6 +328,7 @@ export type Database = {
           pUserId?: string | null
           pUseText?: boolean | null
           pUseVideo?: boolean | null
+          pVideo?: string | null
         }
         Relationships: [
           {
