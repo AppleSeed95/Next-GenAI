@@ -102,8 +102,8 @@ export function ProjectCardCpn({ project }: Props) {
 
                 </div>
             </div>
-            <div className="w-3/4 pl-8">
-                <div className="flex flex-col gap-2">
+            <div className="w-3/4 pl-8 flex">
+                <div className="flex flex-col gap-2 h-full grow">
                     <div className="flex justify-between items-center pr-6">
                         <div className="font-bold text-2xl">{project.pTitle}</div>
                         <div className={'flex flex-row gap-6 '}>
@@ -118,9 +118,9 @@ export function ProjectCardCpn({ project }: Props) {
                         </div>
                     </div>
 
-                    <div className="flex gap-1 justify-between">
-                        <div className="text-base   flex flex-col gap-2">
-                            <div className="h-full w-full grow">
+                    <div className="flex gap-1 h-full grow justify-between">
+                        <div className="text-base  flex flex-col gap-2">
+                            <div className="h-full w-full grow pt-4">
                                 {project.pTextContent}
                             </div>
                             <div className="flex gap-2 w-full justify-between pr-6">
@@ -140,7 +140,7 @@ export function ProjectCardCpn({ project }: Props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="border-l px-3 flex flex-col gap-2 w-full">
+                        <div className="border-l px-3 flex flex-col gap-2 min-w-[200px]">
                             <div className="flex flex-col justify-center gap-2">
                                 <div className="flex justify-center">
                                     <IconSelect platform={project.pPlatform ?? ''} />
@@ -154,7 +154,7 @@ export function ProjectCardCpn({ project }: Props) {
                                 <div className='bg-slate-950 text-center py-1 px-3 rounded-[30px] shadow-sm cursor-pointer duration-500' >
                                     {`${toFirstCharToUppercase(project.pPostMode)}`}
                                 </div>
-                                <div className="flex gap-2 justify-center">
+                                <div className="flex gap-2 pt-4 justify-center">
                                     <div
                                         onClick={() => router.push(`/home/compaign/${project.id}`)}
                                         className='bg-green-500 py-1 px-3 rounded-full flex items-center justify-center w-10 h-10 shadow-sm cursor-pointer duration-500'>

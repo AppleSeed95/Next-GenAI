@@ -17,8 +17,8 @@ export interface CampaignVideoResultProps {
 
 export const CampaignVideoResultCpn = ({ projectProps, setCurrentStep, setProjectValue, previousStep, nextStep }: CampaignVideoResultProps) => {
     const { t } = useTranslation();
-    const [loading, setLoading] = useState(false);
-    const [result, setResult] = useState<string[]>([]);
+    const [loading, setLoading] = useState<boolean | null>(null);
+    const [result, setResult] = useState<String>('');
 
     const generateVideo = async () => {
         try {
@@ -26,17 +26,20 @@ export const CampaignVideoResultCpn = ({ projectProps, setCurrentStep, setProjec
             const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
             const url = `${baseUrl}/api/video`;
 
-            const response = await fetch(url, {
-                method: 'POST',   // Specify the HTTP method
+            const response: any = await fetch(url, {
+                method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',  // Required for JSON payloads
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ prompt: projectProps.pTextContent ?? '' })  // Convert the JavaScript object to a JSON string
+                body: JSON.stringify({ prompt: projectProps.pTextContent ?? '' })
             })
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            console.log(response);
+            const data = await response.json();
+            setResult(data[0] ?? '');
+            setProjectValue({ ...projectProps, pVideo: data[0] ?? '' });
+
             setLoading(false);
         }
         catch (e) {
@@ -51,25 +54,19 @@ export const CampaignVideoResultCpn = ({ projectProps, setCurrentStep, setProjec
 
             <div className="flex flex-col gap-[10px] w-full">
                 {/* <Label children={t('Generated images based on the content.')} /> */}
-                {loading ?
+                {loading === true ?
                     <div className="animate-pulse flex justify-center space-x-4">
                         <div className="flex justify-center space-y-2 py-1">
                             <div className="h-[300px] w-[500px] bg-slate-800 rounded"></div>
-                            {/* <div className="h-4 bg-slate-800 rounded"></div> */}
-                            {/* <div className="h-4 bg-slate-800 rounded"></div> */}
                         </div>
                     </div>
                     :
-                    <div className='flex gap-[10px] justify-center'>
-                        {
-                            result?.length ?
-                                result.map((a, idx) => (
-                                    <div key={idx}>
-                                        <Image width={300} height={300} key={idx} alt='img' src={a} />
-                                    </div>
-                                )) : null
-                        }
-                    </div>
+                    projectProps.pVideo?.length > 0 && <video
+                        className="w-full aspect-video mt-8 rounded-lg border bg-black"
+                        controls
+                    >
+                        <source src={projectProps.pVideo} />
+                    </video>
                 }
             </div>
             <div className="flex justify-center mt-[20px] w-full gap-[10px]">

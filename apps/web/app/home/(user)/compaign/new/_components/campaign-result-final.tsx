@@ -37,6 +37,14 @@ export const CampaignResultFinalCpn = ({ loading, setCurrentStep, projectProps, 
                                 )) : null
                         }
                     </div>
+                    <div>
+                        <video
+                            className="w-full aspect-video mt-8 rounded-lg border bg-black"
+                            controls
+                        >
+                            <source src={projectProps.pVideo} />
+                        </video>
+                    </div>
                 </div>
                 <div className="w-[30%] pl-[20px] flex flex-col gap-[15px]">
                     <div className="flex flex-col gap-[10px] w-full">
