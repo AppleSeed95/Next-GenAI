@@ -161,19 +161,15 @@ export function PersonalContentCreatorContainer(
             <div className="px-[150px] pb-[50px]">
                <CompaignStepIndicatorCpn useText={projectValue.pUseText} useImage={projectValue.pUseImage} useVideo={projectValue.pUseVideo} setCurrentStep={setStep} steps={['config', 'pPlatform', 'text', 'image', 'video', 'complete']} currentStep={step} />
             </div>
-            <div className="absolute w-full flex justify-center text-center  pt-[130px]">
-               {
-                  stepDescriptions.map((a, idx) => (
-                     <WithAnimation isVisible={idx === step} key={idx} mode="zoom">
-                        <div className="font-bold w-full text-[25px] text-center">
-                           {`${a ?? ''}`}
-                        </div>
-                     </WithAnimation>
-                  ))
-               }
-            </div>
+            <WithAnimation mode="up">
+               <div className="w-full flex justify-center font-bold text-[25px] text-center">
+                  {
+                     stepDescriptions[step] ?? ''
+                  }
+               </div>
+            </WithAnimation>
 
-            <div className="pt-[80px]">
+            <div className="">
                {step === 0 && <CompaignHeader currentStep={0} setCurrentStep={setStep} projectValue={projectValue} onChange={(data) => { setProjectValue(data) }} />}
                {step === 1 && <CompaignpPlatformSelect
                   previousStep={0}
@@ -196,7 +192,7 @@ export function PersonalContentCreatorContainer(
                   previousStep={projectValue.pUseVideo ? 4 : projectValue.pUseImage ? 3 : projectValue.pUseText ? 2 : 1}
                   setCurrentStep={setStep} projectProps={projectValue} saveCampaign={saveCampaign} />}
             </div>
-         </div>
+         </div >
       </>
    )
 }

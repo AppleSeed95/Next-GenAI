@@ -136,20 +136,19 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
 
                     </div>
                 </div>
-                <div className="flex  gap-[10px] w-full">
-                    {/* <Label children={t('Generated images based on the content.')} /> */}
+                <div className="flex justify-center  gap-[10px] w-full">
                     {loading === true ?
                         <div className='flex w-full  gap-[20px] justify-center'>
                             {[...Array(cnt)].map((_, idx) => (
-                                <div key={idx} className="animate-pulse w-full flex justify-center space-x-4">
-                                    <div className="h-[300px] w-full bg-slate-800 rounded"></div>
+                                <div key={idx} className="animate-pulse max-w-[500px] w-full flex justify-center border-2 border-dashed rounded-lg p-2">
+                                    <div className="h-[300px]  w-full bg-slate-800 rounded"></div>
                                 </div>
                             ))}
                         </div>
                         :
                         projectProps.pImages?.length ?
                             projectProps.pImages.map((a, idx) => (
-                                <div key={idx} className='flex gap-[10px] justify-center'>
+                                <div key={idx} className='flex gap-[10px] justify-center '>
                                     <div >
                                         <Image width={500} height={300} key={idx} alt='img' src={a} />
                                     </div>
