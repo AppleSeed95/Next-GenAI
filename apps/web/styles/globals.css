@@ -95,3 +95,7 @@ Optimize dropdowns for mobile
 [data-radix-menu-content] [role="menuitem"] {
   @apply md:min-h-0 min-h-12;
 }
+
+body {
+  overflow-x: hidden;
+}

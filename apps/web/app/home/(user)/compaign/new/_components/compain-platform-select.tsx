@@ -21,6 +21,7 @@ import {
    AlertTitle,
 } from "@kit/ui/alert"
 import { AlertCircle, ChevronLeft, ChevronRight } from "lucide-react"
+import { WithAnimation } from "~/home/(user)/_components/animated-element";
 
 type Props = {
    setCurrentStep: (v: number) => void,
@@ -79,90 +80,91 @@ export function CompaignpPlatformSelect(props: Props) {
    }
    return (
       <PageBody>
-         <div className={'flex flex-col gap-4 bg-[#000208] p-[50px] mx-[200px] mb-[20px] rounded-lg shadow-lg '}>
-            {/* <div className={'flex flex-col sm:flex-row justify-between'}>
+         <WithAnimation mode="zoom">
+            <div className={'flex flex-col gap-4 bg-[#000208] p-[50px] mx-[200px] mb-[20px] rounded-lg shadow-lg '}>
+               {/* <div className={'flex flex-col sm:flex-row justify-between'}>
                <div className={'flex flex-row justify-between sm:gap-4'}>
                   <pPlatformSelectForCompaingnComboboxDemo onChange={(data) => { setpPlatform(data), props.onChange({ ...props.projectValue, pPlatform: data }) }} />
                   <ComboboxDemoDetail pPlatformurl={props.projectValue.pPlatformurl} onChange={(data) => { setpPlatformUrl(data), props.onChange({ ...props.projectValue, pPlatformurl: data }) }} />
                </div>
             </div> */}
-            <div className={'flex justify-center'}>
-               <IconSelect platform={props.projectValue.pPlatform as string} />
-            </div>
-            <div className="flex flex-col gap-[10px] w-full">
-               <Label children={t('Target pPlatform')} />
-               <PlatformSelectForCompaingnComboboxDemo onChange={(data) => { setPlatform(data), props.onChange({ ...props.projectValue, pPlatform: data }) }} />
-            </div>
-            <div className="flex flex-col gap-[10px] w-full">
-               <Label children={t('Post settings')} />
-               <div className="flex flex-row gap-3">
-                  <Input
-                     type="number"
-                     max={3}
-                     min={0}
-                     value={props.projectValue.pCnt}
-                     onChange={(e) => {
-                        const value = parseInt(e.target.value)
-                        props.onChange({ ...props.projectValue, pCnt: value })
-                     }}
-                     placeholder="input number of count"
-                     className={'w-[200px] [moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]'}
-                  />
-                  <RadioGroup
-                     onValueChange={(data: string) => {
-                        props.onChange({ ...props.projectValue, pPostMode: data });
-                     }}
-                     value={props.projectValue.pPostMode}
-                     className="h-full w-full" defaultValue="Active">
-                     <div className="flex items-center gap-[10px] h-full">
-                        <div className="flex items-center space-x-2">
-                           <RadioGroupItem value="weekly" />
-                           <Label >Per week</Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                           <RadioGroupItem value="monthly" />
-                           <Label >Per month</Label>
-                        </div>
-                     </div>
-                  </RadioGroup>
-                  {/* <SelectDuration onChange={() => { }} /> */}
+               <div className={'flex justify-center'}>
+                  <IconSelect platform={props.projectValue.pPlatform as string} />
                </div>
-            </div>
-            <div className="flex flex-col gap-[10px] w-full">
-               <Label children={t('Campaign atmosphere')} />
-               <div className={'flex flex-col gap-4'}>
-                  <div className="flex">
-                     <MultiSelectableCheckboxGroup
-                        options={options}
-                        onChange={(data) => {
-                           console.log(data);
-                           setSelectedOptions(data);
-                           props.onChange({ ...props.projectValue, pAtmosphere: JSON.stringify(data) });
+               <div className="flex flex-col gap-[10px] w-full">
+                  <Label className="font-bold text-[16px]" children={t('Target pPlatform')} />
+                  <PlatformSelectForCompaingnComboboxDemo onChange={(data) => { setPlatform(data), props.onChange({ ...props.projectValue, pPlatform: data }) }} />
+               </div>
+               <div className="flex flex-col gap-[10px] w-full">
+                  <Label className="font-bold text-[16px]" children={t('Post settings')} />
+                  <div className="flex flex-row gap-3">
+                     <Input
+                        type="number"
+                        max={3}
+                        min={0}
+                        value={props.projectValue.pCnt}
+                        onChange={(e) => {
+                           const value = parseInt(e.target.value)
+                           props.onChange({ ...props.projectValue, pCnt: value })
                         }}
-                        selectedOptions={selectedOptions}
+                        placeholder="input number of count"
+                        className={'w-[200px] [moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]'}
                      />
+                     <RadioGroup
+                        onValueChange={(data: string) => {
+                           props.onChange({ ...props.projectValue, pPostMode: data });
+                        }}
+                        value={props.projectValue.pPostMode}
+                        className="h-full w-full" defaultValue="Active">
+                        <div className="flex items-center gap-[10px] h-full">
+                           <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="weekly" />
+                              <Label >Per week</Label>
+                           </div>
+                           <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="monthly" />
+                              <Label >Per month</Label>
+                           </div>
+                        </div>
+                     </RadioGroup>
+                     {/* <SelectDuration onChange={() => { }} /> */}
                   </div>
-                  {/* <ContentTopicSuggestion selectedOptions={options} topic={props.projectValue.pMainTopic} isAuto={props.projectValue.pMode} onChange={() => { setSelectedOptions([]) }} generatedTopicIdeas={props.generatedTopicIdeas} setGeneratedTopicIdeas={(data) => props.setGeneratedTopicIdeas(data)} /> */}
                </div>
-            </div>
-            {error !== '' && <div className="my-[20px]">
-               <Alert variant="destructive">
-                  <div className="flex gap-[10px]">
-                     <AlertCircle className="h-6 w-6" />
-                     <div>
-                        <AlertTitle>Error</AlertTitle>
-                        <AlertDescription>
-                           {error}
-                        </AlertDescription>
+               <div className="flex flex-col gap-[10px] w-full">
+                  <Label className="font-bold text-[16px]" children={t('Campaign atmosphere')} />
+                  <div className={'flex flex-col gap-4'}>
+                     <div className="flex">
+                        <MultiSelectableCheckboxGroup
+                           options={options}
+                           onChange={(data) => {
+                              console.log(data);
+                              setSelectedOptions(data);
+                              props.onChange({ ...props.projectValue, pAtmosphere: JSON.stringify(data) });
+                           }}
+                           selectedOptions={selectedOptions}
+                        />
                      </div>
+                     {/* <ContentTopicSuggestion selectedOptions={options} topic={props.projectValue.pMainTopic} isAuto={props.projectValue.pMode} onChange={() => { setSelectedOptions([]) }} generatedTopicIdeas={props.generatedTopicIdeas} setGeneratedTopicIdeas={(data) => props.setGeneratedTopicIdeas(data)} /> */}
                   </div>
-               </Alert>
-            </div>}
-            <div className="flex justify-center mt-[20px] w-full gap-[10px]">
-               <Button variant={'outline'} onClick={() => props.setCurrentStep(0)}><ChevronLeft /> Prev</Button>
-               <Button variant={'outline'} onClick={handleNext}>Next <ChevronRight /></Button>
-            </div>
-            {/* <div className={'flex flex-col gap-4 px-7 py-6 justify-center sm:justify-between items-center'}>
+               </div>
+               {error !== '' && <div className="my-[20px]">
+                  <Alert variant="destructive">
+                     <div className="flex gap-[10px]">
+                        <AlertCircle className="h-6 w-6" />
+                        <div>
+                           <AlertTitle>Error</AlertTitle>
+                           <AlertDescription>
+                              {error}
+                           </AlertDescription>
+                        </div>
+                     </div>
+                  </Alert>
+               </div>}
+               <div className="flex justify-center mt-[20px] w-full gap-[10px]">
+                  <Button variant={'outline'} onClick={() => props.setCurrentStep(0)}><ChevronLeft /> Prev</Button>
+                  <Button variant={'outline'} onClick={handleNext}>Next <ChevronRight /></Button>
+               </div>
+               {/* <div className={'flex flex-col gap-4 px-7 py-6 justify-center sm:justify-between items-center'}>
                <div className={'flex flex-col gap-4'}>
                   {index.map((id) => (
                      <div className={'flex flex-row gap-2 items-center'}>
@@ -187,7 +189,8 @@ export function CompaignpPlatformSelect(props: Props) {
                   <ContentTopicSuggestion selectedOptions={options} topic={props.projectValue.pMainTopic} isAuto={props.projectValue.pMode} onChange={() => { setSelectedOptions([]) }} generatedTopicIdeas={props.generatedTopicIdeas} setGeneratedTopicIdeas={(data) => props.setGeneratedTopicIdeas(data)} />
                </div>
             </div> */}
-         </div>
+            </div>
+         </WithAnimation>
       </PageBody>
    );
 }

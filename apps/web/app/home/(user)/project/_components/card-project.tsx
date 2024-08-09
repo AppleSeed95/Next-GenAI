@@ -94,7 +94,7 @@ export function ProjectCardCpn({ project }: Props) {
             <div className="w-1/4 rounded-lg overflow-hidden">
                 <div >
                     {carouselItems.length > 0 &&
-                        <Carousel autoPlay interval={3000} showThumbs={false} infiniteLoop showStatus stopOnHover showArrows showIndicators >
+                        <Carousel autoPlay interval={3000} showThumbs={false} swipeable infiniteLoop showStatus stopOnHover showArrows showIndicators >
                             {carouselItems.map((aSrc, idx) => (
                                 aSrc.type === 'image' ?
                                     (<div key={idx} className="w-full">

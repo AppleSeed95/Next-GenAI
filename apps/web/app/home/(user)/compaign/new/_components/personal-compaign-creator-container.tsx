@@ -16,6 +16,7 @@ import { requireUser } from "@kit/supabase/require-user"
 import { ProjectsType } from "../page";
 import { updateUserProject } from "~/home/(user)/project/_lib/server/server-action-user-project";
 import { useParams } from "next/navigation";
+import { WithAnimation } from "~/home/(user)/_components/animated-element";
 
 
 export function PersonalContentCreatorContainer(
@@ -156,34 +157,45 @@ export function PersonalContentCreatorContainer(
 
    return (
       <>
-         <div className={'flex flex-col gap-10'}>
+         <div className={'relative flex flex-col gap-10'}>
             <div className="px-[150px] pb-[50px]">
                <CompaignStepIndicatorCpn useText={projectValue.pUseText} useImage={projectValue.pUseImage} useVideo={projectValue.pUseVideo} setCurrentStep={setStep} steps={['config', 'pPlatform', 'text', 'image', 'video', 'complete']} currentStep={step} />
             </div>
-            <div className="font-bold text-[25px] text-center">
-               {`${stepDescriptions[step] ?? ''}`}
+            <div className="absolute w-full flex justify-center text-center  pt-[130px]">
+               {
+                  stepDescriptions.map((a, idx) => (
+                     <WithAnimation isVisible={idx === step} key={idx} mode="zoom">
+                        <div className="font-bold w-full text-[25px] text-center">
+                           {`${a ?? ''}`}
+                        </div>
+                     </WithAnimation>
+                  ))
+               }
             </div>
-            {step === 0 && <CompaignHeader currentStep={0} setCurrentStep={setStep} projectValue={projectValue} onChange={(data) => { setProjectValue(data) }} />}
-            {step === 1 && <CompaignpPlatformSelect
-               previousStep={0}
-               nextStep={projectValue.pUseText ? 2 : projectValue.pUseImage ? 3 : projectValue.pUseVideo ? 4 : 5}
-               setCurrentStep={setStep} projectValue={projectValue} onChange={(data) => { setProjectValue(data) }} generatedTopicIdeas={generatedTopicIdeas} setGeneratedTopicIdeas={(data) => setGeneratedTopicIdeas(data)} />}
-            {step === 2 && <CampaignTextResultCpn
-               previousStep={1}
-               nextStep={projectValue.pUseImage ? 3 : projectValue.pUseVideo ? 4 : 5}
-               setCurrentStep={setStep} projectProps={projectValue} setProjectValue={setProjectValue} />}
-            {step === 3 && <CampaignImageResultCpn
-               previousStep={projectValue.pUseText ? 2 : 1}
-               nextStep={projectValue.pUseVideo ? 4 : 5}
-               setCurrentStep={setStep} projectProps={projectValue} setProjectValue={setProjectValue} />}
-            {step === 4 && <CampaignVideoResultCpn
-               previousStep={projectValue.pUseImage ? 3 : projectValue.pUseText ? 2 : 1}
-               nextStep={5}
-               setCurrentStep={setStep} projectProps={projectValue} setProjectValue={setProjectValue} />}
-            {step === 5 && <CampaignResultFinalCpn
-               loading={loading}
-               previousStep={projectValue.pUseVideo ? 4 : projectValue.pUseImage ? 3 : projectValue.pUseText ? 2 : 1}
-               setCurrentStep={setStep} projectProps={projectValue} saveCampaign={saveCampaign} />}
+
+            <div className="pt-[80px]">
+               {step === 0 && <CompaignHeader currentStep={0} setCurrentStep={setStep} projectValue={projectValue} onChange={(data) => { setProjectValue(data) }} />}
+               {step === 1 && <CompaignpPlatformSelect
+                  previousStep={0}
+                  nextStep={projectValue.pUseText ? 2 : projectValue.pUseImage ? 3 : projectValue.pUseVideo ? 4 : 5}
+                  setCurrentStep={setStep} projectValue={projectValue} onChange={(data) => { setProjectValue(data) }} generatedTopicIdeas={generatedTopicIdeas} setGeneratedTopicIdeas={(data) => setGeneratedTopicIdeas(data)} />}
+               {step === 2 && <CampaignTextResultCpn
+                  previousStep={1}
+                  nextStep={projectValue.pUseImage ? 3 : projectValue.pUseVideo ? 4 : 5}
+                  setCurrentStep={setStep} projectProps={projectValue} setProjectValue={setProjectValue} />}
+               {step === 3 && <CampaignImageResultCpn
+                  previousStep={projectValue.pUseText ? 2 : 1}
+                  nextStep={projectValue.pUseVideo ? 4 : 5}
+                  setCurrentStep={setStep} projectProps={projectValue} setProjectValue={setProjectValue} />}
+               {step === 4 && <CampaignVideoResultCpn
+                  previousStep={projectValue.pUseImage ? 3 : projectValue.pUseText ? 2 : 1}
+                  nextStep={5}
+                  setCurrentStep={setStep} projectProps={projectValue} setProjectValue={setProjectValue} />}
+               {step === 5 && <CampaignResultFinalCpn
+                  loading={loading}
+                  previousStep={projectValue.pUseVideo ? 4 : projectValue.pUseImage ? 3 : projectValue.pUseText ? 2 : 1}
+                  setCurrentStep={setStep} projectProps={projectValue} saveCampaign={saveCampaign} />}
+            </div>
          </div>
       </>
    )
