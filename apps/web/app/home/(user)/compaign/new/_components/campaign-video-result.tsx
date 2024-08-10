@@ -20,7 +20,6 @@ export const CampaignVideoResultCpn = ({ projectProps, setCurrentStep, setProjec
     const { t } = useTranslation();
     const [loading, setLoading] = useState<boolean | null>(null);
     const [result, setResult] = useState<String>('');
-    console.log('received', projectProps);
 
     const generateVideo = async () => {
         try {

@@ -12,6 +12,7 @@ import { Button } from "@kit/ui/button";
 import { CardProject } from "./card-saved-project";
 import { withI18n } from "~/lib/i18n/with-i18n";
 import { ProjectSearchBar } from "./project-search";
+import { WithAnimation } from "../../_components/animated-element";
 
 
 function PersonalSavedProjectContainer(props: React.PropsWithChildren<{
@@ -33,10 +34,17 @@ function PersonalSavedProjectContainer(props: React.PropsWithChildren<{
     return (
         <>
             <PageBody className={'space-y-4'}>
-                <ProjectSearchBar searchParams={props.searchParams} />
+                <WithAnimation mode="zoom">
+                    <ProjectSearchBar searchParams={props.searchParams} />
+                </WithAnimation>
                 <div className="flex justify-between items-center pt-6">
-                    <PersonalCreatedProjects searchParams={props.searchParams} />
-                    <HeaderPart searchParams={props.searchParams} />
+                    <WithAnimation mode="up" className="w-full">
+                        <PersonalCreatedProjects searchParams={props.searchParams} />
+                    </WithAnimation>
+                    <WithAnimation mode="up" className="w-full">
+                        <HeaderPart searchParams={props.searchParams} />
+                    </WithAnimation>
+
                 </div>
 
                 <ServerDataLoader
@@ -65,8 +73,9 @@ function PersonalSavedProjectContainer(props: React.PropsWithChildren<{
                                         </p>
                                     </div>
                                 </If>
-
-                                <CardProject projects={props.data} />
+                                <WithAnimation mode="up">
+                                    <CardProject projects={props.data} />
+                                </WithAnimation>
                             </div>
                         );
                     }}

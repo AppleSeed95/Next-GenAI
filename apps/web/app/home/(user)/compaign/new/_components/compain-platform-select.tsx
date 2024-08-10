@@ -97,7 +97,7 @@ export function CompaignpPlatformSelect(props: Props) {
                </div>
                <div className="flex flex-col gap-[10px] w-full">
                   <Label className="font-bold text-[16px]" children={t('Post settings')} />
-                  <div className="flex flex-row gap-3">
+                  <div className="flex items-center flex-row gap-3">
                      <Input
                         type="number"
                         max={3}

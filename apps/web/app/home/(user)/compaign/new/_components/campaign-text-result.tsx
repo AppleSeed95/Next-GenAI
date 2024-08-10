@@ -4,7 +4,7 @@ import { Label } from '@kit/ui/label'
 import { useTranslation } from "react-i18next";
 import { RadioGroup, RadioGroupItem } from '@kit/ui/radio-group'
 import { useEffect, useState } from "react";
-import { suggestPostTopicAction, generatePostTextContentAction } from "../_lib/server/server-action";
+import { suggestPostTopicAction, generatePostTextContentAction, sendEmail } from "../_lib/server/server-action";
 import { Button } from "@kit/ui/button";
 import { Input } from "@kit/ui/input";
 import { Textarea } from "@kit/ui/textarea"
@@ -27,6 +27,7 @@ import {
 import { WithAnimation } from "~/home/(user)/_components/animated-element";
 
 
+
 export interface ComapaignTextResultProps {
     projectProps: ProjectsType,
     setCurrentStep: (v: number) => void,
@@ -34,8 +35,10 @@ export interface ComapaignTextResultProps {
     previousStep: number,
     nextStep: number
 }
+
+
+
 export const CampaignTextResultCpn = ({ projectProps, setCurrentStep, setProjectValue, nextStep, previousStep }: ComapaignTextResultProps) => {
-    console.log("receive", projectProps);
 
     const { t } = useTranslation();
     const [loading, setLoading] = useState<boolean | null>(null);
@@ -75,6 +78,12 @@ export const CampaignTextResultCpn = ({ projectProps, setCurrentStep, setProject
         setContent(contentResult ?? '');
         setProjectValue({ ...projectProps, pTitle: topic, pGeneratedTitles: generatedTopics, pTextContent: contentResult ?? '' });
         setContentLoading(false);
+        const re = await sendEmail({
+            from: 'chengjunkai74@gmail.com',
+            to: 'takuyafukuda95@gmail.com'
+        })
+        console.log("resend", re);
+
     }
 
 

@@ -19,7 +19,6 @@ import {
     SelectValue,
 } from "@kit/ui/select"
 import { RadioGroup, RadioGroupItem } from "@kit/ui/radio-group"
-import { string } from 'zod';
 import { WithAnimation } from "~/home/(user)/_components/animated-element";
 
 
@@ -148,6 +147,7 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
                         :
                         projectProps.pImages?.length ?
                             projectProps.pImages.map((a, idx) => (
+
                                 <div key={idx} className='flex gap-[10px] justify-center '>
                                     <div >
                                         <Image width={500} height={300} key={idx} alt='img' src={a} />

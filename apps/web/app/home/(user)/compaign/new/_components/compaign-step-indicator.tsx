@@ -18,7 +18,7 @@ export const CompaignStepIndicatorCpn = ({ useText, useVideo, useImage, steps, c
                 {steps.map((a, idx) => {
                     return (
                         <WithAnimation
-                            delay={0.3 * idx}
+                            delay={0.2 * idx}
                             mode="zoom" isVisible={
                                 !((idx === 2 && !useText) || (idx === 3 && !useImage) || (idx === 4 && !useVideo))
                             }>
@@ -51,7 +51,7 @@ export const CompaignStepIndicatorCpn = ({ useText, useVideo, useImage, steps, c
                 }
                 )}
             </div >
-            <WithAnimation mode="up" delay={1.5}>
+            <WithAnimation mode="up" delay={1.0}>
                 <div className="w-full z-20 relative mt-[-40px] border-[2px] border-t-[#02ab51]"></div>
             </WithAnimation>
         </>

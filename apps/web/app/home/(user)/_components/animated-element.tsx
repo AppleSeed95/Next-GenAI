@@ -7,10 +7,11 @@ interface WithAnimationProps {
     children: ReactNode;
     mode: string;
     delay?: number;
-    isVisible?: boolean
+    isVisible?: boolean;
+    className?: string
 }
 
-export const WithAnimation = ({ children, mode, delay = 0, isVisible = true }: WithAnimationProps) => {
+export const WithAnimation = ({ children, mode, delay = 0, isVisible = true, className }: WithAnimationProps) => {
     const { ref, inView } = useInView({
         triggerOnce: true,
         threshold: 0.1,
@@ -82,6 +83,7 @@ export const WithAnimation = ({ children, mode, delay = 0, isVisible = true }: W
                 animate={inView ? 'visible' : 'hidden'}
                 exit="exit"
                 variants={variants}
+                className={className}
                 transition={{
                     duration: mode === 'zoom' ? 0.5 : 0.7,
                     ease: 'backInOut'

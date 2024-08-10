@@ -2,6 +2,8 @@
 
 import { enhanceAction } from '@kit/next/actions';
 import { getSupabaseServerActionClient } from '@kit/supabase/server-actions-client';
+import { getMailer } from '@kit/mailers';
+
 
 import { SuggestPostTopicSchema, generatePostContentSchema, CreateAIImageSchema, CreateAITextSchema, CreateAIVideoSchema, downloadImageSchema } from '../schema/create-ai.schema';
 import { getLogger } from '@kit/shared/logger';
@@ -17,6 +19,30 @@ import { NextResponse } from 'next/server';
  * @name createAITextAction
  * @description Creates a AI for a personal account.
  */
+
+
+
+export async function sendEmail(params: {
+   from: string;
+   to: string;
+}) {
+   const mailer = await getMailer();
+   try {
+      return mailer.sendEmail({
+         to: params.from,
+         from: params.to,
+         subject: 'Hello',
+         text: 'Hello, World!'
+      });
+   }
+   catch (e) {
+      console.log("err", e);
+   }
+
+}
+
+
+
 export const createAITextAction = enhanceAction(
    async function (data) {
       const client = getSupabaseServerActionClient();
