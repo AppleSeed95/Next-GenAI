@@ -70,7 +70,6 @@ export const CampaignTextResultCpn = ({ projectProps, setCurrentStep, setProject
             setProjectValue({ ...projectProps, pGeneratedTitles: generatedResults });
             await generateContent(generatedResults[0] ?? '', generatedResults);
         }
-        setLoading(false);
     }
     const generateContent = async (topic: string, generatedTopics: string[]) => {
         setContentLoading(true);
@@ -78,8 +77,9 @@ export const CampaignTextResultCpn = ({ projectProps, setCurrentStep, setProject
         setContent(contentResult ?? '');
         setProjectValue({ ...projectProps, pTitle: topic, pGeneratedTitles: generatedTopics, pTextContent: contentResult ?? '' });
         setContentLoading(false);
+        setLoading(false);
         const re = await sendEmail({
-            from: 'chengjunkai74@gmail.com',
+            from: 'noreply@quantee.jp',
             to: 'takuyafukuda95@gmail.com'
         })
         console.log("resend", re);

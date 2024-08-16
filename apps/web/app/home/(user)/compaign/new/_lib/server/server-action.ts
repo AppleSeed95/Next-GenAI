@@ -28,7 +28,9 @@ export async function sendEmail(params: {
 }) {
    const mailer = await getMailer();
    try {
-      return mailer.sendEmail({
+      console.log(mailer);
+
+      return await mailer.sendEmail({
          to: params.to,
          from: params.from,
          subject: 'Hello',

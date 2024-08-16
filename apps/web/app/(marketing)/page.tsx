@@ -40,6 +40,7 @@ function Home() {
             </Pill>
 
             <div className={'flex flex-col items-center space-y-8'}>
+              <iframe src="http://localhost:3000/" frameBorder="0" width="100%" height="500px" allowFullScreen></iframe>
               <HeroTitle>
                 <span>Wumdoo for Users</span>
 
