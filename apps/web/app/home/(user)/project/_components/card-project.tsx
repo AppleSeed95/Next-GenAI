@@ -86,7 +86,7 @@ export function ProjectCardCpn({ project }: Props) {
     }
     return (
         <div className="bg-slate-900 shadow-lg flex w-full p-4 pr-0   rounded-lg">
-            <div className="w-1/4 rounded-lg overflow-hidden">
+            {carouselItems.length > 0 && <div className="w-1/4 rounded-lg overflow-hidden">
                 <div >
                     {carouselItems.length > 0 &&
                         <Carousel autoPlay interval={3000} showThumbs={false} swipeable infiniteLoop showStatus stopOnHover showArrows showIndicators >
@@ -106,7 +106,7 @@ export function ProjectCardCpn({ project }: Props) {
 
 
                 </div>
-            </div>
+            </div>}
             <div className="w-3/4 pl-8 flex">
                 <div className="flex flex-col gap-2 h-full grow">
                     <div className="flex justify-between items-center pr-6">
