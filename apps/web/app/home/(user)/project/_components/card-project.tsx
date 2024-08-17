@@ -81,7 +81,6 @@ export function ProjectCardCpn({ project }: Props) {
         updateToaster(promise);
     }, [updateToaster])
     const handleStateChange = (active: boolean) => {
-        console.log(`post with id:${project.id} state changed ${active ? 'true' : 'false'}`);
         updateProject(active);
     }
     return (
