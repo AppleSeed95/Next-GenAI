@@ -106,7 +106,7 @@ export function ProjectCardCpn({ project }: Props) {
 
                 </div>
             </div>}
-            <div className="w-3/4 pl-8 flex">
+            <div className={`${carouselItems.length > 0 ? 'w-3/4' : 'w-full'} w-3/4 pl-8 flex`}>
                 <div className="flex flex-col gap-2 h-full grow">
                     <div className="flex justify-between items-center pr-6">
                         <div className="flex items-center gap-2">
