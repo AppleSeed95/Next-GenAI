@@ -22,6 +22,7 @@ import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { updateUserProject } from "../_lib/server/server-action-user-project"
 import { toast } from 'sonner';
+import { Play } from "lucide-react"
 
 
 
@@ -41,12 +42,6 @@ export function ProjectCardCpn({ project }: Props) {
         type: 'image',
         src: aImage
     }))
-    if (project.pVideo?.length ?? 0 > 0) {
-        carouselItems.push({
-            type: 'video',
-            src: project.pVideo ?? ''
-        })
-    }
     const toFirstCharToUppercase = (value: string | null) => {
         const first = value ? value[0] : '';
         return `${first?.toUpperCase()}${value?.slice(1, value.length)}`
@@ -96,24 +91,15 @@ export function ProjectCardCpn({ project }: Props) {
                     {carouselItems.length > 0 &&
                         <Carousel autoPlay interval={3000} showThumbs={false} swipeable infiniteLoop showStatus stopOnHover showArrows showIndicators >
                             {carouselItems.map((aSrc, idx) => (
-                                aSrc.type === 'image' ?
-                                    (<div key={idx} className="w-full">
-                                        <Image
-                                            className="rounded-lg"
-                                            src={aSrc.src}
-                                            width={450}
-                                            layout="responsive"
-                                            height={150}
-                                            alt='image' />
-                                    </div>) :
-                                    (<div key={idx} className="flex items-center h-full grow w-full">
-                                        <video
-                                            className="w-full aspect-video mt-8 rounded-lg border bg-black"
-                                            controls
-                                        >
-                                            <source src={aSrc.src} />
-                                        </video>
-                                    </div>)
+                                <div key={idx} className="w-full">
+                                    <Image
+                                        className="rounded-lg"
+                                        src={aSrc.src}
+                                        width={450}
+                                        layout="responsive"
+                                        height={150}
+                                        alt='image' />
+                                </div>
                             ))}
                         </Carousel>
                     }
@@ -124,7 +110,29 @@ export function ProjectCardCpn({ project }: Props) {
             <div className="w-3/4 pl-8 flex">
                 <div className="flex flex-col gap-2 h-full grow">
                     <div className="flex justify-between items-center pr-6">
-                        <div className="font-bold text-2xl">{project.pTitle}</div>
+                        <div className="flex items-center gap-2">
+                            {(project.pVideo?.length ?? 0) > 0 &&
+                                <Dialog>
+                                    <DialogTrigger asChild>
+                                        <div className='bg-red-500 py-1 px-3 rounded-full flex items-center justify-center w-10 h-10 shadow-sm cursor-pointer duration-500'>
+                                            <Play />
+                                        </div>
+                                    </DialogTrigger>
+                                    <DialogContent className="w-full md:w-[60%] lg:w-[60%]">
+                                        <DialogHeader>
+                                            <DialogTitle>Video</DialogTitle>
+                                        </DialogHeader>
+                                        <video
+                                            className="w-full aspect-video mt-8 rounded-lg border bg-black"
+                                            controls
+                                        >
+                                            <source src={project.pVideo ?? ""} />
+                                        </video>
+                                    </DialogContent>
+                                </Dialog>
+                            }
+                            <div className="font-bold text-2xl">{project.pTitle}</div>
+                        </div>
                         <div className={'flex flex-row gap-6 '}>
                             <label className="inline-flex items-center cursor-pointer">
                                 <input

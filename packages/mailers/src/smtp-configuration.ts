@@ -8,8 +8,20 @@ export function getSMTPConfiguration() {
     port: Number(process.env.NEXT_PUBLIC_EMAIL_PORT),
     secure: process.env.NEXT_PUBLIC_EMAIL_TLS !== 'false',
   });
+  const tls = {
+    ciphers: 'SSLv3',
+  };
 
-
+  console.log("ddddd", {
+    host: data.host,
+    port: data.port,
+    secure: data.secure,
+    auth: {
+      user: data.user,
+      pass: data.pass,
+    },
+    tls
+  })
   return {
     host: data.host,
     port: data.port,
@@ -18,5 +30,6 @@ export function getSMTPConfiguration() {
       user: data.user,
       pass: data.pass,
     },
+    tls
   };
 }

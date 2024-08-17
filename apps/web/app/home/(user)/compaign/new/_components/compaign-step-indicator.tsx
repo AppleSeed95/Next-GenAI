@@ -18,6 +18,7 @@ export const CompaignStepIndicatorCpn = ({ useText, useVideo, useImage, steps, c
                 {steps.map((a, idx) => {
                     return (
                         <WithAnimation
+                            key={idx}
                             delay={0.2 * idx}
                             mode="zoom" isVisible={
                                 !((idx === 2 && !useText) || (idx === 3 && !useImage) || (idx === 4 && !useVideo))

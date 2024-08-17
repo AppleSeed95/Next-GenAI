@@ -28,17 +28,20 @@ export async function sendEmail(params: {
 }) {
    const mailer = await getMailer();
    try {
-      console.log(mailer);
 
-      return await mailer.sendEmail({
+      const mailResult = await mailer.sendEmail({
          to: params.to,
          from: params.from,
          subject: 'Hello',
          text: 'Hello, World!'
       });
+      console.log('this is mail result', mailResult);
+
+      return { result: "mailResult" };
    }
    catch (e) {
       console.log("err", e);
+      return { error: "e" };
    }
 
 }

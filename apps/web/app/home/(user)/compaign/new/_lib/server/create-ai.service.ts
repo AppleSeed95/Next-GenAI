@@ -15,7 +15,6 @@ export default function createAiEditorService(): AiEditorService {
   const BASE_URL = process.env.OPENAI_BASE_URL;
 
   const client = new OpenAI({ apiKey: API_KEY });
-  console.log("Client: ", client);
 
   return new AiEditorService(client);
 }
@@ -86,7 +85,6 @@ class AiEditorService {
     // }
 
 
-    console.log("GPT_Response", GPT_response.choices[0]?.message.content);
     return GPT_response.choices[0]?.message.content;
   }
   async suggestTextTopic(projectValue: { mainTopic: string, subTopic: string, atmosphere: string, language: string }) {
@@ -143,7 +141,6 @@ class AiEditorService {
     // }
 
 
-    console.log("GPT_Response", GPT_response.choices[0]?.message.content);
     return GPT_response.choices[0]?.message.content;
   }
   async generatePostTextContent(data: { topic: string, language: string, wordsCnt: number, brand: string, addition: string }) {
@@ -188,7 +185,6 @@ class AiEditorService {
     // }
 
 
-    console.log("GPT_Response", GPT_response.choices[0]?.message.content);
     return GPT_response.choices[0]?.message.content;
   }
 
@@ -233,7 +229,6 @@ class AiEditorService {
     // }
 
 
-    console.log("GPT_Response", GPT_response.choices[0]?.message.content);
     return GPT_response.choices[0]?.message.content;
   }
 
@@ -279,7 +274,6 @@ class AiEditorService {
     //   // top_p: 1,
     // });
 
-    // console.log("Prompt : ", GPT_response.choices[0]?.message.content)
 
     const Image_response = await this.client.images.generate({
       // model: DEFAULT_MODEL,
@@ -375,7 +369,6 @@ class AiEditorService {
     // }
 
 
-    console.log("GPT_Response", GPT_response.choices[0]?.message.content);
     return GPT_response.choices[0]?.message.content;
   }
 

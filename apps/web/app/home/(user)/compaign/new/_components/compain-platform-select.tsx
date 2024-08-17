@@ -137,7 +137,6 @@ export function CompaignpPlatformSelect(props: Props) {
                         <MultiSelectableCheckboxGroup
                            options={options}
                            onChange={(data) => {
-                              console.log(data);
                               setSelectedOptions(data);
                               props.onChange({ ...props.projectValue, pAtmosphere: JSON.stringify(data) });
                            }}

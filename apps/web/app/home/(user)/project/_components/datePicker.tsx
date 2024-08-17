@@ -30,7 +30,6 @@ export function DatePickerWithRange({
   dateRange,
   onChange
 }: DatePickerWithRangeProps) {
-  console.log(from, to);
 
   const [date, setDate] = useState<DateRange | undefined>({
     from: from?.length > 0 ? new Date(from) : undefined,

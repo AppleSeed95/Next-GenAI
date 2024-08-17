@@ -32,7 +32,6 @@ export async function POST(req: Request) {
         // return NextResponse.json(response); // return the response from Replicate
 
     } catch (error) {
-        console.log("this is an error", error);
         return NextResponse.json({ type: "error" }); // return the response from Replicate
     }
 }

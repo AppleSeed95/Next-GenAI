@@ -106,7 +106,6 @@ export function PlatformSelectForCompaingnComboboxDemo(props: Props) {
                         pPlatforms.find((priority) => priority.value === value) ||
                         null
                       )
-                      console.log(value)
                       props.onChange(value)
                       setOpen(false)
                     }}
