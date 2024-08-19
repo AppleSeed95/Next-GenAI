@@ -117,7 +117,7 @@ export function ProjectCardCpn({ project }: Props) {
                                             <Play />
                                         </div>
                                     </DialogTrigger>
-                                    <DialogContent className="w-full md:w-[60%] lg:w-[60%]">
+                                    <DialogContent className="w-full md:w-[70%] lg:w-[70%]">
                                         <DialogHeader>
                                             <DialogTitle>Video</DialogTitle>
                                         </DialogHeader>
