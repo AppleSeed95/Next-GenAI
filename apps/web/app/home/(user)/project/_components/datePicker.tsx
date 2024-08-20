@@ -33,14 +33,14 @@ export function DatePickerWithRange({
 
   const [date, setDate] = useState<DateRange | undefined>({
     from: from?.length > 0 ? new Date(from) : undefined,
-    to: from?.length > 0 ? addDays(new Date(to), 0) : undefined,
+    to: to?.length > 0 ? new Date(to) : undefined,
   })
 
   const { t } = useTranslation();
   useEffect(() => {
     setDate({
       from: from?.length > 0 ? new Date(from) : undefined,
-      to: from?.length > 0 ? addDays(new Date(to), 0) : undefined,
+      to: to?.length > 0 ? new Date(to) : undefined,
     })
   }, [from, to]);
   return (

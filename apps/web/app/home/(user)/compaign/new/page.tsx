@@ -58,7 +58,7 @@ const initial: ProjectsType = {
    pTitle: '',
    pTextContent: '',
    pTextLanguage: 'english',
-   pTextWordsCnt: 20,
+   pTextWordsCnt: 40,
    pTextBrand: '',
    pTextAddition: '',
    pGeneratedTitles: [],

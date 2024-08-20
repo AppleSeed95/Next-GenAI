@@ -163,6 +163,7 @@ class AiEditorService {
            - provide with this brand: ${data.brand}.
            - consider this addition info and reflect in the result: ${data.addition}.
            - provide with this language: ${data.language}.
+           - never use bullet style. you should use plain text style.
 
         `.trim()
 
@@ -239,7 +240,7 @@ class AiEditorService {
    * @param {string} params.context - The context to be used for generating the Content.
    * @return {Promise<object>} A promise that resolves to an object representing the generated Content.
    */
-  async completeImageContent(params: { idea: string }) {
+  async completeImageContent(params: { idea: string, ratio: string }) {
 
     // const prompt = [
     //   {
@@ -278,10 +279,13 @@ class AiEditorService {
     const Image_response = await this.client.images.generate({
       // model: DEFAULT_MODEL,
       model: "dall-e-3",
-      prompt: `generate a realistic image representing that content: "${params.idea}"`,
+      prompt: `
+        generate a realistic image representing that content: "${params.idea}".
+        Generate an image with a landscape (horizontal) orientation while keeping the size.
+      `,
       quality: "standard",
       n: 1,
-      size: "1024x1024",
+      size: params.ratio === 'square' ? "1024x1024" : (params.ratio === 'horizontal' ? '1792x1024' : '1024x1792')
     });
 
     const image_urls = Image_response.data.map(image => image.url)
