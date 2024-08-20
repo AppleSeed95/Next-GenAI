@@ -104,7 +104,7 @@ export const CampaignTextResultCpn = ({ projectProps, setCurrentStep, setProject
     return (
         <WithAnimation mode="zoom">
 
-            <div className="bg-[#000208] flex flex-col gap-[20px] p-[50px] mx-[150px] mb-[20px] rounded-lg shadow-lg">
+            <div className="bg-neutral-100 dark:bg-[#000208] flex flex-col gap-[20px] p-[50px] mx-[150px] mb-[20px] rounded-lg shadow-lg">
                 <div className="mb-[20px]  flex flex-col gap-[10px] w-full">
                     <Label className="font-bold text-[16px]" children={t('Text settings')} />
                     <div className="flex gap-[20px]">
@@ -168,9 +168,9 @@ export const CampaignTextResultCpn = ({ projectProps, setCurrentStep, setProject
                         <Label className="font-bold text-[16px]" children={t('Suggested topic')} />
                         <div className="animate-pulse flex space-x-4">
                             <div className="flex-1 space-y-2 py-1">
-                                <div className="h-4 bg-slate-800 rounded"></div>
-                                <div className="h-4 bg-slate-800 rounded"></div>
-                                <div className="h-4 bg-slate-800 rounded"></div>
+                                <div className="h-4 bg-slate-400  dark:bg-slate-800 rounded"></div>
+                                <div className="h-4 bg-slate-400  dark:bg-slate-800 rounded"></div>
+                                <div className="h-4 bg-slate-400  dark:bg-slate-800 rounded"></div>
                             </div>
                         </div>
                     </div>
@@ -200,12 +200,12 @@ export const CampaignTextResultCpn = ({ projectProps, setCurrentStep, setProject
                             <Label className="font-bold text-[16px]" children={t('Generated contents')} />
                             <div className="animate-pulse flex space-x-4">
                                 <div className="flex-1 space-y-2 py-1">
-                                    <div className="h-4 bg-slate-800 rounded"></div>
-                                    <div className="h-4 bg-slate-800 rounded"></div>
-                                    <div className="h-4 bg-slate-800 rounded"></div>
-                                    <div className="h-4 bg-slate-800 rounded"></div>
-                                    <div className="h-4 bg-slate-800 rounded"></div>
-                                    <div className="h-4 bg-slate-800 rounded"></div>
+                                    <div className="h-4 bg-slate-400  dark:bg-slate-800 rounded"></div>
+                                    <div className="h-4 bg-slate-400  dark:bg-slate-800 rounded"></div>
+                                    <div className="h-4 bg-slate-400  dark:bg-slate-800 rounded"></div>
+                                    <div className="h-4 bg-slate-400  dark:bg-slate-800 rounded"></div>
+                                    <div className="h-4 bg-slate-400  dark:bg-slate-800 rounded"></div>
+                                    <div className="h-4 bg-slate-400  dark:bg-slate-800 rounded"></div>
                                 </div>
                             </div>
                         </>

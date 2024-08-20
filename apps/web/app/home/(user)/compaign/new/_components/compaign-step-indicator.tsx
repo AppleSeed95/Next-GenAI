@@ -31,9 +31,10 @@ export const CompaignStepIndicatorCpn = ({ useText, useVideo, useImage, steps, c
                                         width: '80px',
                                         height: '80px',
                                         backgroundColor: '#02ab51',
-                                        transitionDuration: '500ms'
+                                        transitionDuration: '500ms',
+                                        color: 'white'
                                     } :
-                                    { transitionDuration: '500ms' }
+                                    { transitionDuration: '500ms', color: 'white' }
                                 }
                                 onClick={() => {
                                     // setCurrentStep(idx)

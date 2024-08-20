@@ -116,7 +116,6 @@ export function PersonalContentCreatorContainer(
          if (projectValue.pVideo?.length > 0) {
             uploadedVideo = await upload(projectValue.pVideo, 'video');
          }
-         console.log(projectValue.pVideo, uploadedVideo);
 
          if (props.editMode) {
             const project = {

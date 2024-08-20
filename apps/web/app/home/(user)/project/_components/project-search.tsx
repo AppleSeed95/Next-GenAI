@@ -45,9 +45,9 @@ export function ProjectSearchBar(props: Props) {
     return (
 
         <div className={'flex justify-center gap-2 w-full'}>
-            <div className="bg-slate-800 p-2 border-2 border-slate-900 shadow-lg rounded-[50px] gap-2 flex">
-                <div className="flex items-center  shadow-lg">
-                    <div className="w-10 h-10 flex justify-center items-center rounded-full bg-slate-900"><Search /></div>
+            <div className="dark:bg-slate-800 bg-neutral-100 p-2 border-2 dark:border-slate-900 border-slate-300 shadow-lg rounded-[50px] gap-2 flex">
+                <div className="flex items-center  shadow-lg rounded-full">
+                    <div className="w-10 h-10 flex justify-center items-center rounded-full bg-slate-300 dark:bg-slate-900"><Search /></div>
                 </div>
                 <input
                     onChange={(e) => setQuery(e.target.value)}
@@ -59,7 +59,7 @@ export function ProjectSearchBar(props: Props) {
                 <button
 
                     onClick={() => onSearch(query)}
-                    className="flex items-center px-4 rounded-[30px] shadow-lg bg-green-500 hover:bg-green-600 duration-500">
+                    className="text-white  flex items-center px-4 rounded-[30px] shadow-lg bg-green-500 hover:bg-green-600 duration-500">
                     Search
                 </button>
             </div>

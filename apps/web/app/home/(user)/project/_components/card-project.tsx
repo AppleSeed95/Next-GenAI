@@ -84,7 +84,7 @@ export function ProjectCardCpn({ project }: Props) {
         updateProject(active);
     }
     return (
-        <div className="bg-slate-900 shadow-lg flex w-full p-4 pr-0   rounded-lg">
+        <div className="bg-neutral-200 dark:bg-slate-900  shadow-lg flex w-full p-4 pr-0   rounded-lg">
             {carouselItems.length > 0 && <div className="w-1/4 rounded-lg overflow-hidden">
                 <div >
                     {carouselItems.length > 0 &&
@@ -113,7 +113,7 @@ export function ProjectCardCpn({ project }: Props) {
                             {(project.pVideo?.length ?? 0) > 0 &&
                                 <Dialog>
                                     <DialogTrigger asChild>
-                                        <div className='bg-red-500 py-1 px-3 rounded-full flex items-center justify-center w-10 h-10 shadow-sm cursor-pointer duration-500'>
+                                        <div className='text-white bg-red-500 py-1 px-3 rounded-full flex items-center justify-center w-10 h-10 shadow-sm cursor-pointer duration-500'>
                                             <Play />
                                         </div>
                                     </DialogTrigger>
@@ -153,14 +153,14 @@ export function ProjectCardCpn({ project }: Props) {
                                 <div className='flex gap-2 flex-wrap '>
                                     {JSON.parse(project.pAtmosphere ?? JSON.stringify([])).length > 0 &&
                                         JSON.parse(project.pAtmosphere ?? JSON.stringify([])).map((aAtmosphere: string, idx: number) => (
-                                            <div className='bg-slate-950 py-1 px-3 rounded-[30px] shadow-sm cursor-pointer duration-500' key={idx}>
-                                                {`${aAtmosphere[0]?.toUpperCase()}${aAtmosphere.slice(1, aAtmosphere.length)}`}
+                                            <div className='bg-neutral-500 dark:bg-slate-950 text-white py-1 px-3 rounded-[30px] shadow-sm cursor-pointer duration-500' key={idx}>
+                                                {`${aAtmosphere[0]?.toUpperCase()}${aAtmosphere.slice(1, aAtmosphere.length).replaceAll('_', ' ')}`}
                                             </div>
                                         ))
                                     }
                                 </div>
                                 <div className='flex gap-4'>
-                                    <div className="flex gap-2 text-sm items-center text-slate-400">
+                                    <div className="flex gap-2 text-sm items-center  text-slate-600 dark:text-slate-400">
                                         <Clock8 />{` ${project.pStartDate} ~ ${project.pEndDate}`}
                                     </div>
                                 </div>
@@ -171,22 +171,22 @@ export function ProjectCardCpn({ project }: Props) {
                                 <div className="flex justify-center">
                                     <IconSelect platform={project.pPlatform ?? ''} />
                                 </div>
-                                <div className='bg-slate-950 text-center py-1 px-3 rounded-[30px] shadow-sm cursor-pointer duration-500' >
+                                <div className='bg-neutral-500 dark:bg-slate-950 text-white text-center py-1 px-3 rounded-[30px] shadow-sm cursor-pointer duration-500' >
                                     {`${toFirstCharToUppercase(project.pMode)}`}
                                 </div>
-                                <div className='bg-slate-950 text-center py-1 px-3 rounded-[30px] shadow-sm cursor-pointer duration-500' >
+                                <div className='bg-neutral-500 dark:bg-slate-950 text-white text-center py-1 px-3 rounded-[30px] shadow-sm cursor-pointer duration-500' >
                                     {`${projectState ? 'Active' : 'Inactive'}`}
                                 </div>
-                                <div className='bg-slate-950 text-center py-1 px-3 rounded-[30px] shadow-sm cursor-pointer duration-500' >
+                                <div className='bg-neutral-500 dark:bg-slate-950 text-white text-center py-1 px-3 rounded-[30px] shadow-sm cursor-pointer duration-500' >
                                     {`${toFirstCharToUppercase(project.pPostMode)}`}
                                 </div>
                                 <div className="flex gap-2 pt-4 justify-center">
                                     <div
                                         onClick={() => router.push(`/home/compaign/${project.id}`)}
-                                        className='bg-green-500 py-1 px-3 rounded-full flex items-center justify-center w-10 h-10 shadow-sm cursor-pointer duration-500'>
+                                        className='text-white  bg-green-500 py-1 px-3 rounded-full flex items-center justify-center w-10 h-10 shadow-sm cursor-pointer duration-500'>
                                         <Settings />
                                     </div>
-                                    <div className='bg-red-500 py-1 px-3 rounded-full flex items-center justify-center w-10 h-10 shadow-sm cursor-pointer duration-500'>
+                                    <div className='text-white  bg-red-500 py-1 px-3 rounded-full flex items-center justify-center w-10 h-10 shadow-sm cursor-pointer duration-500'>
                                         <Trash2 />
                                     </div>
                                 </div>
