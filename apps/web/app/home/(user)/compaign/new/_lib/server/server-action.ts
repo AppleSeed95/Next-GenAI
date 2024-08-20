@@ -111,10 +111,12 @@ export const generatePostTextContentAction = enhanceAction(
 
 export const createAIImageAction = enhanceAction(
    async function (data) {
-      const client = getSupabaseServerActionClient();
+      console.log(data);
+
       try {
          const response = await createAiEditorService().completeImageContent({
-            idea: data.idea
+            idea: data.idea,
+            ratio: data.ratio
          });
          return response;
 

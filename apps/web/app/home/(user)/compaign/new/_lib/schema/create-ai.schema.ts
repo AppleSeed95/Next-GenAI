@@ -28,14 +28,8 @@ export const CreateAITextSchema = z
 
 export const CreateAIImageSchema = z
    .object({
-      // format: z.string(),
-      // description: z.string(),
-      // size: z.string(),
-      // amount: z.number(),
-      // topicIdea: z.string(),
-      // maintopic: z.string(),
-      // subtopic: z.string(),
       idea: z.string(),
+      ratio: z.string()
    })
 
 export const downloadImageSchema = z

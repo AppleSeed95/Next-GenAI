@@ -42,7 +42,7 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
         setLoading(true);
         let generatedResult: string[] = [];
         for (let index = 0; index < cnt; index++) {
-            const result = await createAIImageAction({ idea: projectProps.pUseText ? projectProps.pTextContent : `topic:${projectProps.pMainTopic}-${projectProps.pSubTopic}, atmosphere: ${projectProps.pAtmosphere} ` });
+            const result = await createAIImageAction({ ratio: projectProps.pImageRatio, idea: projectProps.pUseText ? projectProps.pTextContent : `topic:${projectProps.pMainTopic}-${projectProps.pSubTopic}, atmosphere: ${projectProps.pAtmosphere} ` });
             if (result != "Error") {
                 const filteredImageUrls: string[] = result.filter((url): url is string => url !== undefined);
                 generatedResult.push(filteredImageUrls[0] ?? '');
@@ -51,6 +51,30 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
         setResult(generatedResult);
         setProjectValue({ ...projectProps, pImages: generatedResult });
         setLoading(false);
+    }
+    const classNamePerRatio = () => {
+        switch (projectProps.pImageRatio) {
+            case 'horizontal':
+                return 'max-w-[500px] h-[300px]'
+            case 'vertical':
+                return 'max-w-[300px] h-[500px]'
+            case 'square':
+                return 'max-w-[500px] h-[500px]'
+            default:
+                return 'max-w-[500px] h-[500px]'
+        }
+    }
+    const loadingClassNamePerRatio = () => {
+        switch (projectProps.pImageRatio) {
+            case 'horizontal':
+                return 'h-[296px]'
+            case 'vertical':
+                return 'h-[496px]'
+            case 'square':
+                return 'h-[496px]'
+            default:
+                return 'h-[496px]'
+        }
     }
     return (
         <WithAnimation mode="zoom">
@@ -139,8 +163,8 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
                     {loading === true ?
                         <div className='flex w-full  gap-[20px] justify-center'>
                             {[...Array(cnt)].map((_, idx) => (
-                                <div key={idx} className="animate-pulse max-w-[500px] w-full flex justify-center border-2 border-dashed rounded-lg p-2">
-                                    <div className="h-[300px]  w-full bg-slate-400  dark:bg-slate-800 rounded"></div>
+                                <div key={idx} className={`w-full grow flex justify-center items-center m-auto h-[300px] border-2 border-slate-700 border-dashed rounded-lg ${classNamePerRatio()}`}>
+                                    <div className={`${loadingClassNamePerRatio()} w-full bg-slate-400  dark:bg-slate-800 rounded`}></div>
                                 </div>
                             ))}
                         </div>
@@ -156,7 +180,7 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
                             )) :
                             <div className='flex gap-2 w-full'>
                                 {new Array(projectProps.pImageCnt).fill(null).map((_, idx) => (
-                                    <div key={idx} className='w-full max-w-[500px] grow flex justify-center items-center m-auto h-[300px] border-2 border-dashed rounded-lg'>
+                                    <div key={idx} className={`w-full grow flex justify-center items-center m-auto h-[300px] border-2 border-slate-700 border-dashed rounded-lg ${classNamePerRatio()}`}>
                                         <ImageMinus className="w-[50px] h-[50px]" />
                                     </div>
                                 ))}
