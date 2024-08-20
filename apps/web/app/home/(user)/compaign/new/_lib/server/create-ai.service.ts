@@ -282,6 +282,7 @@ class AiEditorService {
       prompt: `
         generate a realistic image representing that content: "${params.idea}".
         Generate an image with a landscape (horizontal) orientation while keeping the size.
+        make sure an image keep the posture of the things way up.
       `,
       quality: "standard",
       n: 1,
