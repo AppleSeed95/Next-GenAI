@@ -81,7 +81,7 @@ export function CompaignpPlatformSelect(props: Props) {
    return (
       <PageBody>
          <WithAnimation mode="zoom">
-            <div className={'flex flex-col gap-4 bg-[#000208] p-[50px] mx-[200px] mb-[20px] rounded-lg shadow-lg '}>
+            <div className={'flex flex-col gap-4 bg-neutral-100 dark:bg-[#000208] p-[50px] mx-[200px] mb-[20px] rounded-lg shadow-lg '}>
                {/* <div className={'flex flex-col sm:flex-row justify-between'}>
                <div className={'flex flex-row justify-between sm:gap-4'}>
                   <pPlatformSelectForCompaingnComboboxDemo onChange={(data) => { setpPlatform(data), props.onChange({ ...props.projectValue, pPlatform: data }) }} />

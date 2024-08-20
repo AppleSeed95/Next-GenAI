@@ -53,14 +53,14 @@ export const CampaignVideoResultCpn = ({ projectProps, setCurrentStep, setProjec
     return (
         <WithAnimation mode="zoom">
 
-            <div className="bg-[#000208] flex flex-col gap-[20px] p-[50px] mx-[100px] mb-[20px]">
+            <div className="bg-neutral-100 dark:bg-[#000208] flex flex-col gap-[20px] p-[50px] mx-[100px] mb-[20px]">
 
                 <div className="flex flex-col gap-[10px] w-full">
                     {/* <Label children={t('Generated images based on the content.')} /> */}
                     {loading === true ?
                         <div className="animate-pulse flex justify-center border-2 border-dashed rounded-lg w-[60%] m-auto h-[300px] p-2">
                             <div className="flex justify-center h-full w-full">
-                                <div className="h-full w-full bg-slate-800 rounded"></div>
+                                <div className="h-full w-full bg-slate-400  dark:bg-slate-800 rounded"></div>
                             </div>
                         </div>
                         :

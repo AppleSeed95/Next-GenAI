@@ -54,7 +54,7 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
     }
     return (
         <WithAnimation mode="zoom">
-            <div className="bg-[#000208] flex flex-col gap-[20px] p-[50px] mx-[100px] mb-[20px]">
+            <div className="bg-neutral-100 dark:bg-[#000208] flex flex-col gap-[20px] p-[50px] mx-[100px] mb-[20px]">
                 <div className="mb-[20px]  flex flex-col gap-[10px] w-full">
                     <Label className="font-bold text-[16px]" children={t('Image settings')} />
                     <div className="flex gap-[20px]">
@@ -140,7 +140,7 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
                         <div className='flex w-full  gap-[20px] justify-center'>
                             {[...Array(cnt)].map((_, idx) => (
                                 <div key={idx} className="animate-pulse max-w-[500px] w-full flex justify-center border-2 border-dashed rounded-lg p-2">
-                                    <div className="h-[300px]  w-full bg-slate-800 rounded"></div>
+                                    <div className="h-[300px]  w-full bg-slate-400  dark:bg-slate-800 rounded"></div>
                                 </div>
                             ))}
                         </div>

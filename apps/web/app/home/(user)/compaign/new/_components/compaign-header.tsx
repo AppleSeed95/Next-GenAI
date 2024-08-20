@@ -66,7 +66,7 @@ export function CompaignHeader(props: Props) {
    return (
       <PageBody className={'flex flex-col gap-10'}>
          <WithAnimation mode="zoom">
-            <div className="mx-[200px] mb-[20px] p-[50px] bg-[#000208] rounded-lg shadow-lg">
+            <div className="mx-[200px] mb-[20px] p-[50px] bg-neutral-100 dark:bg-[#000208] rounded-lg shadow-lg">
 
                <div className={'flex flex-col gap-4'}>
                   <div className={'flex justify-between sm:flex-row gap-4'}>

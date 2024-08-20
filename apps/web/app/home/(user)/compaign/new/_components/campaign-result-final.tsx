@@ -22,7 +22,7 @@ export const CampaignResultFinalCpn = ({ loading, setCurrentStep, projectProps, 
     return (
         <WithAnimation mode="zoom">
 
-            <div className="bg-[#000208] flex flex-col gap-[20px] p-[50px] mx-[100px] mb-[20px]">
+            <div className="bg-neutral-100 dark:bg-[#000208] flex flex-col gap-[20px] p-[50px] mx-[100px] mb-[20px]">
                 <div className="m-[20px] flex justify-center">
                     <IconSelect platform={projectProps.pPlatform as string} />
                 </div>
@@ -53,29 +53,35 @@ export const CampaignResultFinalCpn = ({ loading, setCurrentStep, projectProps, 
                     <div className="w-[30%] pl-[20px] flex flex-col gap-[15px]">
                         <div className="flex flex-col gap-[10px] w-full">
                             <Label children={t('Time')} />
-                            <div className="rounded-full  shadow-md">
-                                <Badge variant="secondary">{`2024/07/19`}</Badge>
+                            <div className="rounded-full">
+                                <Badge className="shadow-md text-md rounded-[25px]" variant="secondary">
+                                    {`${projectProps.pStartDate?.getDate()}/${projectProps.pStartDate?.getMonth() ?? 0 + 1}/${projectProps.pStartDate?.getFullYear()} ~ ${projectProps.pEndDate?.getDate()}/${projectProps.pEndDate?.getMonth() ?? 0 + 1}/${projectProps.pEndDate?.getFullYear()}`}
+                                </Badge>
                             </div>
                         </div>
                         <div className="flex flex-col gap-[10px] w-full">
                             <Label children={t('State')} />
-                            <div className="rounded-full  shadow-md">
-                                <Badge variant="secondary">{projectProps.pState ? 'Active' : 'Inactive'}</Badge>
+                            <div className="rounded-full">
+                                <Badge className="shadow-md text-md rounded-[25px]" variant="secondary">{projectProps.pState ? 'Active' : 'Inactive'}</Badge>
                             </div>
                         </div>
                         <div className="flex flex-col gap-[10px] w-full">
                             <Label children={t('Mode')} />
-                            <div className="rounded-full  shadow-md">
-                                <Badge variant="secondary">{projectProps.pMode}</Badge>
+                            <div className="rounded-full">
+                                <Badge className="shadow-md text-md rounded-[25px]" variant="secondary">
+                                    {`${projectProps.pMode[0]?.toUpperCase()}${projectProps.pMode.slice(1, projectProps.pMode.length)}`}
+                                </Badge>
                             </div>
                         </div>
                         <div className="flex flex-col gap-[10px] w-full">
                             <Label children={t('Atmosphere')} />
-                            <div className="rounded-full flex flex-wrap gap-[5px] shadow-md">
-                                {JSON.parse(projectProps.pAtmosphere).map((a: string, idx: number) => {
+                            <div className="rounded-full flex flex-wrap gap-[5px]">
+                                {JSON.parse(projectProps.pAtmosphere).map((aAtmosphere: string, idx: number) => {
                                     return (
                                         (
-                                            <Badge key={idx} variant="secondary">{a}</Badge>
+                                            <Badge className="shadow-md text-md rounded-[25px]" key={idx} variant="secondary">
+                                                {`${aAtmosphere[0]?.toUpperCase()}${aAtmosphere.slice(1, aAtmosphere.length).replaceAll('_', ' ')}`}
+                                            </Badge>
                                         )
                                     )
                                 })}
