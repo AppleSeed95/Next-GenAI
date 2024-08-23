@@ -13,14 +13,26 @@ const replicate = new Replicate({
  */
 export async function POST(req: Request) {
     try {
-        const { prompt } = await req.json();
+        const { prompt, ratio } = await req.json();
+        console.log(prompt);
 
-        const input = {
-            num_frames: 240,
-            fps: 24,
+        const geometry = ratio === 'horizontal' ? {
             width: 1024,
-            height: 576,
+            height: 576
+        } : ratio === 'vertical' ? {
+            width: 576,
+            height: 1024
+        } : {
+            width: 576,
+            height: 576
+        }
+        const input = {
+            // num_frames: 24,
+            fps: 4,
+            ...geometry,
             prompt,
+            // prompt: `generate video representing this content : ${prompt}`,
+            // prompt: `A macro video of a bee pollinating a flower `,
             guidance_scale: 17.5,
         };
 
@@ -29,6 +41,8 @@ export async function POST(req: Request) {
 
 
     } catch (error) {
+        console.log(error);
+
         return NextResponse.json({ type: "error" });
     }
 }
