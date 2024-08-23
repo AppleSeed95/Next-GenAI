@@ -18,7 +18,6 @@ export type MultiOption = {
 }
 const MultiSelectableCheckboxGroup = (props: MultiOption) => {
 
-   console.log('props', props.selectedOptions);
 
    const option1 = props.options.slice(0, 5);
    const option2 = props.options.slice(5);

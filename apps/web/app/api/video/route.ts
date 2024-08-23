@@ -13,25 +13,36 @@ const replicate = new Replicate({
  */
 export async function POST(req: Request) {
     try {
-        // handle the webhook event
-        const { prompt } = await req.json();
+        const { prompt, ratio } = await req.json();
+        console.log(prompt);
 
-        // const prediction = await replicate.predictions.create(options);
-        const input = {
-            fps: 24,
+        const geometry = ratio === 'horizontal' ? {
             width: 1024,
-            height: 576,
+            height: 576
+        } : ratio === 'vertical' ? {
+            width: 576,
+            height: 1024
+        } : {
+            width: 576,
+            height: 576
+        }
+        const input = {
+            // num_frames: 24,
+            fps: 4,
+            ...geometry,
             prompt,
+            // prompt: `generate video representing this content : ${prompt}`,
+            // prompt: `A macro video of a bee pollinating a flower `,
             guidance_scale: 17.5,
-            negative_prompt: "very blue, dust, noisy, washed out, ugly, distorted, broken"
         };
 
         const output = await replicate.run("anotherjesse/zeroscope-v2-xl:9f747673945c62801b13b84701c783929c0ee784e4748ec062204894dda1a351", { input });
         return NextResponse.json(output, { status: 201 });
 
-        // return NextResponse.json(response); // return the response from Replicate
 
     } catch (error) {
-        return NextResponse.json({ type: "error" }); // return the response from Replicate
+        console.log(error);
+
+        return NextResponse.json({ type: "error" });
     }
 }

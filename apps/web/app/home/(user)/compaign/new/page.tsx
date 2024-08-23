@@ -36,6 +36,7 @@ export type ProjectsType = {
    pImageFormat: string,
    pImageCnt: number,
    pImageRatio: string,
+   pVideoRatio: string,
    pImageAddition: string,
    pUseText: boolean,
    pUseImage: boolean,
@@ -69,6 +70,7 @@ const initial: ProjectsType = {
    pImageAddition: '',
    pImageCnt: 1,
    pImageRatio: 'horizontal',
+   pVideoRatio: 'horizontal',
    pUseText: true,
    pUseImage: true,
    pUseVideo: true

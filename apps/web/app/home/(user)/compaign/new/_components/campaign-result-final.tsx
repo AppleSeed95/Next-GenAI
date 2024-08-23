@@ -15,9 +15,11 @@ export interface CampaignResultFinalProps {
     setCurrentStep: (v: number) => void,
     previousStep: number,
     saveCampaign: () => void,
-    loading: boolean
+    loading: boolean,
+    useLogo: boolean,
+    logoAttached: string[]
 }
-export const CampaignResultFinalCpn = ({ loading, setCurrentStep, projectProps, previousStep, saveCampaign }: CampaignResultFinalProps) => {
+export const CampaignResultFinalCpn = ({ loading, setCurrentStep, projectProps, previousStep, saveCampaign, useLogo, logoAttached }: CampaignResultFinalProps) => {
     const { t } = useTranslation();
     return (
         <WithAnimation mode="zoom">
@@ -33,12 +35,17 @@ export const CampaignResultFinalCpn = ({ loading, setCurrentStep, projectProps, 
                         <div>{projectProps.pTextContent}</div>
                         <div className='flex gap-[10px]'>
                             {
-                                projectProps.pImages?.length ?
-                                    projectProps.pImages.map((a, idx) => (
-                                        <div key={idx}>
-                                            <Image width={300} height={300} key={idx} alt='img' src={a} />
-                                        </div>
-                                    )) : null
+                                useLogo ? logoAttached.map((a, idx) => (
+                                    <div key={idx}>
+                                        <Image width={300} height={300} key={idx} alt='img' src={a} />
+                                    </div>
+                                )) :
+                                    projectProps.pImages?.length ?
+                                        projectProps.pImages.map((a, idx) => (
+                                            <div key={idx}>
+                                                <Image width={300} height={300} key={idx} alt='img' src={a} />
+                                            </div>
+                                        )) : null
                             }
                         </div>
                         {projectProps.pVideo?.length > 0 && <div>

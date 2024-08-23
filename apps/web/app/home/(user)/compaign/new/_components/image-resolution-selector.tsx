@@ -14,10 +14,10 @@ type Props = {
   onChange: (lang: string) => void;
 }
 
-export const SelectResolution:React.FC<Props> = (props) =>  {  
+export const SelectResolution: React.FC<Props> = (props) => {
 
   return (
-    <Select onValueChange={(e) => {props.onChange(e); console.log(e)}}>
+    <Select onValueChange={(e) => { props.onChange(e); }}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select a Resolution" />
       </SelectTrigger>

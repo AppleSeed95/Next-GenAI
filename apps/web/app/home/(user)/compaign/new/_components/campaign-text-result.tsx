@@ -78,11 +78,10 @@ export const CampaignTextResultCpn = ({ projectProps, setCurrentStep, setProject
         setProjectValue({ ...projectProps, pTitle: topic, pGeneratedTitles: generatedTopics, pTextContent: contentResult ?? '' });
         setContentLoading(false);
         setLoading(false);
-        const re = await sendEmail({
-            from: 'noreply@quantee.jp',
-            to: 'takuyafukuda95@gmail.com'
-        })
-        console.log("resend", re);
+        // const re = await sendEmail({
+        //     from: 'noreply@quantee.jp',
+        //     to: 'takuyafukuda95@gmail.com'
+        // })
 
     }
 

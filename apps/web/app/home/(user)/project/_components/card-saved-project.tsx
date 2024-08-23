@@ -45,9 +45,11 @@ export function CardProject(props: PropsType) {
 
    return (
       <div className="flex flex-col items-center space-x-4 w-full py-8 gap-8">
-         {savedProject.map((item, index) => (
+         {savedProject?.length > 0 ? savedProject.map((item, index) => (
             <ProjectCardCpn project={item} key={index} />
-         ))}
+         )) : <div>
+            no project
+         </div>}
       </div>
    )
 }

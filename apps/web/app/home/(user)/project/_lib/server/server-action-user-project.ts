@@ -5,6 +5,12 @@ import { getLogger } from "@kit/shared/logger";
 import { getSupabaseServerActionClient } from "@kit/supabase/server-actions-client";
 import { requireUser } from "@kit/supabase/require-user";
 import { EditProjectSchema, UpdateProjectSchema } from "../schema/edit-user-project.schema";
+import { z } from 'zod';
+import { redirect, } from 'next/navigation';
+
+const IdSchema = z.object({
+    id: z.number(),
+})
 
 export const deleteUserProject = enhanceAction(
     async function (params) {
@@ -60,7 +66,7 @@ export const editUserProject = enhanceAction(
 
         logger.info(data, 'Project successfully updated');
 
-        return data;
+        return redirect(`/home/project`);
 
     },
     {
@@ -91,10 +97,33 @@ export const updateUserProject = enhanceAction(
 
         logger.info(data, 'Project successfully updated');
 
-        return true;
+        return redirect(`/home/project`);
 
     },
     {
         schema: UpdateProjectSchema
     }
 );
+
+export const deleteProject = enhanceAction(
+    async function (payload) {
+
+        const client = getSupabaseServerActionClient();
+        try {
+            const { error } = await client.from('campaign_table')
+                .delete()
+                .eq('id', payload.id)
+                .select();
+            if (error) {
+                throw new Error(`Failed to delete family info`);
+            }
+        } catch (error) {
+            throw new Error(`Failed to delete project info error:${error}`);
+        } finally {
+            return redirect(`/home/project`);
+        }
+    },
+    {
+        schema: IdSchema
+    }
+)

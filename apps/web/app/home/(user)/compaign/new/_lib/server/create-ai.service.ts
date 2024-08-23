@@ -281,7 +281,7 @@ class AiEditorService {
       model: "dall-e-3",
       prompt: `
         generate a realistic image representing that content: "${params.idea}".
-        Generate an image with a landscape (horizontal) orientation while keeping the size.
+        Generate an image with a horizontal orientation while keeping the size.
         make sure an image keep the posture of the things way up.
       `,
       quality: "standard",
@@ -291,9 +291,7 @@ class AiEditorService {
 
     const image_urls = Image_response.data.map(image => image.url)
 
-    // const image_url = Image_response.data[0]?.url;
 
-    console.log("Image URL : ", image_urls);
     return image_urls;
   }
 
@@ -309,10 +307,8 @@ class AiEditorService {
       if (!response.ok) {
         throw new Error('Failed to fetch image');
       }
-      console.log("URL Response : ", response)
       const contentType = response.headers.get('content-type');
       const body = await response.arrayBuffer();
-      console.log("Body :", body)
 
       return new NextResponse(body, {
         headers: {

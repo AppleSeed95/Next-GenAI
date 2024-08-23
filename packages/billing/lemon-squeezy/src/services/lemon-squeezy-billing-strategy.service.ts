@@ -26,8 +26,7 @@ import { createLemonSqueezyBillingPortalSession } from './create-lemon-squeezy-b
 import { createLemonSqueezyCheckout } from './create-lemon-squeezy-checkout';
 
 export class LemonSqueezyBillingStrategyService
-  implements BillingStrategyProviderService
-{
+  implements BillingStrategyProviderService {
   private readonly namespace = 'billing.lemon-squeezy';
 
   /**
@@ -50,7 +49,6 @@ export class LemonSqueezyBillingStrategyService
     const { data: response, error } = await createLemonSqueezyCheckout(params);
 
     if (error ?? !response?.data.id) {
-      console.log(error);
 
       logger.error(
         {
