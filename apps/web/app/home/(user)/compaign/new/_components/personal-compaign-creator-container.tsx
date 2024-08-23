@@ -2,7 +2,7 @@
 import { CompaignHeader } from "./compaign-header";
 import { CompaignpPlatformSelect } from "./compain-platform-select";
 import { CompaignStepIndicatorCpn } from "./compaign-step-indicator";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { CampaignTextResultCpn } from "./campaign-text-result";
 import { CampaignImageResultCpn } from "./campaign-image-result";
 import { CampaignVideoResultCpn } from "./campaign-video-result";
@@ -29,6 +29,8 @@ export function PersonalContentCreatorContainer(
       editMode?: boolean
    }>
 ) {
+
+
    const { id } = useParams();
    const projectId = parseInt(id?.toString() ?? '0');
    const client = useSupabase();
@@ -39,6 +41,8 @@ export function PersonalContentCreatorContainer(
    const stepDescriptions = ['Config your campaign', 'Platform settings', 'Text generation', 'Image generation', 'Video generation', "Save your project!"]
    const [projectValue, setProjectValue] = useState<ProjectsType>(props.projectData)
    const [generatedTopicIdeas, setGeneratedTopicIdeas] = useState('');
+   const [useLogo, setUseLogo] = useState(false);
+   const [logoAttached, setLogoAttached] = useState<string[]>([]);
    const { t } = useTranslation('');
 
    const PROJECT_IMAGE_BUCKET = 'project_image';
@@ -53,36 +57,22 @@ export function PersonalContentCreatorContainer(
       },
       [t],
    );
+   async function createFileFromBlob(blobUrl: string, fileName: string, mimeType: string): Promise<File> {
+      // Fetch the blob from the URL
+      const response = await fetch(blobUrl);
+      const blob = await response.blob();
 
+      const file = new File([blob], fileName, { type: mimeType });
+
+      return file;
+   }
    const upload = async (resultUrl: string | undefined, mode: string) => {
       const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
       const url = `${baseUrl}/api/extra-fetch`;
-
-      try {
-         const response = await fetch(url, {
-            method: 'POST',   // Specify the HTTP method
-            headers: {
-               'Content-Type': 'application/json',  // Required for JSON payloads
-            },
-            body: JSON.stringify({ url: resultUrl ?? 'test' })  // Convert the JavaScript object to a JSON string
-         })
-         if (!response.ok) {
-            throw new Error('Network response was not ok');
-         }
-         if (response.body) {
-            const bucket = client.storage.from(mode === 'image' ? PROJECT_IMAGE_BUCKET : PROJECT_VIDEO_BUCKET);
-            const reader = response.body.getReader();
-            const chunks = [];
-            let push;
-            while (!(push = await reader.read()).done) {
-               chunks.push(push.value);
-            }
-            const blob = new Blob(chunks, { type: 'image/png' });
-            const filename = "your_image.png"
-            const file = new File([blob], filename, {
-               type: blob.type,
-               lastModified: new Date().getTime() // or any timestamp representing file's last modification
-            })
+      const bucket = client.storage.from(mode === 'image' ? PROJECT_IMAGE_BUCKET : PROJECT_VIDEO_BUCKET);
+      if (useLogo === true && mode === 'image') {
+         try {
+            const file = await createFileFromBlob(resultUrl ?? '', 'image.png', 'image/png');
             const bytes = await file.arrayBuffer();
             const { nanoid } = await import('nanoid');
             const uniqueId = nanoid(16);
@@ -91,26 +81,72 @@ export function PersonalContentCreatorContainer(
                return bucket.getPublicUrl(uniqueId).data.publicUrl;
             }
             throw uploaded.error;
-
          }
+         catch (error) {
+            console.error('Error uploading image:', error);
+         }
+      }
+      else {
+         try {
+            const response = await fetch(url, {
+               method: 'POST',   // Specify the HTTP method
+               headers: {
+                  'Content-Type': 'application/json',  // Required for JSON payloads
+               },
+               body: JSON.stringify({ url: resultUrl ?? 'test' })  // Convert the JavaScript object to a JSON string
+            })
+            if (!response.ok) {
+               throw new Error('Network response was not ok');
+            }
+            if (response.body) {
+               const reader = response.body.getReader();
+               const chunks = [];
+               let push;
+               while (!(push = await reader.read()).done) {
+                  chunks.push(push.value);
+               }
+               const blob = new Blob(chunks, { type: 'image/png' });
+               const filename = "your_image.png"
+               const file = new File([blob], filename, {
+                  type: blob.type,
+                  lastModified: new Date().getTime() // or any timestamp representing file's last modification
+               })
+               const bytes = await file.arrayBuffer();
+               const { nanoid } = await import('nanoid');
+               const uniqueId = nanoid(16);
+               const uploaded = await bucket.upload(uniqueId, bytes);
+               if (!uploaded.error) {
+                  return bucket.getPublicUrl(uniqueId).data.publicUrl;
+               }
+               throw uploaded.error;
 
-      } catch (error) {
-         console.error('Error uploading image:', error);
+            }
+
+         } catch (error) {
+            console.error('Error uploading image:', error);
+         }
       }
    }
 
 
    const saveCampaign = useCallback(() => {
       setLoading(true);
-
       const promise = async () => {
 
          const uploadedList: any[] = [];
          if (projectValue.pImages.length > 0) {
-            await Promise.all(projectValue.pImages.map(async (v) => {
-               const temp = await upload(v, 'image');
-               uploadedList.push(temp);
-            }));
+            if (useLogo === true) {
+               await Promise.all(logoAttached.map(async (v) => {
+                  const temp = await upload(v, 'image');
+                  uploadedList.push(temp);
+               }));
+            } else {
+               await Promise.all(projectValue.pImages.map(async (v) => {
+                  const temp = await upload(v, 'image');
+                  uploadedList.push(temp);
+               }));
+            }
+
          }
          let uploadedVideo: string | undefined = '';
          if (projectValue.pVideo?.length > 0) {
@@ -152,7 +188,7 @@ export function PersonalContentCreatorContainer(
       }
 
       createToaster(promise);
-   }, [createToaster, projectValue])
+   }, [createToaster, projectValue, useLogo])
 
    return (
       <>
@@ -179,6 +215,10 @@ export function PersonalContentCreatorContainer(
                   nextStep={projectValue.pUseImage ? 3 : projectValue.pUseVideo ? 4 : 5}
                   setCurrentStep={setStep} projectProps={projectValue} setProjectValue={setProjectValue} />}
                {step === 3 && <CampaignImageResultCpn
+                  useLogo={useLogo}
+                  setUseLogo={setUseLogo}
+                  logoAttached={logoAttached}
+                  setLogoAttached={setLogoAttached}
                   previousStep={projectValue.pUseText ? 2 : 1}
                   nextStep={projectValue.pUseVideo ? 4 : 5}
                   setCurrentStep={setStep} projectProps={projectValue} setProjectValue={setProjectValue} />}
@@ -187,6 +227,8 @@ export function PersonalContentCreatorContainer(
                   nextStep={5}
                   setCurrentStep={setStep} projectProps={projectValue} setProjectValue={setProjectValue} />}
                {step === 5 && <CampaignResultFinalCpn
+                  useLogo={useLogo}
+                  logoAttached={logoAttached}
                   loading={loading}
                   previousStep={projectValue.pUseVideo ? 4 : projectValue.pUseImage ? 3 : projectValue.pUseText ? 2 : 1}
                   setCurrentStep={setStep} projectProps={projectValue} saveCampaign={saveCampaign} />}

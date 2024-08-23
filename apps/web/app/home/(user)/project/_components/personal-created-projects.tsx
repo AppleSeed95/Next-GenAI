@@ -66,7 +66,6 @@ export function PersonalCreatedProjects(props: Props) {
                         shouldTouch: true,
                      },
                   );
-                  console.log(form.getValues());
                   return onSubmit(form.getValues());
                }}
             />

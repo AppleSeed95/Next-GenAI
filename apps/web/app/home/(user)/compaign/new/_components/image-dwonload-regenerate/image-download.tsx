@@ -63,7 +63,6 @@ const DownloadImageIcon: React.FC<DownloadImageIconProps> = ({ imageUrl, fileNam
         });
       })
       .catch(err => {
-        console.log(err);
       });
   };
   return (

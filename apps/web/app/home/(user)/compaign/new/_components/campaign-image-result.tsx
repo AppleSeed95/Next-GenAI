@@ -5,7 +5,7 @@ import { ProjectsType } from '../page';
 import { createAIImageAction } from '../_lib/server/server-action';
 import { useState } from 'react';
 import Image from 'next/image';
-import { ImageMinus, ChevronLeft, ChevronRight, Check, RectangleHorizontal, RectangleVertical, Square } from "lucide-react";
+import { ImagePlus, ChevronLeft, ChevronRight, Check, RectangleHorizontal, RectangleVertical, Square } from "lucide-react";
 import { Button } from "@kit/ui/button";
 import { Input } from "@kit/ui/input";
 import { Textarea } from "@kit/ui/textarea"
@@ -21,6 +21,8 @@ import {
 import { RadioGroup, RadioGroupItem } from "@kit/ui/radio-group"
 import { WithAnimation } from "~/home/(user)/_components/animated-element";
 
+import { LogoUploader } from './image-uploader';
+
 
 
 
@@ -29,17 +31,23 @@ export interface CampaignImageResultProps {
     setCurrentStep: (v: number) => void,
     setProjectValue: (v: ProjectsType) => void,
     previousStep: number,
-    nextStep: number
+    nextStep: number,
+    useLogo: boolean,
+    setUseLogo: (v: boolean) => void,
+    logoAttached: string[],
+    setLogoAttached: (v: string[]) => void
 }
 
 
-export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjectValue, previousStep, nextStep }: CampaignImageResultProps) => {
+export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjectValue, previousStep, nextStep, useLogo, setUseLogo, logoAttached, setLogoAttached }: CampaignImageResultProps) => {
     const { t } = useTranslation();
     const [loading, setLoading] = useState<boolean | null>(null);
     const [result, setResult] = useState<string[]>([]);
     const [cnt, setCnt] = useState(projectProps.pImageCnt);
     const generateImage = async () => {
         setLoading(true);
+        setUseLogo(false);
+        setLogoAttached([]);
         let generatedResult: string[] = [];
         for (let index = 0; index < cnt; index++) {
             const result = await createAIImageAction({ ratio: projectProps.pImageRatio, idea: projectProps.pUseText ? projectProps.pTextContent : `topic:${projectProps.pMainTopic}-${projectProps.pSubTopic}, atmosphere: ${projectProps.pAtmosphere} ` });
@@ -51,6 +59,63 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
         setResult(generatedResult);
         setProjectValue({ ...projectProps, pImages: generatedResult });
         setLoading(false);
+    }
+    const attachLogo = async (src: string, file: File) => {
+        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+        const url = `${baseUrl}/api/add-logo`;
+        try {
+            const formData = new FormData();
+            formData.append('openAiImageUrl', src);
+            formData.append('logoSrc', file);
+
+            const response = await fetch(url, {
+                method: 'POST',   // Specify the HTTP method
+                body: formData  // Convert the JavaScript object to a JSON string
+            })
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            if (response.body) {
+                const reader = response.body.getReader();
+
+                const stream = new ReadableStream({
+                    start(controller) {
+                        function push() {
+                            reader.read().then(({ done, value }) => {
+                                if (done) {
+                                    controller.close();
+                                    return;
+                                }
+                                controller.enqueue(value);
+                                push();
+                            });
+                        }
+                        push();
+                    }
+                });
+
+                const responseBlob = await new Response(stream).blob();
+
+                const imageUrl = URL.createObjectURL(responseBlob);
+                return imageUrl;
+            }
+
+        } catch (error) {
+            console.error('Error uploading image:', error);
+        }
+    }
+    const onLogoApply = async (file: File) => {
+        setLoading(true);
+        let logoAttached: string[] = [];
+        await Promise.all(
+            projectProps.pImages.map(async (a) => {
+                const attached = await attachLogo(a, file);
+                logoAttached.push(attached ?? '');
+            })
+        );
+        setLogoAttached(logoAttached);
+        setLoading(false);
+
     }
     const classNamePerRatio = () => {
         switch (projectProps.pImageRatio) {
@@ -67,13 +132,13 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
     const loadingClassNamePerRatio = () => {
         switch (projectProps.pImageRatio) {
             case 'horizontal':
-                return 'h-[296px]'
+                return 'h-[280px]'
             case 'vertical':
-                return 'h-[496px]'
+                return 'h-[480px]'
             case 'square':
-                return 'h-[496px]'
+                return 'h-[480px]'
             default:
-                return 'h-[496px]'
+                return 'h-[480px]'
         }
     }
     return (
@@ -158,33 +223,55 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
                         </div>
 
                     </div>
+                    <div className={'flex flex-row gap-6 pt-8'}>
+                        <label className="inline-flex items-center cursor-pointer">
+                            <input type="checkbox" disabled={(!(projectProps.pImages?.length > 0) || loading === true)} onChange={(e) => setUseLogo(e.target.checked)} value="" checked={useLogo} className="sr-only peer" />
+                            <div className="relative w-11 h-6 bg-gray-200 peer-disabled:cursor-not-allowed peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                        </label>
+                        <span>Use custom logo</span>
+                    </div>
+                    <WithAnimation
+                        mode="zoom"
+                        isVisible={useLogo}>
+                        <LogoUploader onChange={onLogoApply} loading={loading} />
+                    </WithAnimation>
                 </div>
                 <div className="flex justify-center  gap-[10px] w-full">
                     {loading === true ?
-                        <div className='flex w-full  gap-[20px] justify-center'>
+                        <div className='flex w-full gap-[20px] justify-center'>
                             {[...Array(cnt)].map((_, idx) => (
-                                <div key={idx} className={`w-full grow flex justify-center items-center m-auto h-[300px] border-2 border-slate-700 border-dashed rounded-lg ${classNamePerRatio()}`}>
+                                <div key={idx} className={`w-full animate-pulse grow flex justify-center items-center m-auto h-[300px] border-2 border-slate-700 p-2 border-dashed rounded-lg ${classNamePerRatio()}`}>
                                     <div className={`${loadingClassNamePerRatio()} w-full bg-slate-400  dark:bg-slate-800 rounded`}></div>
                                 </div>
                             ))}
                         </div>
                         :
-                        projectProps.pImages?.length ?
-                            projectProps.pImages.map((a, idx) => (
+                        useLogo && logoAttached.length > 0 ?
+                            logoAttached.map
+                                ((a, idx) => (
 
-                                <div key={idx} className='flex gap-[10px] justify-center '>
-                                    <div >
-                                        <Image width={500} height={300} key={idx} alt='img' src={a} />
+                                    <div key={idx} className='flex gap-[10px] justify-center '>
+                                        <div >
+                                            <Image width={500} height={300} key={idx} alt='img' src={a} />
+                                        </div>
                                     </div>
+                                )) :
+                            projectProps.pImages?.length ?
+                                projectProps.pImages.map((a, idx) => (
+
+                                    <div key={idx} className='flex gap-[10px] justify-center '>
+                                        <div >
+                                            <Image width={500} height={300} key={idx} alt='img' src={a} />
+                                        </div>
+                                    </div>
+                                )) :
+                                <div className='flex gap-2 w-full'>
+                                    {new Array(projectProps.pImageCnt).fill(null).map((_, idx) => (
+                                        <div key={idx} className={`w-full grow flex justify-center items-center m-auto h-[300px] border-2 border-slate-700 border-dashed rounded-lg ${classNamePerRatio()}`}>
+                                            <ImagePlus className="w-[50px] h-[50px]" />
+                                        </div>
+                                    ))}
                                 </div>
-                            )) :
-                            <div className='flex gap-2 w-full'>
-                                {new Array(projectProps.pImageCnt).fill(null).map((_, idx) => (
-                                    <div key={idx} className={`w-full grow flex justify-center items-center m-auto h-[300px] border-2 border-slate-700 border-dashed rounded-lg ${classNamePerRatio()}`}>
-                                        <ImageMinus className="w-[50px] h-[50px]" />
-                                    </div>
-                                ))}
-                            </div>
 
                     }
                 </div>

@@ -188,7 +188,6 @@ function getFilters(params: SearchParams) {
             lte: params.end,
         };
     }
-    console.log(filters);
 
     return filters;
 }

@@ -3,7 +3,7 @@ import { Card } from "@kit/ui/card"
 import { Heading } from "@kit/ui/heading"
 import { Button } from "@kit/ui/button"
 import { DatePickerWithRange } from "./datePicker"
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@kit/ui/dialog"
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@kit/ui/dialog"
 import { Delete, Edit2Icon, X } from "lucide-react"
 import { Label } from "@kit/ui/label"
 import { Textarea } from "@kit/ui/textarea"
@@ -23,7 +23,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { updateUserProject } from "../_lib/server/server-action-user-project"
 import { toast } from 'sonner';
 import { Play } from "lucide-react"
-
+import { deleteProject } from "../_lib/server/server-action-user-project"
 
 
 type Props = {
@@ -32,6 +32,7 @@ type Props = {
 
 
 export function ProjectCardCpn({ project }: Props) {
+
     const router = useRouter();
     const pathName = usePathname();
     const url = `${pathName}`;
@@ -57,21 +58,20 @@ export function ProjectCardCpn({ project }: Props) {
         },
         [t],
     );
+    const deleteToaster = useCallback(
+        (promise: () => Promise<unknown>) => {
+            return toast.promise(promise, {
+                success: t(`deleteProjectSuccess`),
+                error: t(`deleteProjectError`),
+                loading: t(`deleteProjectLoading`),
+            });
+        },
+        [t],
+    );
     const updateProject = useCallback((v: boolean) => {
 
         const promise = async () => {
-            // let updateProject:ProjectType = {};
-            // const keys = Object.keys(project);
-            // keys.forEach((key: string) => {
-            //     const value = project[key as keyof typeof project];
-            //     if (value) {
-            //         updateProject = {
-            //             ...updateProject,
-            //             [key]: value
-            //         }
-            //     }
 
-            // });
             const res = await updateUserProject({ ...project, pState: v });
             if (res) {
                 setProjectState(v);
@@ -80,24 +80,34 @@ export function ProjectCardCpn({ project }: Props) {
 
         updateToaster(promise);
     }, [updateToaster])
+    const deleteUserProject = useCallback((id: number) => {
+        const promise = async () => {
+            await deleteProject({ id: id });
+        }
+        deleteToaster(promise);
+    }, [deleteToaster])
     const handleStateChange = (active: boolean) => {
         updateProject(active);
     }
     return (
         <div className="bg-neutral-200 dark:bg-slate-900  shadow-lg flex w-full p-4 pr-0   rounded-lg">
             {carouselItems.length > 0 && <div className="w-1/4 rounded-lg overflow-hidden">
-                <div >
+                <div className="flex items-center h-full grow">
                     {carouselItems.length > 0 &&
                         <Carousel autoPlay interval={3000} showThumbs={false} swipeable infiniteLoop showStatus stopOnHover showArrows showIndicators >
                             {carouselItems.map((aSrc, idx) => (
                                 <div key={idx} className="w-full">
-                                    <Image
+                                    {aSrc.src?.length > 0 ? <Image
                                         className="rounded-lg"
                                         src={aSrc.src}
                                         width={450}
                                         layout="responsive"
                                         height={150}
-                                        alt='image' />
+                                        alt='image' /> :
+                                        <div>
+                                            {aSrc.src}
+                                        </div>
+                                    }
                                 </div>
                             ))}
                         </Carousel>
@@ -186,9 +196,28 @@ export function ProjectCardCpn({ project }: Props) {
                                         className='text-white  bg-green-500 py-1 px-3 rounded-full flex items-center justify-center w-10 h-10 shadow-sm cursor-pointer duration-500'>
                                         <Settings />
                                     </div>
-                                    <div className='text-white  bg-red-500 py-1 px-3 rounded-full flex items-center justify-center w-10 h-10 shadow-sm cursor-pointer duration-500'>
-                                        <Trash2 />
-                                    </div>
+                                    <Dialog>
+                                        <DialogTrigger asChild>
+                                            <div className='text-white  bg-red-500 py-1 px-3 rounded-full flex items-center justify-center w-10 h-10 shadow-sm cursor-pointer duration-500'>
+                                                <Trash2 />
+                                            </div>
+                                        </DialogTrigger>
+                                        <DialogContent className="sm:max-w-[425px]">
+                                            <DialogHeader>
+                                                <DialogTitle>Delete a project</DialogTitle>
+                                                <DialogDescription>
+                                                    Are you sure deleting this project?
+                                                </DialogDescription>
+                                            </DialogHeader>
+
+                                            <DialogFooter>
+                                                <Button onClick={() => {
+                                                    deleteUserProject(project.id)
+                                                }}>Delete</Button>
+                                            </DialogFooter>
+                                        </DialogContent>
+                                    </Dialog>
+
                                 </div>
                             </div>
 

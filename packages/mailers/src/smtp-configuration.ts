@@ -12,16 +12,7 @@ export function getSMTPConfiguration() {
     ciphers: 'SSLv3',
   };
 
-  console.log("ddddd", {
-    host: data.host,
-    port: data.port,
-    secure: data.secure,
-    auth: {
-      user: data.user,
-      pass: data.pass,
-    },
-    tls
-  })
+
   return {
     host: data.host,
     port: data.port,

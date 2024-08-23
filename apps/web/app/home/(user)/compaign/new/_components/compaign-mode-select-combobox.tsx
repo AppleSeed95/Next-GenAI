@@ -92,7 +92,6 @@ export function ModeSelectComboDemo(props: Props) {
                         null
 
                       )
-                      console.log(value);
                       props.onChange(value)
                       setOpen(false)
                     }}

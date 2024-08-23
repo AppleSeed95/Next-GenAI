@@ -44,7 +44,6 @@ export const CampaignVideoResultCpn = ({ projectProps, setCurrentStep, setProjec
             setLoading(false);
         }
         catch (e) {
-            console.log(e);
             setLoading(false);
         }
 
@@ -58,14 +57,14 @@ export const CampaignVideoResultCpn = ({ projectProps, setCurrentStep, setProjec
                 <div className="flex flex-col gap-[10px] w-full">
                     {/* <Label children={t('Generated images based on the content.')} /> */}
                     {loading === true ?
-                        <div className="animate-pulse flex justify-center border-2 border-slate-700 border-dashed rounded-lg w-[60%] m-auto h-[300px] p-2">
+                        <div className="animate-pulse flex justify-center border-2 border-slate-700 border-dashed rounded-lg w-[60%] m-auto h-[400px] p-2">
                             <div className="flex justify-center h-full w-full">
                                 <div className="h-full w-full bg-slate-400  dark:bg-slate-800 rounded"></div>
                             </div>
                         </div>
                         :
                         projectProps.pVideo?.length > 0 ?
-                            <div className="w-[60%] m-auto">
+                            <div className="w-[70%] m-auto">
                                 <video
                                     className="w-full aspect-video mt-8 rounded-lg border bg-black"
                                     controls
@@ -74,7 +73,7 @@ export const CampaignVideoResultCpn = ({ projectProps, setCurrentStep, setProjec
                                 </video>
                             </div>
                             :
-                            <div className="flex justify-center items-center w-[60%] m-auto h-[300px] border-2 border-slate-700 border-dashed rounded-lg">
+                            <div className="flex justify-center items-center w-[60%] m-auto h-[400px] border-2 border-slate-700 border-dashed rounded-lg">
                                 <Video className="w-[50px] h-[50px]" />
                             </div>
                     }

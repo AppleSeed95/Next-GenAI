@@ -13,6 +13,7 @@ import { requireUser } from '@kit/supabase/require-user';
 import { revalidatePath } from 'next/cache';
 import { SuggestTopicIdeaSchema } from '../schema/suggest-topic-ideas';
 import { NextResponse } from 'next/server';
+import { redirect } from 'next/navigation';
 
 
 /**
@@ -35,12 +36,10 @@ export async function sendEmail(params: {
          subject: 'Hello',
          text: 'Hello, World!'
       });
-      console.log('this is mail result', mailResult);
 
       return { result: "mailResult" };
    }
    catch (e) {
-      console.log("err", e);
       return { error: "e" };
    }
 
@@ -59,7 +58,6 @@ export const createAITextAction = enhanceAction(
          return response;
 
       } catch (e) {
-         console.log("Bug: ", e);
          // return NextResponse.error();
          return ("Error");
       }
@@ -79,7 +77,6 @@ export const suggestPostTopicAction = enhanceAction(
          return response as String;
 
       } catch (e) {
-         console.log("Bug: ", e);
          // return NextResponse.error();
          return ("Error");
       }
@@ -99,7 +96,6 @@ export const generatePostTextContentAction = enhanceAction(
          return response;
 
       } catch (e) {
-         console.log("Bug: ", e);
          // return NextResponse.error();
          return ("Error");
       }
@@ -111,7 +107,6 @@ export const generatePostTextContentAction = enhanceAction(
 
 export const createAIImageAction = enhanceAction(
    async function (data) {
-      console.log(data);
 
       try {
          const response = await createAiEditorService().completeImageContent({
@@ -121,7 +116,6 @@ export const createAIImageAction = enhanceAction(
          return response;
 
       } catch (e) {
-         console.log("Bug: ", e);
          // return NextResponse.error();
          return ("Error");
       }
@@ -138,13 +132,10 @@ export const downloadImageAction = enhanceAction(
          const response = await createAiEditorService().completeImageDownload({
             url: data.url,
          });
-         console.log("Last server response :", response);
          return response;
 
       } catch (e) {
-         console.log("Bug: ", e);
          return NextResponse.error();
-         // return ("Error");
       }
    },
    {
@@ -167,8 +158,6 @@ export const createAIVideoAction = enhanceAction(
          return response;
 
       } catch (e) {
-         console.log("Bug: ", e);
-         // return NextResponse.error();
          return ("Error");
       }
    },
@@ -186,7 +175,6 @@ export const createAIVideoAction = enhanceAction(
 export const saveProjectAction = enhanceAction(
    async function (params) {
       const saveData = SaveProjectSchema.parse(params);
-      console.log('saving...', saveData);
 
       const logger = await getLogger();
       const client = getSupabaseServerActionClient();
@@ -204,7 +192,6 @@ export const saveProjectAction = enhanceAction(
 
       if (error) {
          logger.error(error, `Failed to save Content`);
-         console.log(error);
 
          throw new Error(`Failed to save Content`);
       }
@@ -213,7 +200,7 @@ export const saveProjectAction = enhanceAction(
       logger.info(data, `Content saved successfully`);
 
 
-      return true;
+      return redirect('/home/project')
    },
    {
       schema: SaveProjectSchema,
@@ -234,7 +221,6 @@ export const createSuggestTopic = enhanceAction(
          return response;
 
       } catch (e) {
-         console.log("Bug: ", e);
          // return NextResponse.error();
          return ("Error");
       }
