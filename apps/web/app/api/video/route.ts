@@ -27,12 +27,12 @@ export async function POST(req: Request) {
             height: 576
         }
         const input = {
-            // num_frames: 24,
+            num_frames: 4,
             fps: 4,
             ...geometry,
-            prompt,
+            // prompt,
             // prompt: `generate video representing this content : ${prompt}`,
-            // prompt: `A macro video of a bee pollinating a flower `,
+            prompt: `A macro video of a bee pollinating a flower `,
             guidance_scale: 17.5,
         };
 
