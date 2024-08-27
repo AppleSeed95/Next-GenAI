@@ -58,7 +58,6 @@ export function PersonalContentCreatorContainer(
       [t],
    );
    async function createFileFromBlob(blobUrl: string, fileName: string, mimeType: string): Promise<File> {
-      // Fetch the blob from the URL
       const response = await fetch(blobUrl);
       const blob = await response.blob();
 
@@ -67,10 +66,12 @@ export function PersonalContentCreatorContainer(
       return file;
    }
    const upload = async (resultUrl: string | undefined, mode: string) => {
+
       const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
       const url = `${baseUrl}/api/extra-fetch`;
       const bucket = client.storage.from(mode === 'image' ? PROJECT_IMAGE_BUCKET : PROJECT_VIDEO_BUCKET);
       if (useLogo === true && mode === 'image') {
+
          try {
             const file = await createFileFromBlob(resultUrl ?? '', 'image.png', 'image/png');
             const bytes = await file.arrayBuffer();
@@ -130,17 +131,20 @@ export function PersonalContentCreatorContainer(
 
 
    const saveCampaign = useCallback(() => {
+
       setLoading(true);
       const promise = async () => {
 
          const uploadedList: any[] = [];
          if (projectValue.pImages.length > 0) {
             if (useLogo === true) {
+
                await Promise.all(logoAttached.map(async (v) => {
                   const temp = await upload(v, 'image');
                   uploadedList.push(temp);
                }));
             } else {
+
                await Promise.all(projectValue.pImages.map(async (v) => {
                   const temp = await upload(v, 'image');
                   uploadedList.push(temp);
@@ -188,7 +192,7 @@ export function PersonalContentCreatorContainer(
       }
 
       createToaster(promise);
-   }, [createToaster, projectValue, useLogo])
+   }, [createToaster, projectValue, useLogo, props, logoAttached])
 
    return (
       <>

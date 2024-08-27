@@ -32,7 +32,7 @@ type Props = {
 
 
 export function ProjectCardCpn({ project }: Props) {
-
+    const [openDlg, setOpenDlg] = useState(false);
     const router = useRouter();
     const pathName = usePathname();
     const url = `${pathName}`;
@@ -85,6 +85,7 @@ export function ProjectCardCpn({ project }: Props) {
             await deleteProject({ id: id });
         }
         deleteToaster(promise);
+        setOpenDlg(false);
     }, [deleteToaster])
     const handleStateChange = (active: boolean) => {
         updateProject(active);
@@ -121,7 +122,7 @@ export function ProjectCardCpn({ project }: Props) {
                     <div className="flex justify-between items-center pr-6">
                         <div className="flex items-center gap-2">
                             {(project.pVideo?.length ?? 0) > 0 &&
-                                <Dialog>
+                                <Dialog open={openDlg}>
                                     <DialogTrigger asChild>
                                         <div className='text-white bg-red-500 py-1 px-3 rounded-full flex items-center justify-center w-10 h-10 shadow-sm cursor-pointer duration-500'>
                                             <Play />
