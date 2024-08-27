@@ -25,25 +25,25 @@ const items = [
   {
     name: 'Benny R',
     role: 'Solopreneur',
-    image: '/Portrait.jpeg',
+    image: '/images/man.png',
     text: 'Honestly the best content conversion tool I\'ve used so far. Happy customer.',
   },
   {
     name: 'Travis M',
     role: 'Marketer',
-    image: '/Portrait.jpeg',
+    image: '/images/man.png',
     text: 'They ship insanely fast. I\'ve got the fastest feature implementation based on my suggestion ever.',
   },
   {
     name: 'Dennis',
     role: 'Founder',
-    image: '/Portrait.jpeg',
+    image: '/images/man.png',
     text: 'They ship insanely fast. I\'ve got the fastest feature implementation based on my suggestion ever',
   },
   {
-    name: 'Aleks J',
+    name: 'Aleks',
     role: 'Marketer',
-    image: '/Portrait.jpeg',
+    image: '/images/man.png',
     text: 'Amazing experience! The team exceeded all expectations.',
   },
 
@@ -53,64 +53,6 @@ function Home() {
   return (
     <div className={'mt-4 flex flex-col space-y-24 py-16'}>
       <div className='px-20'>
-
-        {/* ----nav */}
-
-        <div className="fixed top-2 z-50 w-full px-2  md:top-8">
-          {/* <div className="flex justify-center w-full">
-            <div className="flex items-center mx-auto h-12 rounded-full border  bg-white/60 px-1 pl-4 shadow-lg backdrop-blur-md">
-              <div className="flex w-full justify-between gap-6">
-                <Link href="/" className="flex items-center gap-2">
-                  <span className="text-xl font-black tracking-wider">CopyCopter</span>
-                </Link>
-                <div className="flex w-full items-center justify-end gap-4 px-4">
-                  <button>
-                    {
-                      !isDarkMode &&
-                      <FaRegMoon onClick={() => setIsDarkMode(true)} />
-                    }
-                    {
-                      isDarkMode &&
-                      <FaMoon onClick={() => setIsDarkMode(false)} />
-                    }
-                  </button>
-                  <Link href="/home#pricing" className="hidden sm:flex text-sm text-gray-700 hover:underline">Pricing</Link>
-                  <Link href="/home#faq" className="hidden sm:flex text-sm text-gray-700 hover:underline">FAQ</Link>
-                  <Link href="/changelog" className="hidden sm:flex text-sm text-gray-700 hover:underline">Changelog</Link>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="hidden sm:block h-5 border-r border-gray-200"></div>
-                  <div className="flex items-center gap-3 text-xs">
-                    <Link href="/login">
-                      <button className="hidden sm:block h-10 md:h-9 px-4 py-2 rounded-full border text-sm hover:bg-gray-200">
-                        Login
-                      </button>
-                    </Link>
-                    <Link href="/signup">
-                      <button className="h-10 w-24 px-4 py-2 rounded-full bg-black text-white flex items-center justify-center">
-                        <span className="group-hover:-translate-x-2">Start Now</span>
-                        <span className="absolute right-2 translate-x-full opacity-0 transition-all duration-150 group-hover:translate-x-0 group-hover:opacity-100">
-                          <svg stroke="currentColor" fill="currentColor" viewBox="0 0 256 256" height="1em" width="1em">
-                            <path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path>
-                          </svg>
-                        </span>
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
-        </div>
-
-
-
-
-
-
-
-
-
         <section
           id="hero"
           className="flex min-h-[70dvh] w-full max-w-full flex-col items-stretch justify-center gap-4 py-10 md:flex-row md:py-12 xl:py-32"
@@ -121,13 +63,13 @@ function Home() {
               <h1 className="text-center md:text-start">
                 Automate your
                 <br />
-                <span className="font-normal">faceless video</span> channel
+                <span className="font-normal">media contente generation</span> process
               </h1>
             </div>
             <div className="dark:text-white w-full max-w-xl font-light text-[#444240]">
               <p className=" text-center md:text-start">
-                Create AI Videos in minutes, post automatically on your Social Media. Our AI creation tool creates{' '}
-                <span className="font-medium">viral AI videos</span> for you.
+                Create AI Contents in minutes, post automatically on your Social Media.<br /> Our AI creation tool creates{' '}
+                <span className="font-medium">AI contents</span> for you.
               </p>
             </div>
             <div className="dark:text-white w-full max-w-xl font-light text-[#444240]">
@@ -139,7 +81,7 @@ function Home() {
                 <li>👀 Videos that actually <span className="font-bold">GET VIEWS</span></li>
               </ul>
             </div>
-            <div className="flex w-full max-w-lg flex-col items-center rounded-lg border bg-white/40 p-4 pb-2 shadow-[5px_5px_30px_rgba(190,190,190,0.15),-5px_-5px_30px_rgba(255,255,255,0.15)] backdrop-blur-sm">
+            <div className="flex w-full max-w-lg flex-col items-center rounded-lg border bg-white/40 dark:bg-slate-950 p-4 pb-2 shadow-lg backdrop-blur-sm">
               <form className="relative w-full space-y-8">
                 <div className="space-y-2">
                   <div className="flex w-full flex-col items-center gap-2 sm:flex-row">
@@ -151,39 +93,42 @@ function Home() {
                     />
                     <button
                       className="group relative items-center justify-center whitespace-nowrap text-sm font-normal ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground px-4 py-2 flex h-10 w-full flex-grow gap-2 rounded-full bg-blue-600 hover:bg-blue-500 sm:w-5/12 overflow-hidden"
-                      type="submit"
                     >
-                      <span className=" transition-all duration-150 group-hover:-translate-x-2">Start Now</span>
-                      <span className="absolute right-2 translate-x-full opacity-0 transition-all duration-150 group-hover:translate-x-0 group-hover:opacity-100">
-                        <svg
-                          stroke="currentColor"
-                          fill="currentColor"
-                          strokeWidth={0}
-                          viewBox="0 0 256 256"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z" />
-                        </svg>
-                      </span>
+                      <Link
+                        href={'/auth/sign-up'}
+                        className='flex items-center'
+                      >
+                        <span className="text-white transition-all duration-150 group-hover:-translate-x-2">Start Now</span>
+                        <span className="absolute right-2 translate-x-full opacity-0 transition-all duration-150 group-hover:translate-x-0 group-hover:opacity-100">
+                          <svg
+                            stroke="currentColor"
+                            fill="currentColor"
+                            strokeWidth={0}
+                            viewBox="0 0 256 256"
+                            height="1em"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z" />
+                          </svg>
+                        </span>
+                      </Link>
+
                     </button>
                   </div>
                   <p className="text-xs text-muted-foreground w-full"></p>
                 </div>
               </form>
-              <p className="w-full text-end text-xs text-muted-foreground">
+              <p className="dark:text-slate-400 w-full text-end text-xs text-muted-foreground pt-2">
                 By signing up you agree to our
-                <a className="text-black hover:underline" href="/legal/terms-and-conditions">
+                <a className="dark:text-slate-500 text-black hover:underline" href="/legal/terms-and-conditions">
                   terms
                 </a>.
               </p>
             </div>
             <div className="flex flex-col items-center justify-center gap-2 sm:flex-row sm:gap-6">
               <div className="flex justify-between">
-                <a
-                  href="https://craftgen.ai/"
-                  target="_blank"
+                <div
                   className="mr-[-8px] h-7 w-7 overflow-hidden rounded-full border-[3px] border-white transition-all duration-150 hover:scale-110 hover:border-blue-600"
                 >
                   <img
@@ -191,20 +136,18 @@ function Home() {
                     width={28}
                     height={28}
                     decoding="async"
-                    srcSet="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fneco-profile.271152fe.jpg&w=32&q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fneco-profile.271152fe.jpg&w=64&q=75 2x"
-                    src="Portrait.jpeg"
+                    src="/images/man.png"
                   />
-                </a>
-                {/* Repeat similar structure for other testimonial images */}
+                </div>
               </div>
               <div className="dark:text-white flex gap-1 text-xs text-muted-foreground">
                 Join <span className="flex gap-2 font-bold">500+</span> Happy Creators
               </div>
-              <div className="flex-center gap-6 md:hidden">
+              <div className="flex-cener gap-6 justify-center items-center md:hidden">
                 <img
                   style={{ width: '32px', height: '32px' }}
                   className="rounded-sm"
-                  src=""
+                  src="man.png"
                   width={32}
                   height={32}
                   alt="TikTok Logo"
@@ -249,10 +192,31 @@ function Home() {
                 </div>
               </div>
             </div>
-            <div id="second-video" className="dark:text-white absolute flex  -translate-x-24 -translate-y-10  flex-col gap-4 opacity-90  md:-translate-x-32"><div className=" flex w-full -translate-x-4 -rotate-12  items-end gap-1 text-xs font-bold"><svg stroke="currentColor" fill="currentColor" strokeWidth={0} viewBox="0 0 256 256" className="h-6 w-6 min-w-[24px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M212,32a12,12,0,0,1-12,12,84.09,84.09,0,0,0-84,84v67l27.51-27.52a12,12,0,0,1,17,17l-48,48a12,12,0,0,1-17,0l-48-48a12,12,0,0,1,17-17L92,195V128A108.12,108.12,0,0,1,200,20,12,12,0,0,1,212,32Z" /></svg><p className=" text-start">Boost your SEO<br /> with videos</p></div>
+            <div id="second-video" className="dark:text-white absolute flex  -translate-x-24 -translate-y-10  flex-col gap-4 opacity-90  md:-translate-x-32"><div className=" flex w-full -translate-x-4 -rotate-12  items-end gap-1 text-xs font-bold"><svg stroke="currentColor" fill="currentColor" strokeWidth={0} viewBox="0 0 256 256" className="h-6 w-6 min-w-[24px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M212,32a12,12,0,0,1-12,12,84.09,84.09,0,0,0-84,84v67l27.51-27.52a12,12,0,0,1,17,17l-48,48a12,12,0,0,1-17,0l-48-48a12,12,0,0,1,17-17L92,195V128A108.12,108.12,0,0,1,200,20,12,12,0,0,1,212,32Z" /></svg>
+              <p className=" text-start">Boost your SEO<br /> with videos</p>
+            </div>
               <div className="-rotate-12 scale-90 rounded-md  shadow-xl  transition-all duration-300 hover:scale-105 md:scale-100"><div className="h-[280px] w-[160px] overflow-hidden rounded-md  border border-green-500 ">
                 <div className="absolute bottom-0 left-0 right-0 top-0 -z-10 bg-white" />
-                <img alt="Audi Video" loading="lazy" width={180} height={314} decoding="async" data-nimg={1} style={{ color: 'transparent', opacity: '0.9' }} srcSet="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Faudi-cover.a2065d6e.jpg&w=384&q=75" src="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Faudi-cover.a2065d6e.jpg&w=384&q=75" />tbpCover</div></div></div><div id="main-video" className="   flex flex-col gap-4 transition-all duration-300"><div className=" rotate-3 scale-95  transition-all  duration-300 hover:scale-110 md:scale-105 "><div className=" right-16 h-[314px]  w-[180px]  overflow-hidden  rounded-md border border-violet-800">{/*$*/}<video poster="/images/lp/tbd-cover.jpg" loop muted autoPlay playsInline className aria-label="Video Player"><source src="https://delivery.copycopter.ai/lpexamples%2Fdiving.mp4" type="video/mp4" /></video>{/*/$*/}</div></div><div className="flex w-full items-end justify-center gap-1  text-xs font-bold md:-translate-x-16"><p className="text-right">Engage your audience <br />with next-gen content</p> <svg stroke="currentColor" fill="currentColor" strokeWidth={0} viewBox="0 0 256 256" className="h-8 w-8 min-w-[32px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M208.49,88.49a12,12,0,0,1-17,0L164,61v67A108.12,108.12,0,0,1,56,236a12,12,0,0,1,0-24,84.09,84.09,0,0,0,84-84V61L112.49,88.49a12,12,0,0,1-17-17l48-48a12,12,0,0,1,17,0l48,48A12,12,0,0,1,208.49,88.49Z" /></svg></div></div><div className="hidden flex-col items-center justify-center gap-2 md:absolute md:top-10 md:flex" style={{ top: "-15%" }}><p className="hidden w-full text-center text-sm font-bold lg:block">Perfect for</p><div className="flex-center gap-6"><img style={{ width: '42px', height: '42px' }} className="rounded-sm" src="https://copycopter.ai/_next/static/media/TikTok-square.7476ecb4.svg" width={42} height={42} alt="TikTok Logo" /> <img style={{ minWidth: '42px', width: '42px' }} className="rounded-sm" src="https://copycopter.ai/_next/static/media/yt_icon_rgb.806133c0.png" width={42} alt="YouTube Logo" /> <img style={{ width: '42px', height: '42px' }} className="rounded-sm" src="https://copycopter.ai/_next/static/media/instagram.875f977f.svg" width={42} height={42} alt="Instagram Logo" /></div></div></div>
+                <img alt="Audi Video" loading="lazy" width={180} height={314} decoding="async" data-nimg={1} style={{ color: 'transparent', opacity: '0.9' }} srcSet="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Faudi-cover.a2065d6e.jpg&w=384&q=75" src="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Faudi-cover.a2065d6e.jpg&w=384&q=75" />tbpCover</div></div></div><div id="main-video" className="   flex flex-col gap-4 transition-all duration-300"><div className=" rotate-3 scale-95  transition-all  duration-300 hover:scale-110 md:scale-105 ">
+                  <div className=" right-16 h-[314px]  w-[180px]  overflow-hidden  rounded-md border border-violet-800">{/*$*/
+                  }<video poster="/images/lp/tbd-cover.jpg" loop muted autoPlay playsInline aria-label="Video Player">
+                      <source src="https://delivery.copycopter.ai/lpexamples%2Fdiving.mp4" type="video/mp4" />
+                    </video>
+                  </div>
+                </div>
+              <div className="flex w-full items-end justify-center gap-1  text-xs font-bold md:-translate-x-16">
+                <p className="text-right">Engage your audience <br />with next-gen content</p> <svg stroke="currentColor" fill="currentColor" strokeWidth={0} viewBox="0 0 256 256" className="h-8 w-8 min-w-[32px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M208.49,88.49a12,12,0,0,1-17,0L164,61v67A108.12,108.12,0,0,1,56,236a12,12,0,0,1,0-24,84.09,84.09,0,0,0,84-84V61L112.49,88.49a12,12,0,0,1-17-17l48-48a12,12,0,0,1,17,0l48,48A12,12,0,0,1,208.49,88.49Z" /></svg>
+              </div>
+            </div>
+            <div className="hidden flex-col items-center justify-center gap-2 md:absolute md:top-10 md:flex" style={{ top: "-15%" }}>
+              <p className="hidden w-full text-center text-sm font-bold lg:block">Perfect for</p>
+              <div className="flex flex-col justify-center items-center gap-[5px]">
+                <img style={{ width: '42px', height: '42px' }} className="rounded-sm" src="https://copycopter.ai/_next/static/media/TikTok-square.7476ecb4.svg" width={42} height={42} alt="TikTok Logo" />
+                <img style={{ minWidth: '42px', width: '42px' }} className="rounded-sm" src="https://copycopter.ai/_next/static/media/yt_icon_rgb.806133c0.png" width={42} alt="YouTube Logo" />
+                <img style={{ width: '42px', height: '42px' }} className="rounded-sm" src="https://copycopter.ai/_next/static/media/instagram.875f977f.svg" width={42} height={42} alt="Instagram Logo" />
+              </div>
+            </div>
+          </div>
         </section>
 
 
@@ -265,20 +229,15 @@ function Home() {
         <section className='  w-full flex justify-center' >
 
           <div className="min-h-[20%] w-[80%] flex items-center justify-center">
-            {/* <Head>
-  <title>Infinite Scrolling Carousel</title>
-  <meta name="description" content="An infinite scrolling carousel with Framer Motion in Next.js" />
-  <link rel="icon" href="/favicon.ico" />
-</Head> */}
 
             <main className="p-4">
               <div className="overflow-hidden relative">
                 <motion.div
-                  className="flex"
+                  className="flex p-2"
                   initial={{ x: 0 }}
                 >
                   {items.map((item, index) => (
-                    <div key={index} className="shadow-neumorphic flex flex-row items-center gap-2 rounded-lg border bg-white py-1 pl-2 pr-3 ml-2">
+                    <div key={index} className="shadow-neumorphic flex flex-row pt-4 gap-2 rounded-lg border bg-white dark:bg-slate-950 py-1 pl-2 pr-3 ml-2">
                       <Image
                         alt={`Avatar of ${item.name}`}
                         src={item.image}
@@ -308,7 +267,7 @@ function Home() {
                             ))}
                           </div>
                         </div>
-                        <div className="text-start font-light text-gray-700">{item.text}</div>
+                        <div className="text-start font-light text-gray-700 dark:text-slate-400">{item.text}</div>
                       </div>
                     </div>
 
@@ -319,124 +278,73 @@ function Home() {
           </div>
         </section>
 
-
-
-
-
-
-
-        <main className="dark:text-white  flex min-h-screen flex-col items-center justify-between p-24">
-          <section id="examples" className="relative mx-auto flex max-w-7xl flex-col gap-12 px-4 py-12 md:gap-12 md:px-8">
-            <div className=" flex flex-col items-center gap-2">
-              <p className="text-center text-sm">Use Cases</p>
-              <h3 className="dark:text-white w-full text-center text-3xl font-bold text-[#444240]">
-                Create <span className="font-light">unique</span> faceless videos for every niche
-              </h3>
-              <p className=" text-center">CopyCopter is versatile and can be used for a wide range of content types. Find your niche and master it.</p>
-            </div>
-            <div className="flex-center w-full flex-col gap-6">
-              <div className="grid w-full grid-cols-3 gap-4 md:grid-cols-6">
-                <div className="group relative">
-                  <div className="shadow-neumorphic rounded-md">
-                    <video playsInline muted loop autoPlay className="rounded-md border-2 border-blue-500 transition-all duration-300 hover:scale-105" style={{ objectFit: 'cover' }}>
-                      <source src="https://delivery.copycopter.ai/lpexamples%2Fdiving.mp4" type="video/mp4" />
-                    </video>
-                  </div>
-                  <p className="dark:text-white pt-2 text-center text-[#444240]">True Story</p>
-                </div>
-                <div className="group relative">
-                  <div className="shadow-neumorphic rounded-md">
-                    <video playsInline muted loop autoPlay className="rounded-md border-2 border-blue-500 transition-all duration-300 hover:scale-105" style={{ objectFit: 'cover' }}>
-                      <source src="https://delivery.copycopter.ai/lpexamples%2Fdiving.mp4" type="video/mp4" />
-                    </video>
-                  </div>
-                  <p className="dark:text-white pt-2 text-center text-[#444240]">True Story</p>
-                </div>
-                <div className="group relative">
-                  <div className="shadow-neumorphic rounded-md">
-                    <video playsInline muted loop autoPlay className="rounded-md border-2 border-blue-500 transition-all duration-300 hover:scale-105" style={{ objectFit: 'cover' }}>
-                      <source src="https://delivery.copycopter.ai/lpexamples%2Fdiving.mp4" type="video/mp4" />
-                    </video>
-                  </div>
-                  <p className="dark:text-white pt-2 text-center text-[#444240]">Book Review</p>
-                </div>
-                <div className="group relative">
-                  <div className="shadow-neumorphic rounded-md">
-                    <video playsInline muted loop autoPlay className="rounded-md border-2 border-blue-500 transition-all duration-300 hover:scale-105" style={{ objectFit: 'cover' }}>
-                      <source src="https://delivery.copycopter.ai/lpexamples%2Faiko.mp4" type="video/mp4" />
-                    </video>
-                  </div>
-                  <p className="dark:text-white pt-2 text-center text-[#444240]">Bed Time Story</p>
-                </div>
-                <div className="group relative">
-                  <div className="shadow-neumorphic rounded-md">
-                    <video playsInline muted loop autoPlay className="rounded-md border-2 border-blue-500 transition-all duration-300 hover:scale-105" style={{ objectFit: 'cover' }}>
-                      <source src="https://delivery.copycopter.ai/lpexamples%2Freligion.mp4" type="video/mp4" />
-                    </video>
-                  </div>
-                  <p className="dark:text-white pt-2 text-center text-[#444240]">Religion</p>
-                </div>
-                <div className="group relative">
-                  <div className="shadow-neumorphic rounded-md">
-                    <video playsInline muted loop autoPlay className="rounded-md border-2 border-blue-500 transition-all duration-300 hover:scale-105" style={{ objectFit: 'cover' }}>
-                      <source src="https://delivery.copycopter.ai/lpexamples%2Fcreatures.mp4" type="video/mp4" />
-                    </video>
-                  </div>
-                  <p className="dark:text-white pt-2 text-center text-[#444240]">Imaginary Story</p>
-                </div>
-              </div>
-              <div className="flex-center w-full">
-                <p className="dark:text-white text-center text-[#444240]">And <span className="dark:text-white font-bold text-[#444240]">many many more!</span> Find your own niche and master it.</p>
-              </div>
-            </div>
-          </section>
-        </main>
-
-
-        {/* max-w-6xl */}
-
-        <section className="dark:text-white  relative mx-auto flex dark:max-w-full max-w-6xl flex-col gap-12 px-4 py-12 md:gap-12 md:px-8">
-          <div className="flex flex-col gap-2">
-            <p className="text-center text-sm">How it works</p>
-            <h3 className="dark:text-white w-full text-center text-3xl font-bold text-[#444240]">Create your video in 3 easy steps</h3>
+        {/* <main className="dark:text-white  flex min-h-screen flex-col items-center justify-between pt-24"> */}
+        <section id="examples" className="py-8 relative mx-auto flex max-w-7xl flex-col gap-12 px-4 py-12 md:gap-12 md:px-8">
+          <div className=" flex flex-col items-center gap-2">
+            <p className="text-center text-sm">Use Cases</p>
+            <h3 className="dark:text-white w-full text-center text-3xl font-bold text-[#444240]">
+              Create <span className="font-light">unique</span> AI contents for every niche
+            </h3>
+            <p className=" text-center">Wumdoo is versatile and can be used for a wide range of content types. Find your niche and master it.</p>
           </div>
-          <div className="relative z-10 flex flex-col items-center gap-0 text-[#444240] lg:gap-8 lg:flex-row">
-            <div className="flex w-full flex-1 flex-col gap-2 py-5 text-left sm:mx-auto lg:max-w-max">
-              <div className="mt-3 flex">
-                <div className=" flex rounded-md border border-blue-500 bg-blue-50 px-[6px] py-[0.5px] text-xs text-blue-500">Step 1</div>
+          <div className="flex-center w-full flex-col gap-6">
+            <div className="grid w-full grid-cols-3 gap-4 md:grid-cols-6">
+              <div className="group relative">
+                <div className="shadow-neumorphic rounded-md">
+                  <video playsInline muted loop autoPlay className="rounded-md border-2 border-blue-500 transition-all duration-300 hover:scale-105" style={{ objectFit: 'cover' }}>
+                    <source src="https://delivery.copycopter.ai/lpexamples%2Fdiving.mp4" type="video/mp4" />
+                  </video>
+                </div>
+                <p className="dark:text-white pt-2 text-center text-[#444240]">True Story</p>
               </div>
-              <h3 className="dark:text-white text-2xl font-bold">Generate script with one click</h3>
-              <div className="dark:text-white flex flex-col gap-1">
-                <p className="text-left">Simply <span className="font-bold">write your idea</span> and let AI do the job.</p>
-                <ul className="text-left">
-                  <li className="flex items-center gap-2">
-                    <svg stroke="currentColor" fill="currentColor" strokeWidth={0} viewBox="0 0 256 256" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z" />
-                    </svg>
-                    Start with an article, idea, link or just write your own story.
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <svg stroke="currentColor" fill="currentColor" strokeWidth={0} viewBox="0 0 256 256" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z" />
-                    </svg>
-                    Get full video script to create your next video.
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <svg stroke="currentColor" fill="currentColor" strokeWidth={0} viewBox="0 0 256 256" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z" />
-                    </svg>
-                    Works for every niche, from science to bedtime stories.
-                  </li>
-                </ul>
+              <div className="group relative">
+                <div className="shadow-neumorphic rounded-md">
+                  <video playsInline muted loop autoPlay className="rounded-md border-2 border-blue-500 transition-all duration-300 hover:scale-105" style={{ objectFit: 'cover' }}>
+                    <source src="https://delivery.copycopter.ai/lpexamples%2Fdiving.mp4" type="video/mp4" />
+                  </video>
+                </div>
+                <p className="dark:text-white pt-2 text-center text-[#444240]">True Story</p>
+              </div>
+              <div className="group relative">
+                <div className="shadow-neumorphic rounded-md">
+                  <video playsInline muted loop autoPlay className="rounded-md border-2 border-blue-500 transition-all duration-300 hover:scale-105" style={{ objectFit: 'cover' }}>
+                    <source src="https://delivery.copycopter.ai/lpexamples%2Fdiving.mp4" type="video/mp4" />
+                  </video>
+                </div>
+                <p className="dark:text-white pt-2 text-center text-[#444240]">Book Review</p>
+              </div>
+              <div className="group relative">
+                <div className="shadow-neumorphic rounded-md">
+                  <video playsInline muted loop autoPlay className="rounded-md border-2 border-blue-500 transition-all duration-300 hover:scale-105" style={{ objectFit: 'cover' }}>
+                    <source src="https://delivery.copycopter.ai/lpexamples%2Faiko.mp4" type="video/mp4" />
+                  </video>
+                </div>
+                <p className="dark:text-white pt-2 text-center text-[#444240]">Bed Time Story</p>
+              </div>
+              <div className="group relative">
+                <div className="shadow-neumorphic rounded-md">
+                  <video playsInline muted loop autoPlay className="rounded-md border-2 border-blue-500 transition-all duration-300 hover:scale-105" style={{ objectFit: 'cover' }}>
+                    <source src="https://delivery.copycopter.ai/lpexamples%2Freligion.mp4" type="video/mp4" />
+                  </video>
+                </div>
+                <p className="dark:text-white pt-2 text-center text-[#444240]">Religion</p>
+              </div>
+              <div className="group relative">
+                <div className="shadow-neumorphic rounded-md">
+                  <video playsInline muted loop autoPlay className="rounded-md border-2 border-blue-500 transition-all duration-300 hover:scale-105" style={{ objectFit: 'cover' }}>
+                    <source src="https://delivery.copycopter.ai/lpexamples%2Fcreatures.mp4" type="video/mp4" />
+                  </video>
+                </div>
+                <p className="dark:text-white pt-2 text-center text-[#444240]">Imaginary Story</p>
               </div>
             </div>
-            <div className="flex-center mt-5 h-full min-h-[225px] w-full max-w-md flex-1 p-0 lg:mt-0 lg:w-3/12">
-              <img alt="" loading="lazy" width={960} height={540} decoding="async" data-nimg={1} className="shadow-neumorphic w-full rounded-md border" style={{ color: 'transparent' }} srcSet="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep1_v3.3bfbcc0a.jpg&w=1920&q=75" src="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep1_v3.3bfbcc0a.jpg&w=1920&q=75" />
+            <div className="flex items-center w-full p-4">
+              <p className="dark:text-white text-center text-[#444240]">And <span className="dark:text-white font-bold text-[#444240]">many many more!</span> Find your own niche and master it.</p>
             </div>
           </div>
-          {/* Repeat similar blocks for Step 2 and Step 3 */}
         </section>
-        <section className=" dark:text-white mx-auto flex dark:max-w-full max-w-6xl flex-col gap-12 px-4 py-12 md:gap-12 md:px-8">
+        {/* </main> */}
+        <section className="py-8 dark:text-white mx-auto flex dark:max-w-full max-w-6xl flex-col gap-12 px-4 py-12 md:gap-12 md:px-8">
           <div className="dark:text-white flex flex-col gap-2">
             <p className="dark:text-white text-center text-sm">How it works</p>
             <h3 className="dark:text-white w-full text-center text-3xl font-bold text-[#444240]">Create your video in 3 easy steps</h3>
@@ -445,7 +353,7 @@ function Home() {
           <div className="relative z-10 flex flex-col items-center gap-0 text-[#444240] lg:gap-8 lg:flex-row">
             <div className="flex w-full flex-1 flex-col gap-2 py-5 text-left sm:mx-auto lg:max-w-max">
               <div className="mt-3 flex">
-                <div className="flex rounded-md border border-blue-500 bg-blue-50 px-[6px] py-[0.5px] text-xs text-blue-500">Step 1</div>
+                <div className="flex rounded-md border border-blue-500 dark:border-blue-800 bg-blue-50 dark:bg-slate-500 px-[6px] py-[0.5px] text-xs text-blue-500">Step 1</div>
               </div>
               <h3 className="dark:text-white text-2xl font-bold">Generate script with one click</h3>
               <div className="dark:text-white flex flex-col gap-1">
@@ -473,12 +381,12 @@ function Home() {
               </div>
             </div>
 
-            <div className="flex-center mt-5 h-full min-h-[225px] w-full max-w-md flex-1 p-0 lg:mt-0 lg:w-3/12">
+            <div className="flex items-center mt-5 h-full min-h-[225px] w-full max-w-md flex-1 p-0 lg:mt-0 lg:w-3/12">
               <img alt="" loading="lazy" width={960} height={540} decoding="async" className="shadow-neumorphic w-full rounded-md border" style={{ color: 'transparent' }} srcSet="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep1_v3.3bfbcc0a.jpg&w=1920&q=75" src="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep1_v3.3bfbcc0a.jpg&w=1920&q=75" />
             </div>
           </div>
 
-          <div className="relative z-10 flex flex-col items-center gap-0 text-[#444240] lg:gap-8 lg:flex-row-reverse">
+          <div className="py-12 relative z-10 flex flex-col items-center gap-0 text-[#444240] lg:gap-8 lg:flex-row-reverse">
             <div className="flex w-full flex-1 flex-col gap-2 py-5 text-left sm:mx-auto lg:max-w-max">
               <div className="mt-3 flex">
                 <div className="flex rounded-md border border-blue-500 bg-blue-50 px-[6px] py-[0.5px] text-xs text-blue-500">Step 2</div>
@@ -511,15 +419,15 @@ function Home() {
 
             <div className=" flex-center mt-5 h-full min-h-[225px]  w-full max-w-md flex-1 p-0 lg:mt-0 lg:w-3/12">
               <div className=" group relative h-full w-full ">
-                <img alt="" loading="lazy" width={448} height={210} decoding="async" data-nimg={1} className="shadow-neumorphic absolute -left-8 -top-24 z-0 w-full rounded-md border brightness-90 transition-all  duration-300 group-hover:brightness-90 md:brightness-100" style={{ color: 'transparent' }} srcSet="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep21.ef6f3dc3.jpg&w=1080&q=75" src="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep21.ef6f3dc3.jpg&w=1080&q=75" />
-                <img alt="" loading="lazy" width={448} height={170} decoding="async" data-nimg={1} className="h absolute -top-8 z-10 w-full rounded-md border brightness-90 drop-shadow-xl transition-all duration-300 group-hover:brightness-90  md:brightness-100" style={{ color: 'transparent' }} srcSet="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep22.07bb9a98.jpg&w=1080&q=75" src="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep22.07bb9a98.jpg&w=1080&q=75" />
-                <img alt="" loading="lazy" width={448} height={80} decoding="async" data-nimg={1} className="absolute left-8 top-8 z-20 w-full rounded-md border drop-shadow-xl transition-all duration-300 group-hover:scale-105" style={{ color: 'transparent' }} srcSet="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep23.3df24c4d.jpg&w=1080&q=75" src="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep23.3df24c4d.jpg&w=1080&q=75" />
+                <img alt="" loading="lazy" width={448} height={210} decoding="async" data-nimg={1} className="shadow-neumorphic absolute -left-8 -top-12 z-0 w-full rounded-md border brightness-90 transition-all  duration-300 group-hover:brightness-90 md:brightness-100" style={{ color: 'transparent' }} srcSet="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep21.ef6f3dc3.jpg&w=1080&q=75" src="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep21.ef6f3dc3.jpg&w=1080&q=75" />
+                <img alt="" loading="lazy" width={448} height={170} decoding="async" data-nimg={1} className="h absolute  z-10 w-full rounded-md border brightness-90 drop-shadow-xl transition-all duration-300 group-hover:brightness-90  md:brightness-100" style={{ color: 'transparent' }} srcSet="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep22.07bb9a98.jpg&w=1080&q=75" src="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep22.07bb9a98.jpg&w=1080&q=75" />
+                <img alt="" loading="lazy" width={448} height={80} decoding="async" data-nimg={1} className="absolute left-8 top-16 z-20 w-full rounded-md border drop-shadow-xl transition-all duration-300 group-hover:scale-105" style={{ color: 'transparent' }} srcSet="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep23.3df24c4d.jpg&w=1080&q=75" src="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep23.3df24c4d.jpg&w=1080&q=75" />
               </div>
             </div>
           </div>
 
           <div className="relative z-10 flex flex-col items-center gap-0 text-[#444240] lg:gap-8 lg:flex-row">
-            <div className="flex w-full flex-1 flex-col gap-2 py-5 text-left sm:mx-auto lg:max-w-max">
+            <div className="flex w-full flex-1 flex-col gap-2 text-left sm:mx-auto lg:max-w-max">
               <div className="mt-3 flex">
                 <div className="flex rounded-md border border-blue-500 bg-blue-50 px-[6px] py-[0.5px] text-xs text-blue-500">Step 3</div>
               </div>
@@ -550,21 +458,18 @@ function Home() {
             </div>
             <div className=" flex-center mt-5 h-full min-h-[225px]  w-full max-w-md flex-1 p-0 lg:mt-0 lg:w-3/12">
               <div className="group relative overflow-hidden rounded-md">
-                <img alt="" loading="lazy" width={280} height={110} decoding="async" data-nimg={1} className="shadow-neumorphic absolute bottom-14 right-16 z-10 w-[280px] rounded-sm border transition-all  duration-300 group-hover:w-[280px] group-hover:drop-shadow-xl md:w-[120px]" style={{ color: 'transparent' }} srcSet="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep31.27887d14.jpg&w=640&q=75" src="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep31.27887d14.jpg&w=640&q=75" />
-                <img alt="" loading="lazy" width={960} height={540} decoding="async" data-nimg={1} className="shadow-neumorphic z-0 w-full rounded-md border brightness-90 transition-all duration-300 group-hover:brightness-90 md:brightness-100" style={{ color: 'transparent' }} srcSet="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep3.d045ed03.jpg&w=1920&q=75" src="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep3.d045ed03.jpg&w=1920&q=75" /></div></div>
-            {/* 
-  <div className="flex-center mt-5 h-full min-h-[225px] w-full max-w-md flex-1 p-0 lg:mt-0 lg:w-3/12">
-    <img alt="" loading="lazy" width={960} height={540} decoding="async" className="shadow-neumorphic w-full rounded-md border" style={{ color: 'transparent' }} srcSet="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep3.d045ed03.jpg&w=1920&q=75" src="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep3.d045ed03.jpg&w=1920&q=75" />
-  </div>
-</div>
-
-<div className="pointer-events-none absolute inset-0 z-0 flex w-full items-center justify-center">
-  <img alt="" loading="lazy" width={1200} height={600} decoding="async" className="h-full w-full" style={{ color: 'transparent' }} srcSet="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbg_3steps.1280d916.jpg&w=1200&q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbg_3steps.1280d916.jpg&w=1920&q=75 2x" src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbg_3steps.1280d916.jpg&w=1920&q=75" />
-</div> */}
+                <img alt="" loading="lazy" width={280} height={110} decoding="async" data-nimg={1} className="shadow-neumorphic absolute bottom-14 right-16 z-10 w-[280px] rounded-sm border transition-all  duration-300 group-hover:w-[280px] group-hover:drop-shadow-xl md:w-[120px]" style={{ color: 'transparent' }}
+                  srcSet="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep31.27887d14.jpg&w=640&q=75" src="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep31.27887d14.jpg&w=640&q=75"
+                />
+                <img alt="" loading="lazy" width={960} height={540} decoding="async" data-nimg={1} className="shadow-neumorphic z-0 w-full rounded-md border brightness-90 transition-all duration-300 group-hover:brightness-90 md:brightness-100" style={{ color: 'transparent' }}
+                  srcSet="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep3.d045ed03.jpg&w=1920&q=75" src="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstep3.d045ed03.jpg&w=1920&q=75"
+                />
+              </div>
+            </div>
           </div>
         </section>
         <section className=" flex-center w-full flex-col gap-8 p-6 py-12">
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 p-4">
             <p className="dark:text-white text-center text-sm">Features</p>
             <h3 className="dark:text-white w-full text-center text-3xl font-bold text-[#444240]">
               Simple, yet crazy powerful.
@@ -717,11 +622,11 @@ function Home() {
                 <div className="z-10 transition-all duration-300 group-hover:pb-2">
                   <h3 className="text-lg  font-bold transition-all duration-300 group-hover:text-xl">29 Languages</h3>
                   <p className="text-sm font-light ">Create your content in any language. Works for Voice and Text.</p>
-                </div></div></div>
-          </div>
+                </div></div ></div >
+          </div >
 
 
-        </section>
+        </section >
         <div className={'container mx-auto'}>
           <div
             className={
@@ -756,9 +661,9 @@ function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </div >
 
-    </div>
+    </div >
   );
 }
 
