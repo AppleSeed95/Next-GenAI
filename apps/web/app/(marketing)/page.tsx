@@ -63,7 +63,7 @@ function Home() {
               <h1 className="text-center md:text-start">
                 Automate your
                 <br />
-                <span className="font-normal">media contente generation</span> process
+                <span className="font-normal">media contents generation</span> process
               </h1>
             </div>
             <div className="dark:text-white w-full max-w-xl font-light text-[#444240]">
@@ -183,7 +183,7 @@ function Home() {
               <div className="dark:text-white flex w-full translate-x-12 rotate-12  items-end gap-1 text-xs font-bold">
                 <svg stroke="currentColor" fill="currentColor" strokeWidth={0} viewBox="0 0 256 256" className="h-6 w-6 min-w-[24px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                   <path d="M212,32a12,12,0,0,1-12,12,84.09,84.09,0,0,0-84,84v67l27.51-27.52a12,12,0,0,1,17,17l-48,48a12,12,0,0,1-17,0l-48-48a12,12,0,0,1,17-17L92,195V128A108.12,108.12,0,0,1,200,20,12,12,0,0,1,212,32Z" /></svg>
-                <p className="text-start">Get traffic<br />with faceless videos</p>
+                <p className="text-start">Get traffic<br />with great videos</p>
               </div>
 
               <div className="dark:text-white rotate-12 scale-90 rounded-md shadow-xl  transition-all duration-300  hover:scale-105 md:scale-100 ">
@@ -204,18 +204,32 @@ function Home() {
             <div id="second-video" className="dark:text-white absolute flex  -translate-x-24 -translate-y-10  flex-col gap-4 opacity-90  md:-translate-x-32"><div className=" flex w-full -translate-x-4 -rotate-12  items-end gap-1 text-xs font-bold"><svg stroke="currentColor" fill="currentColor" strokeWidth={0} viewBox="0 0 256 256" className="h-6 w-6 min-w-[24px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M212,32a12,12,0,0,1-12,12,84.09,84.09,0,0,0-84,84v67l27.51-27.52a12,12,0,0,1,17,17l-48,48a12,12,0,0,1-17,0l-48-48a12,12,0,0,1,17-17L92,195V128A108.12,108.12,0,0,1,200,20,12,12,0,0,1,212,32Z" /></svg>
               <p className=" text-start">Boost your SEO<br /> with videos</p>
             </div>
-              <div className="-rotate-12 scale-90 rounded-md  shadow-xl  transition-all duration-300 hover:scale-105 md:scale-100">
+              <div className="dark:text-white -rotate-12 mt-8 scale-90 rounded-md shadow-xl  transition-all duration-300  hover:scale-105 md:scale-100 ">
+                <div className="relative h-[240px] w-[160px]   overflow-hidden rounded-md  border border-green-500 ">
+                  <div className="absolute bottom-0 left-0 right-0 top-0 -z-10 bg-white" >
+                    {/* <img alt="BannerBear Video Thumbnail z-0" loading="lazy" width={180} height={314} decoding="async" data-nimg={1}
+                    style={{ color: 'transparent', opacity: '0.9', objectFit: 'fill' }}
+                    srcSet="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Faiko.b9dcb216.jpg&w=384&q=75"
+                    src="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Faiko.b9dcb216.jpg&w=384&q=75"
+                  /> */}
+                    <video className='h-full w-auto' poster="/images/lp/tbd-cover.jpg" loop muted autoPlay playsInline aria-label="Video Player">
+                      <source src="/video/home_3.mp4" type="video/mp4" />
+                    </video>
+                  </div>
+                </div>
+              </div>
+              {/* <div className="-rotate-12 scale-90 rounded-md  shadow-xl  transition-all duration-300 hover:scale-105 md:scale-100">
                 <div className="h-[280px] w-[160px] overflow-hidden rounded-md  border border-green-500 ">
                   <div className="absolute bottom-0 left-0 right-0 top-0 -z-10 bg-white" />
                   <img alt="Audi Video" loading="lazy" width={180} height={314} decoding="async" data-nimg={1} style={{ color: 'transparent', opacity: '0.9' }}
                     srcSet="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Faudi-cover.a2065d6e.jpg&w=384&q=75"
                     src="https://copycopter.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Faudi-cover.a2065d6e.jpg&w=384&q=75"
                   />
-                  {/* <video poster="/images/lp/tbd-cover.jpg" loop muted autoPlay playsInline aria-label="Video Player">
+                  <video poster="/images/lp/tbd-cover.jpg" loop muted autoPlay playsInline aria-label="Video Player">
                     <source src="/video/home_3.mp4" type="video/mp4" />
-                  </video> */}
+                  </video>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div id="main-video" className="flex flex-col gap-4 transition-all duration-300">
               <div className=" rotate-3 scale-95  transition-all  duration-300 hover:scale-110 md:scale-105 ">
