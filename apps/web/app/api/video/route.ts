@@ -27,7 +27,6 @@ export async function POST(req: Request) {
             height: 576
         }
         const input = {
-            num_frames: 4,
             fps: 4,
             ...geometry,
             // prompt,
