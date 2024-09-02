@@ -12,6 +12,8 @@ export function useSignInWithEmailPassword() {
     const response = await client.auth.signInWithPassword(credentials);
 
     if (response.error) {
+      console.log('auth error', response.error);
+
       throw response.error.message;
     }
 
