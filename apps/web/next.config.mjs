@@ -104,7 +104,7 @@ function getRemotePatterns() {
       },
       {
         protocol: 'http',
-        hostname: '82.112.242.89',
+        hostname: 'atkxoryzcgabijsqfgsd.supabase.co',
       },
     ];
 }
