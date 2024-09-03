@@ -2,16 +2,17 @@ import { SmtpConfigSchema } from './schema/smtp-config.schema';
 
 export function getSMTPConfiguration() {
   const data = SmtpConfigSchema.parse({
-    user: process.env.NEXT_PUBLIC_EMAIL_USER,
-    pass: process.env.NEXT_PUBLIC_EMAIL_PASSWORD,
-    host: process.env.NEXT_PUBLIC_EMAIL_HOST,
-    port: Number(process.env.NEXT_PUBLIC_EMAIL_PORT),
-    secure: process.env.NEXT_PUBLIC_EMAIL_TLS !== 'false',
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
+    host: process.env.EMAIL_HOST,
+    port: Number(process.env.EMAIL_PORT),
+    secure: process.env.EMAIL_TLS !== 'false',
   });
   const tls = {
     ciphers: 'SSLv3',
   };
 
+  console.log(data);
 
   return {
     host: data.host,

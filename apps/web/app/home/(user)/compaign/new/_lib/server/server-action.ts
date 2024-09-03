@@ -36,10 +36,13 @@ export async function sendEmail(params: {
          subject: 'Hello',
          text: 'Hello, World!'
       });
+      console.log(mailResult);
 
       return { result: "mailResult" };
    }
    catch (e) {
+      console.log(e);
+
       return { error: "e" };
    }
 
