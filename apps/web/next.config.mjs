@@ -103,7 +103,7 @@ function getRemotePatterns() {
         pathname: '/private/**',
       },
       {
-        protocol: 'http',
+        protocol: 'https',
         hostname: 'atkxoryzcgabijsqfgsd.supabase.co',
       },
     ];
