@@ -91,8 +91,9 @@ export function PersonalContentCreatorContainer(
          try {
             const response = await fetch(url, {
                method: 'POST',   // Specify the HTTP method
+               mode: 'cors',  // Ensure you're using 'cors' mode for cross-origin requests
                headers: {
-                  'Content-Type': 'application/json',  // Required for JSON payloads
+                  'Content-Type': 'application/json',
                },
                body: JSON.stringify({ url: resultUrl ?? 'test' })  // Convert the JavaScript object to a JSON string
             })
