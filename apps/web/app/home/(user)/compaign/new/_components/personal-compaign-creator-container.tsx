@@ -17,6 +17,8 @@ import { ProjectsType } from "../page";
 import { updateUserProject } from "~/home/(user)/project/_lib/server/server-action-user-project";
 import { useParams } from "next/navigation";
 import { WithAnimation } from "~/home/(user)/_components/animated-element";
+import axios from 'axios';
+import { nanoid } from "nanoid";
 
 
 export function PersonalContentCreatorContainer(
@@ -89,44 +91,85 @@ export function PersonalContentCreatorContainer(
       }
       else {
          try {
-            const response = await fetch(url, {
-               method: 'POST',   // Specify the HTTP method
-               mode: 'cors',  // Ensure you're using 'cors' mode for cross-origin requests
+            // Make the POST request
+            const response = await axios.post(url, {
+               url: resultUrl ?? 'test'
+            }, {
                headers: {
                   'Content-Type': 'application/json',
                },
-               body: JSON.stringify({ url: resultUrl ?? 'test' })  // Convert the JavaScript object to a JSON string
-            })
-            if (!response.ok) {
+               responseType: 'arraybuffer', // Set responseType to 'arraybuffer' to handle binary data
+            });
+
+            // Check if the response is successful
+            if (response.status !== 200) {
                throw new Error('Network response was not ok');
             }
-            if (response.body) {
-               const reader = response.body.getReader();
-               const chunks = [];
-               let push;
-               while (!(push = await reader.read()).done) {
-                  chunks.push(push.value);
-               }
-               const blob = new Blob(chunks, { type: 'image/png' });
-               const filename = "your_image.png"
-               const file = new File([blob], filename, {
-                  type: blob.type,
-                  lastModified: new Date().getTime() // or any timestamp representing file's last modification
-               })
-               const bytes = await file.arrayBuffer();
-               const { nanoid } = await import('nanoid');
-               const uniqueId = nanoid(16);
-               const uploaded = await bucket.upload(uniqueId, bytes);
-               if (!uploaded.error) {
-                  return bucket.getPublicUrl(uniqueId).data.publicUrl;
-               }
-               throw uploaded.error;
 
+            // Create a Blob from the response data
+            const blob = new Blob([response.data], { type: 'image/png' });
+            const filename = "your_image.png";
+            const file = new File([blob], filename, {
+               type: blob.type,
+               lastModified: new Date().getTime() // or any timestamp representing file's last modification
+            });
+
+            // Convert File to ArrayBuffer
+            const bytes = await file.arrayBuffer();
+
+            // Generate a unique ID
+            const uniqueId = nanoid(16);
+
+            // Upload the file
+            const uploaded = await bucket.upload(uniqueId, bytes);
+            if (!uploaded.error) {
+               return bucket.getPublicUrl(uniqueId).data.publicUrl;
             }
+            throw uploaded.error;
 
          } catch (error) {
-            console.error('Error uploading image:', error);
+            console.error('Error:', error);
+            throw error; // Rethrow the error if you need to handle it outside this function
          }
+         // try {
+         //    const response = await fetch(url, {
+         //       method: 'POST',   // Specify the HTTP method
+         //       mode: 'cors',  // Ensure you're using 'cors' mode for cross-origin requests
+         //       headers: {
+         //          'Content-Type': 'application/json',
+         //       },
+         //       body: JSON.stringify({ url: resultUrl ?? 'test' })  // Convert the JavaScript object to a JSON string
+         //    })
+         //    if (!response.ok) {
+         //       throw new Error('Network response was not ok');
+         //    }
+         //    if (response.body) {
+         //       const reader = response.body.getReader();
+         //       const chunks = [];
+         //       let push;
+         //       while (!(push = await reader.read()).done) {
+         //          chunks.push(push.value);
+         //       }
+         //       const blob = new Blob(chunks, { type: 'image/png' });
+         //       const filename = "your_image.png"
+         //       const file = new File([blob], filename, {
+         //          type: blob.type,
+         //          lastModified: new Date().getTime() // or any timestamp representing file's last modification
+         //       })
+         //       const bytes = await file.arrayBuffer();
+         //       const { nanoid } = await import('nanoid');
+         //       const uniqueId = nanoid(16);
+         //       const uploaded = await bucket.upload(uniqueId, bytes);
+         //       if (!uploaded.error) {
+         //          return bucket.getPublicUrl(uniqueId).data.publicUrl;
+         //       }
+         //       throw uploaded.error;
+
+         //    }
+
+         // } catch (error) {
+         //    console.error('Error uploading image:', error);
+         // }
       }
    }
 
