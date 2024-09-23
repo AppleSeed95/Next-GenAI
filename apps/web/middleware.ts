@@ -32,9 +32,10 @@ const allowedOrigins = [
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
-  // retrieve the HTTP "Origin" header
-  // from the incoming request
-  const origin = request.headers.get('origin') ?? '';
+  const url = request.nextUrl;
+  
+  // Get the origin from the request
+  const origin = `${url.protocol}//${url.host}`;
 
   // if the origin is an allowed one,
   // add it to the 'Access-Control-Allow-Origin' header
