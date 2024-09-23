@@ -36,6 +36,14 @@ const config = {
       fullUrl: true,
     },
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'https://www.wumdoo.com/api/:path*',
+      },
+    ];
+  },
   experimental: {
     mdxRs: true,
     instrumentationHook: true,
@@ -88,23 +96,23 @@ function getRemotePatterns() {
   return IS_PRODUCTION
     ? remotePatterns
     : [
-      {
-        protocol: 'http',
-        hostname: '127.0.0.1',
-      },
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-      },
-      {
-        protocol: 'https',
-        hostname: 'oaidalleapiprodscus.blob.core.windows.net',
-        port: '',
-        pathname: '/private/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'atkxoryzcgabijsqfgsd.supabase.co',
-      },
-    ];
+        {
+          protocol: 'http',
+          hostname: '127.0.0.1',
+        },
+        {
+          protocol: 'http',
+          hostname: 'localhost',
+        },
+        {
+          protocol: 'https',
+          hostname: 'oaidalleapiprodscus.blob.core.windows.net',
+          port: '',
+          pathname: '/private/**',
+        },
+        {
+          protocol: 'https',
+          hostname: 'atkxoryzcgabijsqfgsd.supabase.co',
+        },
+      ];
 }
