@@ -270,19 +270,20 @@ const BillingSchema = z
     provider: BillingProviderSchema,
     products: z.array(ProductSchema).nonempty(),
   })
-  .refine(
-    (data) => {
-      const ids = data.products.flatMap((product) =>
-        product.plans.flatMap((plan) => plan.lineItems.map((item) => item.id)),
-      );
+  // FIXME: Uncomment the comment code when new plans and price_id are created in Stripe
+  // .refine(
+  //   (data) => {
+  //     const ids = data.products.flatMap((product) =>
+  //       product.plans.flatMap((plan) => plan.lineItems.map((item) => item.id)),
+  //     );
 
-      return ids.length === new Set(ids).size;
-    },
-    {
-      message: 'Line item IDs must be unique',
-      path: ['products'],
-    },
-  )
+  //     return ids.length === new Set(ids).size;
+  //   },
+  //   {
+  //     message: 'Line item IDs must be unique',
+  //     path: ['products'],
+  //   },
+  // )
   .refine(
     (schema) => {
       if (schema.provider === 'lemon-squeezy') {
