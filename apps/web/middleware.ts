@@ -22,8 +22,36 @@ const getUser = (request: NextRequest, response: NextResponse) => {
   return supabase.auth.getUser();
 };
 
+// the list of all allowed origins
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://www.wumdoo.com/',
+  'https://wumdoo.com/',
+];
+
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
+
+  // retrieve the HTTP "Origin" header
+  // from the incoming request
+  const origin = request.headers.get('origin') ?? '';
+
+  // if the origin is an allowed one,
+  // add it to the 'Access-Control-Allow-Origin' header
+  if (allowedOrigins.includes(origin)) {
+    response.headers.append('Access-Control-Allow-Origin', origin);
+  }
+
+  // add the remaining CORS headers to the response
+  response.headers.append('Access-Control-Allow-Credentials', 'true');
+  response.headers.append(
+    'Access-Control-Allow-Methods',
+    'GET,DELETE,PATCH,POST,PUT',
+  );
+  response.headers.append(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
+  );
 
   // set a unique request ID for each request
   // this helps us log and trace requests
