@@ -25,8 +25,8 @@ const getUser = (request: NextRequest, response: NextResponse) => {
 // the list of all allowed origins
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://www.wumdoo.com/',
-  'https://wumdoo.com/',
+  'https://www.wumdoo.com',
+  'https://wumdoo.com',
 ];
 
 export async function middleware(request: NextRequest) {
