@@ -38,7 +38,7 @@ export async function middleware(request: NextRequest) {
   const url = request.nextUrl;
 
   // Get the origin from the request
-  const origin = `${url.protocol}//${url.host}`;
+  const origin = request.headers.get('origin') ?? `${url.protocol}//${url.host}`;
   const isAllowedOrigin = allowedOrigins.includes(origin);
 
   // Handle preflighted requests
