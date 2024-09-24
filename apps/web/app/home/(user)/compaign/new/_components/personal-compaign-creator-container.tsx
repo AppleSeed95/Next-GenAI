@@ -94,7 +94,6 @@ export function PersonalContentCreatorContainer(
          try {
             const response = await fetch(url, {
                method: 'POST',   // Specify the HTTP method
-               mode: 'cors',  // Ensure you're using 'cors' mode for cross-origin requests
                headers: {
                   'Content-Type': 'application/json',
                },
