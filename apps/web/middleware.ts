@@ -29,30 +29,38 @@ const allowedOrigins = [
   'https://wumdoo.com',
 ];
 
-export async function middleware(request: NextRequest) {
-  const response = NextResponse.next();
+const corsOptions = {
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS, PATCH',
+  'Access-Control-Allow-Headers': 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
+};
 
+export async function middleware(request: NextRequest) {
   const url = request.nextUrl;
-  
+
   // Get the origin from the request
   const origin = `${url.protocol}//${url.host}`;
+  const isAllowedOrigin = allowedOrigins.includes(origin);
 
-  // if the origin is an allowed one,
-  // add it to the 'Access-Control-Allow-Origin' header
-  if (allowedOrigins.includes(origin)) {
-    response.headers.append('Access-Control-Allow-Origin', origin);
+  // Handle preflighted requests
+  const isPreflight = request.method === 'OPTIONS';
+
+  if (isPreflight) {
+    const preflightHeaders = {
+      ...(isAllowedOrigin && { 'Access-Control-Allow-Origin': origin }),
+      ...corsOptions,
+    };
+    return NextResponse.json({}, { headers: preflightHeaders });
   }
 
-  // add the remaining CORS headers to the response
-  response.headers.append('Access-Control-Allow-Credentials', 'true');
-  response.headers.append(
-    'Access-Control-Allow-Methods',
-    'GET,DELETE,PATCH,POST,PUT',
-  );
-  response.headers.append(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
-  );
+  const response = NextResponse.next()
+ 
+  if (isAllowedOrigin) {
+    response.headers.set('Access-Control-Allow-Origin', origin)
+  }
+ 
+  Object.entries(corsOptions).forEach(([key, value]) => {
+    response.headers.set(key, value)
+  })
 
   // set a unique request ID for each request
   // this helps us log and trace requests
