@@ -83,7 +83,7 @@ export default createBillingSchema({
           interval: 'year',
           lineItems: [
             {
-              id: 'price_1Q0x6tI0GY3o5wRxlHaGUkX6',
+              id: 'price_basic_yearly',
               name: 'Base',
               cost: 115.0,
               type: 'flat',
@@ -106,7 +106,7 @@ export default createBillingSchema({
           interval: 'month',
           lineItems: [
             {
-              id: 'price_1Q0x6tI0GY3o5wRxlHaGUkX6',
+              id: 'premium-premium-monthly',
               name: 'Premium',
               cost: 29.9,
               type: 'flat',
@@ -120,7 +120,7 @@ export default createBillingSchema({
           interval: 'year',
           lineItems: [
             {
-              id: 'price_1Q0x6tI0GY3o5wRxlHaGUkX6',
+              id: 'price_enterprise_yearly',
               name: 'Base',
               cost: 350.0,
               type: 'flat',
