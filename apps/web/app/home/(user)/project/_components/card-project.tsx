@@ -1,29 +1,17 @@
 'use client'
-import { Card } from "@kit/ui/card"
-import { Heading } from "@kit/ui/heading"
 import { Button } from "@kit/ui/button"
-import { DatePickerWithRange } from "./datePicker"
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@kit/ui/dialog"
-import { Delete, Edit2Icon, X } from "lucide-react"
-import { Label } from "@kit/ui/label"
-import { Textarea } from "@kit/ui/textarea"
-import { ProjectType } from "./card-saved-project"
-import { Trans, useTranslation } from "react-i18next"
-import { deleteUserProject, editUserProject } from "../_lib/server/server-action-user-project"
-import React, { useEffect, useState, useCallback } from "react"
-import { Alert, AlertDescription, AlertTitle } from "@kit/ui/alert"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@kit/ui/dialog"
+import { Clock8, Play, Settings, Trash2 } from 'lucide-react'
+import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
-import Image from "next/image";
-import { useSupabase } from "@kit/supabase/hooks/use-supabase"
-import { LetterCaseCapitalizeIcon } from "@radix-ui/react-icons"
+import { useCallback, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { Carousel } from 'react-responsive-carousel'
+import "react-responsive-carousel/lib/styles/carousel.min.css"
+import { toast } from 'sonner'
 import { IconSelect } from "../../_components/icons"
-import { Clock8, Settings, Trash2 } from 'lucide-react'
-import { Carousel } from 'react-responsive-carousel';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { updateUserProject } from "../_lib/server/server-action-user-project"
-import { toast } from 'sonner';
-import { Play } from "lucide-react"
-import { deleteProject } from "../_lib/server/server-action-user-project"
+import { deleteProject, updateUserProject } from "../_lib/server/server-action-user-project"
+import { ProjectType } from "./card-saved-project"
 
 
 type Props = {
@@ -37,6 +25,7 @@ export function ProjectCardCpn({ project }: Props) {
     const pathName = usePathname();
     const url = `${pathName}`;
 
+
     const { t } = useTranslation(`projects`);
     const images: string[] = JSON.parse(project.pImages ?? JSON.stringify([]));
     let carouselItems = images.map((aImage) => ({
@@ -47,7 +36,8 @@ export function ProjectCardCpn({ project }: Props) {
         const first = value ? value[0] : '';
         return `${first?.toUpperCase()}${value?.slice(1, value.length)}`
     }
-    const [projectState, setProjectState] = useState<boolean>(project.pState ?? false)
+    const projectState = project.pState ?? undefined
+
     const updateToaster = useCallback(
         (promise: () => Promise<unknown>) => {
             return toast.promise(promise, {
@@ -73,9 +63,6 @@ export function ProjectCardCpn({ project }: Props) {
         const promise = async () => {
 
             const res = await updateUserProject({ ...project, pState: v });
-            if (res) {
-                setProjectState(v);
-            }
         }
 
         updateToaster(promise);
