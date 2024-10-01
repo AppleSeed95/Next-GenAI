@@ -29,7 +29,8 @@ export const CreateAITextSchema = z
 export const CreateAIImageSchema = z
    .object({
       idea: z.string(),
-      ratio: z.string()
+      ratio: z.string(),
+      additionalInfo: z.string()
    })
 
 export const downloadImageSchema = z

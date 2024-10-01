@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
+
 import { OpenAI } from 'openai';
 
 const DEFAULT_MODEL = process.env.OPENAI_MODEL_NAME as string;
 const SYSTEM = 'system' as const;
-const USER = "user" as const;
+const USER = 'user' as const;
 
 /**
  * Creates an instance of AiEditorService.
@@ -23,7 +24,7 @@ export default function createAiEditorService(): AiEditorService {
  * A class that provides AI text editing services using the OpenAI client.
  */
 class AiEditorService {
-  constructor(private readonly client: OpenAI) { }
+  constructor(private readonly client: OpenAI) {}
 
   /**
    * Generates a complete Content based on the provided context.
@@ -32,18 +33,23 @@ class AiEditorService {
    * @param {string} params.context - The context to be used for generating the Content.
    * @return {Promise<object>} A promise that resolves to an object representing the generated Content.
    */
-  async completeTextContent(params: { context: string, brand: string, words: number, lang: string, maintopic: string, subtopic: string }) {
-
+  async completeTextContent(params: {
+    context: string;
+    brand: string;
+    words: number;
+    lang: string;
+    maintopic: string;
+    subtopic: string;
+  }) {
     const prompt = [
       {
-        "role": SYSTEM,
-        "content": `You are assisting USER in writing professional text. Never use double quotes.`,
+        role: SYSTEM,
+        content: `You are assisting USER in writing professional text. Never use double quotes.`,
       },
       {
+        role: USER,
 
-        "role": USER,
-
-        "content": `
+        content: `
           
         Generate a content title and text based on the provided parameters:
         - Main Topic: "${params.maintopic}"
@@ -61,17 +67,16 @@ class AiEditorService {
         
          
            - Develop a text discussing the main topic, subtopic, and brand.
-           - Background Information for context: "${- params.context}"
+           - Background Information for context: "${-params.context}"
            - The text should be composed in "${params.lang}" and consist of exactly ${params.words} sentences.         
       
-        `.trim()
-
+        `.trim(),
       },
     ];
 
     const GPT_response = await this.client.chat.completions.create({
       // model: DEFAULT_MODEL,
-      model: "gpt-4-turbo",
+      model: 'gpt-4-turbo',
       messages: prompt,
       // baseURL: "https://api.openai.com/v1/assistants",
       // max_tokens: 50,
@@ -84,27 +89,30 @@ class AiEditorService {
     //   console.log(chunk.choices[0]?.delta.content); // this code from the doc runs
     // }
 
-
     return GPT_response.choices[0]?.message.content;
   }
-  async suggestTextTopic(projectValue: { mainTopic: string, subTopic: string, atmosphere: string, language: string }) {
+  async suggestTextTopic(projectValue: {
+    mainTopic: string;
+    subTopic: string;
+    atmosphere: string;
+    language: string;
+  }) {
     const generateAtmosphere = (array: string[]): string => {
       let result = '';
-      array.forEach(((a) => {
-        result += a + ','
-      }));
+      array.forEach((a) => {
+        result += a + ',';
+      });
       return result;
-    }
+    };
     const prompt = [
       {
-        "role": SYSTEM,
-        "content": `You are assisting USER in writing professional text. Never use double quotes.`,
+        role: SYSTEM,
+        content: `You are assisting USER in writing professional text. Never use double quotes.`,
       },
       {
+        role: USER,
 
-        "role": USER,
-
-        "content": `
+        content: `
           
         Generate 3 topics seperated with '|' based on the provided parameters:
         - Main Topic: "${projectValue.mainTopic}"
@@ -120,14 +128,13 @@ class AiEditorService {
            - Avoid using the word "Title."
            - Ensure the title is in the specified language, "${projectValue.language}".
            - you have to don't use "Title" word
-        `.trim()
-
+        `.trim(),
       },
     ];
 
     const GPT_response = await this.client.chat.completions.create({
       // model: DEFAULT_MODEL,
-      model: "gpt-4-turbo",
+      model: 'gpt-4-turbo',
       messages: prompt,
       // baseURL: "https://api.openai.com/v1/assistants",
       // max_tokens: 50,
@@ -140,20 +147,24 @@ class AiEditorService {
     //   console.log(chunk.choices[0]?.delta.content); // this code from the doc runs
     // }
 
-
     return GPT_response.choices[0]?.message.content;
   }
-  async generatePostTextContent(data: { topic: string, language: string, wordsCnt: number, brand: string, addition: string }) {
+  async generatePostTextContent(data: {
+    topic: string;
+    language: string;
+    wordsCnt: number;
+    brand: string;
+    addition: string;
+  }) {
     const prompt = [
       {
-        "role": SYSTEM,
-        "content": `You are assisting USER in writing professional text. Never use double quotes.`,
+        role: SYSTEM,
+        content: `You are assisting USER in writing professional text. Never use double quotes.`,
       },
       {
+        role: USER,
 
-        "role": USER,
-
-        "content": `
+        content: `
           
         Generate contents based on the current topic:${data.topic}:
         
@@ -161,18 +172,17 @@ class AiEditorService {
           
            - provide with about ${data.wordsCnt} words.
            - provide with this brand: ${data.brand}.
-           - consider this addition info and reflect in the result: ${data.addition}.
+           - consider this additional information and reflect in the result: ${data.addition}.
            - provide with this language: ${data.language}.
            - never use bullet style. you should use plain text style.
 
-        `.trim()
-
+        `.trim(),
       },
     ];
 
     const GPT_response = await this.client.chat.completions.create({
       // model: DEFAULT_MODEL,
-      model: "gpt-4-turbo",
+      model: 'gpt-4-turbo',
       messages: prompt,
       // baseURL: "https://api.openai.com/v1/assistants",
       // max_tokens: 50,
@@ -184,7 +194,6 @@ class AiEditorService {
     // for await (const chunk of GPT_response) {
     //   console.log(chunk.choices[0]?.delta.content); // this code from the doc runs
     // }
-
 
     return GPT_response.choices[0]?.message.content;
   }
@@ -196,27 +205,24 @@ class AiEditorService {
    * @param {string} params.context - The context to be used for generating the Content.
    * @return {Promise<object>} A promise that resolves to an object representing the generated Content.
    */
-  async completeSuggestTopics(params: { topic: string, contentType: string }) {
-
+  async completeSuggestTopics(params: { topic: string; contentType: string }) {
     const prompt = [
       {
-        "role": SYSTEM,
-        "content": `You are assisting USER in writing professional text. Never use double quotes.`,
+        role: SYSTEM,
+        content: `You are assisting USER in writing professional text. Never use double quotes.`,
       },
       {
+        role: USER,
 
-        "role": USER,
-
-        "content": `        
+        content: `        
           Create 5 topic ideas for a "${params.topic}" with a "${params.contentType}" approach, each described in 5 sentences.
-        `.trim()
-
+        `.trim(),
       },
     ];
 
     const GPT_response = await this.client.chat.completions.create({
       // model: DEFAULT_MODEL,
-      model: "gpt-4-turbo",
+      model: 'gpt-4-turbo',
       messages: prompt,
       // baseURL: "https://api.openai.com/v1/assistants",
       // max_tokens: 50,
@@ -229,7 +235,6 @@ class AiEditorService {
     //   console.log(chunk.choices[0]?.delta.content); // this code from the doc runs
     // }
 
-
     return GPT_response.choices[0]?.message.content;
   }
 
@@ -240,8 +245,11 @@ class AiEditorService {
    * @param {string} params.context - The context to be used for generating the Content.
    * @return {Promise<object>} A promise that resolves to an object representing the generated Content.
    */
-  async completeImageContent(params: { idea: string, ratio: string }) {
-
+  async completeImageContent(params: {
+    idea: string;
+    ratio: string;
+    additionalInfo: string;
+  }) {
     // const prompt = [
     //   {
     //     "role": SYSTEM,
@@ -275,31 +283,36 @@ class AiEditorService {
     //   // top_p: 1,
     // });
 
-
     const Image_response = await this.client.images.generate({
       // model: DEFAULT_MODEL,
-      model: "dall-e-3",
+      model: 'dall-e-3',
       prompt: `
         generate a realistic image representing that content: "${params.idea}".
+        consider this additional information and reflect in the result image: ${params.additionalInfo}.
         Generate an image with a horizontal orientation while keeping the size.
         make sure an image keep the posture of the things way up.
       `,
-      quality: "standard",
+      quality: 'standard',
       n: 1,
-      size: params.ratio === 'square' ? "1024x1024" : (params.ratio === 'horizontal' ? '1792x1024' : '1024x1792')
+      size:
+        params.ratio === 'square'
+          ? '1024x1024'
+          : params.ratio === 'horizontal'
+            ? '1792x1024'
+            : '1024x1792',
     });
 
-    const image_urls = Image_response.data.map(image => image.url)
-
+    const image_urls = Image_response.data.map((image) => image.url);
 
     return image_urls;
   }
 
-
   async completeImageDownload(params: { url: string }) {
-
     if (!params.url) {
-      return NextResponse.json({ error: 'Image URL is required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Image URL is required' },
+        { status: 400 },
+      );
     }
 
     try {
@@ -321,9 +334,12 @@ class AiEditorService {
     }
   }
 
-  async saveProject(params: { format: string, context: string, scale: number, amount: number }) {
-
-  }
+  async saveProject(params: {
+    format: string;
+    context: string;
+    scale: number;
+    amount: number;
+  }) {}
 
   /**
    * Generates a complete Content based on the provided context.
@@ -332,12 +348,15 @@ class AiEditorService {
    * @param {string} params.context - The context to be used for generating the Content.
    * @return {Promise<object>} A promise that resolves to an object representing the generated Content.
    */
-  async completeVideoContent(params: { format: string, context: string, length: number }) {
-
+  async completeVideoContent(params: {
+    format: string;
+    context: string;
+    length: number;
+  }) {
     const prompt = [
       {
-        "role": SYSTEM,
-        "content": `You are assisting USER in writing professional text. Never use double quotes.`,
+        role: SYSTEM,
+        content: `You are assisting USER in writing professional text. Never use double quotes.`,
       },
       // {
 
@@ -347,7 +366,7 @@ class AiEditorService {
 
       //     Generate a video related to "${params.title}". The title should consist of 4 to 10 impactful words and don't use "Title" word. Ensure the title is in "${params.lang}" language.
 
-      //     Develop a text discussing "${params.title}". Here's the background information provided by the user: "${params.context}". Compose the text in "${params.lang}" language, and ensure it contains exactly ${params.words} sentences.          
+      //     Develop a text discussing "${params.title}". Here's the background information provided by the user: "${params.context}". Compose the text in "${params.lang}" language, and ensure it contains exactly ${params.words} sentences.
 
       //   `.trim()
 
@@ -356,7 +375,7 @@ class AiEditorService {
 
     const GPT_response = await this.client.chat.completions.create({
       // model: DEFAULT_MODEL,
-      model: "gpt-4-turbo",
+      model: 'gpt-4-turbo',
       messages: prompt,
       // baseURL: "https://api.openai.com/v1/assistants",
       // max_tokens: 50,
@@ -368,7 +387,6 @@ class AiEditorService {
     // for await (const chunk of GPT_response) {
     //   console.log(chunk.choices[0]?.delta.content); // this code from the doc runs
     // }
-
 
     return GPT_response.choices[0]?.message.content;
   }

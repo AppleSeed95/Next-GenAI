@@ -50,7 +50,7 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
         setLogoAttached([]);
         let generatedResult: string[] = [];
         for (let index = 0; index < cnt; index++) {
-            const result = await createAIImageAction({ ratio: projectProps.pImageRatio, idea: projectProps.pUseText ? projectProps.pTextContent : `topic:${projectProps.pMainTopic}-${projectProps.pSubTopic}, atmosphere: ${projectProps.pAtmosphere} ` });
+            const result = await createAIImageAction({ ratio: projectProps.pImageRatio, idea: projectProps.pUseText ? projectProps.pTextContent : `topic:${projectProps.pMainTopic}-${projectProps.pSubTopic}, atmosphere: ${projectProps.pAtmosphere} `, additionalInfo: projectProps.pImageAddition });
             if (result != "Error") {
                 const filteredImageUrls: string[] = result.filter((url): url is string => url !== undefined);
                 generatedResult.push(filteredImageUrls[0] ?? '');
@@ -62,7 +62,7 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
     }
     const attachLogo = async (src: string, file: File) => {
         const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
-        const url = `${baseUrl}/api/add-logo`;
+        const url = `${baseUrl}/api/add-logo`
         try {
             const formData = new FormData();
             formData.append('openAiImageUrl', src);
@@ -219,7 +219,11 @@ export const CampaignImageResultCpn = ({ projectProps, setCurrentStep, setProjec
                             </div>
                             <Textarea
                                 disabled={loading === true}
-                                className="h-full w-full grow" placeholder="Additional information to the bot(e.g like photographs, etc.)" />
+                                className="h-full w-full grow" placeholder="Additional information to the bot(e.g like photographs, etc.)" 
+                                onChange={(e) => {
+                                    setProjectValue({ ...projectProps, pImageAddition: e.target.value })
+                                }}
+                                />
                         </div>
 
                     </div>

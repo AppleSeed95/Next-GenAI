@@ -1,13 +1,8 @@
 'use client'
-import { ProjectsType } from '../page';
-import { Label } from '@kit/ui/label'
-import { useTranslation } from "react-i18next";
-import { RadioGroup, RadioGroupItem } from '@kit/ui/radio-group'
-import { useEffect, useState } from "react";
-import { suggestPostTopicAction, generatePostTextContentAction, sendEmail } from "../_lib/server/server-action";
 import { Button } from "@kit/ui/button";
 import { Input } from "@kit/ui/input";
-import { Textarea } from "@kit/ui/textarea"
+import { Label } from '@kit/ui/label';
+import { RadioGroup, RadioGroupItem } from '@kit/ui/radio-group';
 import {
     Select,
     SelectContent,
@@ -16,14 +11,19 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-} from "@kit/ui/select"
+} from "@kit/ui/select";
+import { Textarea } from "@kit/ui/textarea";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { generatePostTextContentAction, sendEmail, suggestPostTopicAction } from "../_lib/server/server-action";
+import { ProjectsType } from '../page';
 
-import { ChevronLeft, ChevronRight, Check, AlertCircle } from "lucide-react";
 import {
     Alert,
     AlertDescription,
     AlertTitle,
-} from "@kit/ui/alert"
+} from "@kit/ui/alert";
+import { AlertCircle, Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { WithAnimation } from "~/home/(user)/_components/animated-element";
 
 
