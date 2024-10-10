@@ -92,8 +92,8 @@ export function CompaignpPlatformSelect(props: Props) {
                   <IconSelect platform={props.projectValue.pPlatform as string} />
                </div>
                <div className="flex flex-col gap-[10px] w-full">
-                  <Label className="font-bold text-[16px]" children={t('Target pPlatform')} />
-                  <PlatformSelectForCompaingnComboboxDemo onChange={(data) => { setPlatform(data), props.onChange({ ...props.projectValue, pPlatform: data }) }} />
+                  <Label className="font-bold text-[16px]" children={t('Target Platform')} />
+                  <PlatformSelectForCompaingnComboboxDemo onChange={(data) => { setPlatform(data), props.onChange({ ...props.projectValue, pPlatform: data }) }} currentPlatform={props.projectValue.pPlatform}/>
                </div>
                <div className="flex flex-col gap-[10px] w-full">
                   <Label className="font-bold text-[16px]" children={t('Post settings')} />

@@ -1,8 +1,10 @@
-"use client"
+'use client';
 
-import * as React from "react"
+import * as React from 'react';
 
-import { Button } from "@kit/ui/button"
+import { useTranslation } from 'react-i18next';
+
+import { Button } from '@kit/ui/button';
 import {
   Command,
   CommandEmpty,
@@ -10,71 +12,68 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@kit/ui/command"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@kit/ui/popover"
-import { useTranslation } from "react-i18next"
+} from '@kit/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '@kit/ui/popover';
 
 type pPlatform = {
-  value: string
-  label: string
-}
+  value: string;
+  label: string;
+};
 
 const pPlatforms: pPlatform[] = [
   {
-    value: "facebook",
-    label: "Facebook",
+    value: 'facebook',
+    label: 'Facebook',
   },
   {
-    value: "instagram",
-    label: "Instagram",
+    value: 'instagram',
+    label: 'Instagram',
   },
   {
-    value: "linkedin",
-    label: "LinkedIn",
+    value: 'linkedin',
+    label: 'LinkedIn',
   },
   {
-    value: "youtube",
-    label: "YouTube",
+    value: 'youtube',
+    label: 'YouTube',
   },
   {
-    value: "tiktok",
-    label: "TikTok",
+    value: 'tiktok',
+    label: 'TikTok',
   },
   {
-    value: "wordpress",
-    label: "Wordpress",
+    value: 'wordpress',
+    label: 'Wordpress',
   },
   {
-    value: "contao",
-    label: "Contao",
+    value: 'contao',
+    label: 'Contao',
   },
   {
-    value: "joomla",
-    label: "Joomla",
+    value: 'joomla',
+    label: 'Joomla',
   },
-]
+];
 
 type Props = {
-  onChange: (pPlatform: string) => void,
-}
-
+  onChange: (pPlatform: string) => void;
+  currentPlatform: string;
+};
 
 export function PlatformSelectForCompaingnComboboxDemo(props: Props) {
-  const [open, setOpen] = React.useState(false)
-  const [selectedpPlatform, setSelectedpPlatform] = React.useState<pPlatform | null>(
-    {
-      value: "linkedin",
-      label: "LinkedIn",
-    },
-  )
+  const [open, setOpen] = React.useState(false);
+  const [selectedpPlatform, setSelectedpPlatform] =
+    React.useState<pPlatform | null>(() => {
+      return (
+        pPlatforms?.find(
+          (platform) => platform?.value === props?.currentPlatform,
+        ) ?? { value: 'linkedin', label: 'LinkedIn' }
+      );
+    });
   const { t } = useTranslation();
 
   return (
-    <div className="flex w-full sm:items-center space-x-4">
+    <div className="flex w-full space-x-4 sm:items-center">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -83,9 +82,7 @@ export function PlatformSelectForCompaingnComboboxDemo(props: Props) {
             className="w-[200px] justify-start"
           >
             {selectedpPlatform ? (
-              <>
-                {selectedpPlatform.label}
-              </>
+              <>{selectedpPlatform.label}</>
             ) : (
               <>{t('pPlatform')}</>
             )}
@@ -103,11 +100,12 @@ export function PlatformSelectForCompaingnComboboxDemo(props: Props) {
                     value={pPlatform.value}
                     onSelect={(value) => {
                       setSelectedpPlatform(
-                        pPlatforms.find((priority) => priority.value === value) ||
-                        null
-                      )
-                      props.onChange(value)
-                      setOpen(false)
+                        pPlatforms.find(
+                          (priority) => priority.value === value,
+                        ) || null,
+                      );
+                      props.onChange(value);
+                      setOpen(false);
                     }}
                   >
                     <span>{pPlatform.label}</span>
@@ -119,5 +117,5 @@ export function PlatformSelectForCompaingnComboboxDemo(props: Props) {
         </PopoverContent>
       </Popover>
     </div>
-  )
+  );
 }
